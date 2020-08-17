@@ -6,19 +6,11 @@ enum CategoriaPlato {
 
 import grails.rest.Resource
 
-
 @Resource(uri = '/plato')
-class Plato implements Producto {
-    String nombre;
-    BigDecimal precio;
+class Plato extends Producto {
+
     CategoriaPlato categoria;
     String descripcion;
-
-    static belongsTo = [restaurant: Restaurant]
-
-    BigDecimal getPrecio(){
-        return precio;
-    }
 
     boolean admiteA(CuponDescuento descuento) {
         return descuento.permitirEn(this)

@@ -33,8 +33,8 @@ class MenuSpec extends Specification implements DomainUnitTest<Menu> {
     void "test Menu tiene 2 platos, precio deberia seguir  fijo "() {
         when:
         Menu menuConPLatos = new Menu(nombre: 'Viernes', precio: 400)
-        menuConPLatos.addToProductos(new Plato(nombre:'Milanesa con pure', precio: 350, categoria: CategoriaPlato.PLATO))
-        menuConPLatos.addToProductos(new Plato(nombre:'Flan Mixto con pure', precio: 150, categoria: CategoriaPlato.POSTRE))
+        menuConPLatos.addToPlatos(new Plato(nombre:'Milanesa con pure', precio: 350, categoria: CategoriaPlato.PLATO))
+        menuConPLatos.addToPlatos(new Plato(nombre:'Flan Mixto con pure', precio: 150, categoria: CategoriaPlato.POSTRE))
         BigDecimal precio = menuConPLatos.getPrecio()
         then:
         precio == 400
