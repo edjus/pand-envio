@@ -4,6 +4,10 @@ enum CategoriaPlato {
     ENTRADA, BEBIDA, PLATO, POSTRE
 }
 
+import grails.rest.Resource
+
+
+@Resource(uri = '/plato')
 class Plato implements Producto {
     String nombre;
     BigDecimal precio;

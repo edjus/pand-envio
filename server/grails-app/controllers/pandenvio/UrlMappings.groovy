@@ -1,4 +1,4 @@
-package pand.envio
+package pandenvio
 
 class UrlMappings {
 

@@ -1,0 +1,17 @@
+import pandenvio.Plato
+
+model {
+    Plato plato
+}
+json {
+    id plato.id
+
+    nombre plato.nombre
+
+    precio plato.precio
+
+    descripcion plato.descripcion
+
+    restaurant nombre:plato.restaurant.nombre,
+            id: plato.restaurant.id
+}

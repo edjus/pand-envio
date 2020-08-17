@@ -1,4 +1,4 @@
-package pand.envio
+package pandenvio
 
 import grails.boot.GrailsApp
 import grails.boot.config.GrailsAutoConfiguration

@@ -1,4 +1,4 @@
-package pand.envio
+package pandenvio
 
 import grails.core.GrailsApplication
 import grails.plugins.*

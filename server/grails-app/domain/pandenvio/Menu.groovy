@@ -4,7 +4,7 @@ class Menu implements Producto {
     String nombre
     BigDecimal precio
 
-    static hasMany = [productos: Producto]
+    static hasMany = [productos: Plato]
     static belongsTo = [restaurant: Restaurant]
 
     BigDecimal getPrecio(){
