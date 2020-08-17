@@ -5,6 +5,7 @@ class Menu implements Producto {
     BigDecimal precio
 
     static hasMany = [productos: Producto]
+    static belongsTo = [restaurant: Restaurant]
 
     BigDecimal getPrecio(){
         return precio;

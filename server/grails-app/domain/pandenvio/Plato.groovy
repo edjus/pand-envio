@@ -10,6 +10,8 @@ class Plato implements Producto {
     CategoriaPlato categoria;
     String descripcion;
 
+    static belongsTo = [restaurant: Restaurant]
+
     BigDecimal getPrecio(){
         return precio;
     }
