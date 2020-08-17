@@ -10,4 +10,5 @@ install:
   - true
 jdk:
   - openjdk8
-script: "./travis-build.sh"
+script:
+  "cd server/ && ./grailsw test-app"
