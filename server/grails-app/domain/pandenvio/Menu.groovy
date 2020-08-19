@@ -5,14 +5,14 @@ class Menu extends Producto {
     static hasMany = [platos: Plato]
 
     boolean admiteA(CuponDescuento descuento) {
-        return descuento.permitirEn(this)
+        descuento.permitirEn(this)
     }
 
     boolean admiteA(CuponDescuentoNulo descuento) {
-        return true
+        true
     }
 
     boolean admiteA(CuponDescuentoPorcentual descuento) {
-        return false
+        false
     }
 }

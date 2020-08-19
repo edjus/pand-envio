@@ -8,6 +8,6 @@ class Cliente {
     String telefono;
 
     String nombreCompleto() {
-        return nombre + " " + apellido
+        nombre + " " + apellido
     }
 }

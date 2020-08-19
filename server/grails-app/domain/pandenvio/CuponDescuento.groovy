@@ -12,6 +12,6 @@ abstract class CuponDescuento {
     }
 
     boolean estoyActivo() {
-        return activo
+        activo
     }
 }

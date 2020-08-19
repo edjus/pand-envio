@@ -5,7 +5,7 @@ abstract class Producto {
     static belongsTo = [restaurant: Restaurant]
 
     BigDecimal getPrecio(){
-        return precio;
+        precio;
     }
 
     String nombre

@@ -13,14 +13,14 @@ class Plato extends Producto {
     String descripcion;
 
     boolean admiteA(CuponDescuento descuento) {
-        return descuento.permitirEn(this)
+        descuento.permitirEn(this)
     }
 
     boolean admiteA(CuponDescuentoNulo descuento) {
-        return true
+        true
     }
 
     boolean admiteA(CuponDescuentoPorcentual descuento) {
-        return true
+        true
     }
 }

@@ -14,6 +14,6 @@ class CuponDescuentoPorcentual extends CuponDescuento {
             throw new CuponYaUtilizadoException()
         }
         this.activo = false;
-        return precio * (1-(porcentaje/100))
+        precio * (1-(porcentaje/100))
     }
 }
