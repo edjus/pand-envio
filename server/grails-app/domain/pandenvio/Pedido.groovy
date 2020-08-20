@@ -22,7 +22,7 @@ class Pedido {
     }
 
     BigDecimal calcularPrecio(){
-        BigDecimal precioTotalParcial = items.sum(0) { it.getPrecio() }
+        BigDecimal precioTotalParcial = items.sum(0) { it.calcularPrecio() }
         Boolean aplicaDescuento = items.inject(true) {resultado , item -> resultado && item.admiteA(cuponDeDescuento)}
 
         aplicaDescuento ? cuponDeDescuento.aplicarDescuento(precioTotalParcial) : precioTotalParcial

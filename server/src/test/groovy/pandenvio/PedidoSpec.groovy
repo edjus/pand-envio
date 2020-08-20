@@ -27,12 +27,24 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
             !pedido.validate()
     }
 
-    void "test precio de un pedido sin items es 0"() {
+    void "test precio de un pedido sin productos es 0"() {
         given:
             Pedido pedido = new Pedido(new Cliente())
         when:
             BigDecimal precio = pedido.calcularPrecio()
         then:
             precio == 0
+    }
+
+    void "test precio de un pedido con productos"() {
+        given:
+            Pedido pedido = new Pedido(new Cliente())
+            Plato plato = new Plato(nombre: 'Alto Guiso', precio: 15, categoria: CategoriaPlato.PLATO)
+            Integer cantidad = 2
+        when:
+            pedido.agregar(plato, cantidad)
+            BigDecimal precio = pedido.calcularPrecio()
+        then:
+            precio == plato.getPrecio() * cantidad
     }
 }
