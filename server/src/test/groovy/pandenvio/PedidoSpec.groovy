@@ -39,7 +39,7 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
     void "test precio de un pedido con productos"() {
         given:
             Pedido pedido = new Pedido(new Cliente())
-            Plato plato = new Plato(nombre: 'Alto Guiso', precio: 15, categoria: CategoriaPlato.PLATO)
+            Producto plato = new Plato(nombre: 'Alto Guiso', precio: 15, categoria: CategoriaPlato.PLATO)
             Integer cantidad = 2
         when:
             pedido.agregar(plato, cantidad)
@@ -74,14 +74,29 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
         given:
             Pedido pedido = new Pedido(new Cliente())
             CuponDescuento cupon = new CuponDescuentoPorcentual(activo: true, porcentaje: 10)
-            Plato plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO)
-            Plato plato2 = new Plato(nombre: 'Flan', precio: 100, categoria: CategoriaPlato.POSTRE)
+            Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO)
+            Producto plato2 = new Plato(nombre: 'Flan', precio: 100, categoria: CategoriaPlato.POSTRE)
             pedido.agregar(plato, 1)
             pedido.agregar(plato2, 2)
         when:
             pedido.cuponDeDescuento = cupon
             BigDecimal precio = pedido.calcularPrecio()
         then:
-            precio == 360 // (200*1 + 100*2)* (1 - 0.1)
+            precio == 360 // (200*1 + 100*2) * (1 - 0.1)
+    }
+
+    void "test precio de un pedido con productos y cupon activo  no aplica si hay menu"() {
+        given:
+            Pedido pedido = new Pedido(new Cliente())
+            CuponDescuento cupon = new CuponDescuentoPorcentual(activo: true, porcentaje: 10)
+            Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO)
+            Producto menu = new Menu(nombre: 'Viernes', precio: 300)
+            pedido.agregar(plato, 2)
+            pedido.agregar(menu, 2)
+        when:
+            pedido.cuponDeDescuento = cupon
+            BigDecimal precio = pedido.calcularPrecio()
+        then:
+            precio == 1000 // (200*2 + 300*2)
     }
 }
