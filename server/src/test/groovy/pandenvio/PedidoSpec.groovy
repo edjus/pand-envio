@@ -11,8 +11,11 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
     def cleanup() {
     }
 
-    void "test something"() {
-        expect:"fix me"
-            true == true
+    void "test Pedido se crea con fecha actual y con descuento Nulo"() {
+        when:
+            Pedido pedido = new Pedido(new Cliente())
+        then:
+            pedido.fecha.toString() == (new Date()).toString()
+            pedido.cuponDeDescuento.class == CuponDescuentoNulo
     }
 }
