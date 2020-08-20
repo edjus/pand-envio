@@ -5,6 +5,7 @@ class Pedido {
     Date fecha
     CuponDescuento cuponDeDescuento
     Cliente cliente
+    EstadoPedido estado
     List<Item> items = []
 
     static constraints = {
@@ -15,6 +16,7 @@ class Pedido {
         this.fecha = new Date()
         this.cliente = cliente
         this.cuponDeDescuento = new CuponDescuentoNulo(fecha: fecha, activo: true, codigo: 'NULO')
+        this.estado = new EstadoRecibido()
     }
 
     void agregar(Producto producto, Integer cantidad){

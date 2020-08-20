@@ -18,6 +18,7 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
             pedido.validate()
             pedido.fecha.toString() == (new Date()).toString()
             pedido.cuponDeDescuento.class == CuponDescuentoNulo
+            pedido.estado.class == EstadoRecibido
     }
 
     void "test cliente de un Pedido no puede ser null"() {
