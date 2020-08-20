@@ -69,4 +69,19 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
         then:
             thrown CuponYaUtilizadoException
     }
+
+    void "test precio de un pedido con productos con cupon activo aplica descuento"() {
+        given:
+            Pedido pedido = new Pedido(new Cliente())
+            CuponDescuento cupon = new CuponDescuentoPorcentual(activo: true, porcentaje: 10)
+            Plato plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO)
+            Plato plato2 = new Plato(nombre: 'Flan', precio: 100, categoria: CategoriaPlato.POSTRE)
+            pedido.agregar(plato, 1)
+            pedido.agregar(plato2, 2)
+        when:
+            pedido.cuponDeDescuento = cupon
+            BigDecimal precio = pedido.calcularPrecio()
+        then:
+            precio == 360 // (200*1 + 100*2)* (1 - 0.1)
+    }
 }
