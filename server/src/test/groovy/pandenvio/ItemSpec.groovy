@@ -16,7 +16,18 @@ class ItemSpec extends Specification implements DomainUnitTest<Item> {
         cupon = new CuponDescuentoPorcentual(activo: true, fecha: new Date())
     }
 
-    def cleanup() {
+    void "test item debe tener un producto"() {
+        when:
+            Item item = new Item(null, 1)
+        then:
+            !item.validate()
+    }
+
+    void "test item debe tener una cantidad positiva"() {
+        when:
+            Item item = new Item(plato, 0)
+        then:
+            !item.validate()
     }
 
     void "test Item admite descuento si el producto lo admite"() {
