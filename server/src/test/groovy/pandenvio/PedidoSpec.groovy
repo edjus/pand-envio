@@ -47,4 +47,15 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
         then:
             precio == plato.getPrecio() * cantidad
     }
+
+    void "test precio de un pedido sin productos con cupon activo es 0"() {
+        given:
+            Pedido pedido = new Pedido(new Cliente())
+            CuponDescuento cupon = new CuponDescuentoPorcentual(activo: true, porcentaje: 10)
+        when:
+            pedido.cuponDeDescuento = cupon
+            BigDecimal precio = pedido.calcularPrecio()
+        then:
+            precio == 0
+    }
 }
