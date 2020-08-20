@@ -58,4 +58,15 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
         then:
             precio == 0
     }
+
+    void "test precio de un pedido sin productos con cupon inactivo lanza error"() {
+        given:
+            Pedido pedido = new Pedido(new Cliente())
+            CuponDescuento cupon = new CuponDescuentoPorcentual(activo: false, porcentaje: 10)
+        when:
+            pedido.cuponDeDescuento = cupon
+            BigDecimal precio = pedido.calcularPrecio()
+        then:
+            thrown CuponYaUtilizadoException
+    }
 }
