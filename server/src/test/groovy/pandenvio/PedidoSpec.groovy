@@ -26,4 +26,13 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
         then:
             !pedido.validate()
     }
+
+    void "test precio de un pedido sin items es 0"() {
+        given:
+            Pedido pedido = new Pedido(new Cliente())
+        when:
+            BigDecimal precio = pedido.calcularPrecio()
+        then:
+            precio == 0
+    }
 }

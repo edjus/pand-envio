@@ -5,7 +5,7 @@ class Pedido {
     Date fecha
     CuponDescuento cuponDeDescuento
     Cliente cliente
-    List<Item> items
+    List<Item> items = []
 
     static constraints = {
         cliente nullable: false
@@ -22,9 +22,9 @@ class Pedido {
     }
 
     BigDecimal calcularPrecio(){
-        BigDecimal precioTotalParcial = items.sum() { it.getPrecio() }
+        BigDecimal precioTotalParcial = items.sum(0) { it.getPrecio() }
         Boolean aplicaDescuento = items.inject(true) {resultado , item -> resultado && item.admiteA(cuponDeDescuento)}
-        
+
         aplicaDescuento ? cuponDeDescuento.aplicarDescuento(precioTotalParcial) : precioTotalParcial
     }
 }
