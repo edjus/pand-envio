@@ -16,7 +16,7 @@ class Item {
     }
 
     BigDecimal calcularPrecio(){
-        producto.getPrecio() * cantidad
+        producto.precio * cantidad
     }
 
     Boolean admiteA(CuponDescuento descuento){

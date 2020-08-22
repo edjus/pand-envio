@@ -2,14 +2,10 @@ package pandenvio
 
 abstract class Producto {
 
-    static belongsTo = [restaurant: Restaurant]
-
-    BigDecimal getPrecio(){
-        precio;
-    }
-
     String nombre
     BigDecimal precio
+
+    static belongsTo = [restaurant: Restaurant]
 
     abstract boolean admiteA(CuponDescuento descuento)
     abstract boolean admiteA(CuponDescuentoNulo descuento)
