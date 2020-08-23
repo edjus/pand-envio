@@ -10,4 +10,10 @@ class Cliente {
     String nombreCompleto() {
         nombre + " " + apellido
     }
+
+
+
+    boolean esValido(){
+      return true
+   }
 }
