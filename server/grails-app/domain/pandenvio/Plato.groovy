@@ -1,10 +1,10 @@
 package pandenvio
+import grails.rest.Resource
 
 enum CategoriaPlato {
     ENTRADA, BEBIDA, PLATO, POSTRE
 }
 
-import grails.rest.Resource
 
 @Resource(uri = '/plato')
 class Plato extends Producto {
