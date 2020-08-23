@@ -38,4 +38,13 @@ class CuponDescuentoPorcentualSpec extends Specification implements DomainUnitTe
         !cuponPorcentualActivo.validate()
     }
 
+    void "Cupon Descuento Porcentual se guarda correctamente"() {
+        when:
+            def cupon = new CuponDescuentoPorcentual(fecha: new Date(), activo: true, codigo: 'ABC', porcentaje: 10)
+        then:
+            cupon.save(failOnError)
+            CuponDescuentoPorcentual.count == 1
+            cupon == CuponDescuentoPorcentual.findById(cupon.id)
+    }
+
 }

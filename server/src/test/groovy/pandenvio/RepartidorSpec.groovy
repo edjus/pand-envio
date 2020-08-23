@@ -30,4 +30,13 @@ class RepartidorSpec extends Specification implements DomainUnitTest<Repartidor>
         then:
             repartidor.validate()
     }
+
+    void "Repartidor se guarda correctamente"() {
+        when:
+            Repartidor repartidor = new Repartidor('Lucas', '989764699')
+            repartidor.save()
+        then:
+            Repartidor.count == 1
+            repartidor == Repartidor.findById(repartidor.id)
+    }
 }

@@ -26,4 +26,13 @@ class PuntuacionSpec extends Specification implements DomainUnitTest<Puntuacion>
         then:
         puntuacion.validate()
     }
+
+    void "Puntuacion se guarda correctamente"() {
+        when:
+        Puntuacion puntuacion = new Puntuacion(3)
+        puntuacion.save()
+        then:
+        Puntuacion.count == 1
+        puntuacion == Puntuacion.findById(puntuacion.id)
+    }
 }

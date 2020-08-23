@@ -39,4 +39,16 @@ class MenuSpec extends Specification implements DomainUnitTest<Menu> {
         then:
         precio == 400
     }
+
+    void "test Menu con 2 platos, se guarda bien"() {
+        when:
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina')
+        Menu menuConPLatos = new Menu(nombre: 'Viernes', precio: 400, restaurant: restaurante)
+        menuConPLatos.addToPlatos(new Plato(nombre:'Milanesa con pure', precio: 350, categoria: CategoriaPlato.PLATO, restaurant:  restaurante))
+        menuConPLatos.addToPlatos(new Plato(nombre:'Flan Mixto con pure', precio: 150, categoria: CategoriaPlato.POSTRE, restaurant:  restaurante))
+        then:
+        menuConPLatos.save(failOnError: true)
+        Menu.count == 1
+        menuConPLatos == Menu.findById(menuConPLatos.id)
+    }
 }

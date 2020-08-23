@@ -11,10 +11,11 @@ class ClienteSpec extends Specification implements DomainUnitTest<Cliente> {
     void "test basic persistence mocking"() {
         setup:
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234)
-        new Cliente(nombre: 'Pepe', apellido:'Argento', mail: 'pepe.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433').save()
+        def cliente1 =  new Cliente(nombre: 'Pepe', apellido:'Argento', mail: 'pepe.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433').save()
         new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433').save()
         expect:
         Cliente.count() == 2
+        cliente1 == Cliente.findById(cliente1.id)
     }
 
     void "test domain instance"() {

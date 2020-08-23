@@ -29,4 +29,16 @@ class PlatoSpec extends Specification implements DomainUnitTest<Plato> {
         then:
         precio == 15
     }
+
+    void "Plato se guarda correctamente"() {
+        when:
+        Restaurant restaurante = new Restaurant(nombre: 'La esquina')
+        Plato platoPrincipal = new Plato(nombre: 'Alto Guiso', precio: 15, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+        platoPrincipal.save(failOnError: true)
+        then:
+        Plato.count == 1
+        def platoGuardado = Plato.findById(platoPrincipal.id)
+        platoGuardado == platoPrincipal
+        platoGuardado.restaurant == restaurante
+    }
 }

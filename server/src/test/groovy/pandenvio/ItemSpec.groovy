@@ -58,4 +58,20 @@ class ItemSpec extends Specification implements DomainUnitTest<Item> {
         then:
             precioItem == precioPlato * cantidad
     }
+
+    // TODO: Ver como correr ésta prueba acá
+    /*void "test Item se guarda bien"() {
+        when:
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina')
+        Menu menuConPLatos = new Menu(nombre: 'Viernes', precio: 400, restaurant: restaurante)
+        menuConPLatos.addToPlatos(new Plato(nombre:'Milanesa con pure', precio: 350, categoria: CategoriaPlato.PLATO, restaurant:  restaurante))
+        Item item = new Item(menuConPLatos, 2)
+        then:
+        item.save(failOnError: true)
+        Item.count == 1
+        def itemGuardado = Item.findById(item.id)
+        itemGuardado ==  item
+        itemGuardado.producto == menuConPLatos
+    }*/
+
 }
