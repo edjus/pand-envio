@@ -3,7 +3,6 @@ package pandenvio
 class Item {
     Producto producto
     Integer cantidad
-    BigDecimal precio
 
     static constraints = {
         producto nullable: false

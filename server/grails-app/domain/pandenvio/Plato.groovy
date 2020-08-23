@@ -12,6 +12,10 @@ class Plato extends Producto {
     CategoriaPlato categoria;
     String descripcion;
 
+    static constraints = {
+        descripcion nullable: true
+    }
+
     boolean admiteA(CuponDescuento descuento) {
         descuento.permitirEn(this)
     }
