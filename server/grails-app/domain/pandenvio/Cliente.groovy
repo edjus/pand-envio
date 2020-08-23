@@ -11,8 +11,6 @@ class Cliente {
         nombre + " " + apellido
     }
 
-
-
     boolean esValido(){
       return true
    }

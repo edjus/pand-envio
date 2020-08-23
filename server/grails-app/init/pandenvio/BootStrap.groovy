@@ -5,7 +5,7 @@ import groovy.transform.CompileStatic
 @CompileStatic
 class BootStrap {
 
-    PlatoDataService platoDataService
+    //PlatoDataService platoDataService
     RestaurantService restaurantService
 
     def init = { servletContext ->

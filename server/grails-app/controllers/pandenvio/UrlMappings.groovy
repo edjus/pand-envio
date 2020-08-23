@@ -12,6 +12,7 @@ class UrlMappings {
 
         "/cliente"(resources:"cliente")
         "/restaurant"(resources:"restaurant")
+        "/plato"(resources:"plato")
 
 
         "/"(controller: 'application', action:'index')
