@@ -9,6 +9,8 @@ import pandenvio.CuponDescuento
 import pandenvio.CuponDescuentoPorcentual
 import pandenvio.Item
 import pandenvio.Menu
+import pandenvio.ModalidadEntrega
+import pandenvio.ModalidadParaRetirar
 import pandenvio.Pedido
 import pandenvio.Plato
 import pandenvio.Producto
@@ -54,12 +56,13 @@ class PersitenciaSpec extends Specification {
                         .save(failOnError: true)
             CuponDescuento cupon = new CuponDescuentoPorcentual(activo: true, porcentaje: 10, codigo: 'ABC', fecha: new Date())
                     .save(failOnError: true)
-
-            Pedido pedido = new Pedido(cliente)
+            ModalidadEntrega modalidadEntrega = new ModalidadParaRetirar()
+                    .save(failOnError: true)
+        when:
+            Pedido pedido = new Pedido(cliente, modalidadEntrega)
             pedido.agregar(plato, 2)
             pedido.agregar(menu, 2)
             pedido.cuponDeDescuento = cupon
-        when:
             pedido.save(failOnError: true)
         then:
             Pedido.count == 1
@@ -68,5 +71,6 @@ class PersitenciaSpec extends Specification {
             pedidoGuardado.cliente == cliente
             pedidoGuardado.nombreEstado == 'recibido'
             pedidoGuardado.cuponDeDescuento == cupon
+            pedidoGuardado.modalidadEntrega == modalidadEntrega
     }
 }
