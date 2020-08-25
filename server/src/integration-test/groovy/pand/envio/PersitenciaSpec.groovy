@@ -7,6 +7,9 @@ import pandenvio.CategoriaPlato
 import pandenvio.Cliente
 import pandenvio.CuponDescuento
 import pandenvio.CuponDescuentoPorcentual
+import pandenvio.EstadoEnPreparacion
+import pandenvio.EstadoPedido
+import pandenvio.EstadoRecibido
 import pandenvio.Item
 import pandenvio.Menu
 import pandenvio.ModalidadEntrega
@@ -58,19 +61,25 @@ class PersitenciaSpec extends Specification {
                     .save(failOnError: true)
             ModalidadEntrega modalidadEntrega = new ModalidadParaRetirar()
                     .save(failOnError: true)
+            EstadoPedido estado = new EstadoEnPreparacion().save(failOnError: true)
         when:
             Pedido pedido = new Pedido(cliente, modalidadEntrega)
             pedido.agregar(plato, 2)
             pedido.agregar(menu, 2)
             pedido.cuponDeDescuento = cupon
             pedido.save(failOnError: true)
+            Pedido pedido2 = new Pedido(cliente, modalidadEntrega)
+            pedido2.agregar(plato, 2)
+            pedido2.estado = estado
+            pedido2.save(failOnError: true)
+
         then:
-            Pedido.count == 1
-            def pedidoGuardado = Pedido.findById(pedido.id)
-            pedidoGuardado == pedido
+            Pedido.count == 2
+            def pedidoGuardado = Pedido.findById(pedido2.id)
+            pedidoGuardado == pedido2
             pedidoGuardado.cliente == cliente
-            pedidoGuardado.nombreEstado == 'recibido'
-            pedidoGuardado.cuponDeDescuento == cupon
+            pedidoGuardado.nombreEstado == estado.nombre
             pedidoGuardado.modalidadEntrega == modalidadEntrega
+            pedidoGuardado.estado == estado
     }
 }

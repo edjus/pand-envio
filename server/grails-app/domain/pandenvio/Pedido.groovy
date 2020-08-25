@@ -33,9 +33,13 @@ class Pedido {
         return this.modalidadEntrega.calcularPrecioCon(cuponDeDescuento, items)
     }
 
-    // TODO: ver como mejorar ésto, es una asignación manual del estado al cargar el pedido
     void setEstado(EstadoPedido nuevoEstado){
         this.estado = nuevoEstado
         this.nombreEstado = nuevoEstado.nombre
+    }
+
+    // TODO: ver como mejorar ésto y si es necesario, es una asignación manual del estado al cargar el pedido
+    def afterLoad() {
+        this.setEstado(FabricaEstados.obtenerEstado(this.nombreEstado))
     }
 }
