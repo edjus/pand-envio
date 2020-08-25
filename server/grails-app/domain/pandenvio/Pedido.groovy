@@ -30,10 +30,7 @@ class Pedido {
     }
 
     BigDecimal calcularPrecio(){
-        BigDecimal precioTotalParcial = items.sum(0) { it.calcularPrecio() }
-        Boolean aplicaDescuento = items.inject(true) {resultado , item -> resultado && item.admiteA(cuponDeDescuento)}
-
-        aplicaDescuento ? cuponDeDescuento.aplicarDescuento(precioTotalParcial) : precioTotalParcial
+        return this.modalidadEntrega.calcularPrecioCon(cuponDeDescuento, items)
     }
 
     // TODO: ver como mejorar ésto, es una asignación manual del estado al cargar el pedido

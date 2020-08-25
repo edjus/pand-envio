@@ -5,5 +5,5 @@ abstract class ModalidadEntrega {
     static constraints = {
     }
 
-    abstract  calcularPrecioCon(CuponDescuento cuponDescuento, List<Item> items)
+    abstract BigDecimal calcularPrecioCon(CuponDescuento cuponDeDescuento, List<Item> items)
 }
