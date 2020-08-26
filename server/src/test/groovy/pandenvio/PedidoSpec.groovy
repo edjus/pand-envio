@@ -38,4 +38,11 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
         pedido.estado.class == EstadoEnPreparacion.class
     }
 
+    void "test cancelar Pedido se cancela según estado"() {
+        when:
+        Pedido pedido = new Pedido(new Cliente(), new ModalidadParaLlevar())
+        pedido.cancelar()
+        then:
+        pedido.estado.class == EstadoCancelado.class
+    }
 }

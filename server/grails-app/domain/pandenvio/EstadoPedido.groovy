@@ -8,6 +8,8 @@ abstract class EstadoPedido {
     }
 
     abstract EstadoPedido siguienteEstado(ModalidadEntrega modalidadEntrega)
+
+    abstract EstadoPedido cancelar()
 }
 
 class EstadoRecibido extends EstadoPedido {
@@ -18,6 +20,11 @@ class EstadoRecibido extends EstadoPedido {
     @Override
     EstadoPedido siguienteEstado(ModalidadEntrega modalidadEntrega) {
         new EstadoEnPreparacion()
+    }
+
+    @Override
+    EstadoPedido cancelar() {
+        new EstadoCancelado()
     }
 }
 
@@ -30,6 +37,11 @@ class EstadoEnPreparacion extends EstadoPedido {
     EstadoPedido siguienteEstado(ModalidadEntrega modalidadEntrega) {
         new EstadoListo()
     }
+
+    @Override
+    EstadoPedido cancelar() {
+        new EstadoCancelado()
+    }
 }
 
 class EstadoListo extends EstadoPedido {
@@ -40,6 +52,11 @@ class EstadoListo extends EstadoPedido {
     @Override
     EstadoPedido siguienteEstado(ModalidadEntrega modalidadEntrega) {
         modalidadEntrega.siguienteEstadoListo()
+    }
+
+    @Override
+    EstadoPedido cancelar() {
+        throw new PedidoNoSePuedeCancelarException("El pedido tiene estado ${this.nombre}, no se puede cancelar")
     }
 }
 
@@ -52,6 +69,11 @@ class EstadoEnEntrega extends EstadoPedido {
     EstadoPedido siguienteEstado(ModalidadEntrega modalidadEntrega) {
         new EstadoEntregado()
     }
+
+    @Override
+    EstadoPedido cancelar() {
+        throw new PedidoNoSePuedeCancelarException("El pedido tiene estado ${this.nombre}, no se puede cancelar")
+    }
 }
 
 class EstadoEnEspera extends EstadoPedido {
@@ -62,6 +84,11 @@ class EstadoEnEspera extends EstadoPedido {
     @Override
     EstadoPedido siguienteEstado(ModalidadEntrega modalidadEntrega) {
         modalidadEntrega.hayRepartidor() ? new EstadoEnEntrega() : this;
+    }
+
+    @Override
+    EstadoPedido cancelar() {
+        throw new PedidoNoSePuedeCancelarException("El pedido tiene estado ${this.nombre}, no se puede cancelar")
     }
 }
 
@@ -74,6 +101,11 @@ class EstadoEntregado extends EstadoPedido {
     EstadoPedido siguienteEstado(ModalidadEntrega modalidadEntrega) {
         throw new NoHaySiguienteEstadoException("El estado ${this.nombre} no tiene uno siguiente no se puede cambiar")
     }
+
+    @Override
+    EstadoPedido cancelar() {
+        throw new PedidoNoSePuedeCancelarException("El pedido tiene estado ${this.nombre}, no se puede cancelar")
+    }
 }
 
 class EstadoNoEntregado extends EstadoPedido {
@@ -85,6 +117,11 @@ class EstadoNoEntregado extends EstadoPedido {
     EstadoPedido siguienteEstado(ModalidadEntrega modalidadEntrega) {
         throw new NoHaySiguienteEstadoException("El estado ${this.nombre} no tiene uno siguiente no se puede cambiar")
     }
+
+    @Override
+    EstadoPedido cancelar() {
+        throw new PedidoNoSePuedeCancelarException("El pedido tiene estado ${this.nombre}, no se puede cancelar")
+    }
 }
 
 class EstadoCancelado extends EstadoPedido {
@@ -95,5 +132,10 @@ class EstadoCancelado extends EstadoPedido {
     @Override
     EstadoPedido siguienteEstado(ModalidadEntrega modalidadEntrega) {
         throw new NoHaySiguienteEstadoException("El estado ${this.nombre} no tiene uno siguiente no se puede cambiar")
+    }
+
+    @Override
+    EstadoPedido cancelar() {
+        new EstadoCancelado()
     }
 }

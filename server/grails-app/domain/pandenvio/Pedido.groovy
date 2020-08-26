@@ -42,6 +42,10 @@ class Pedido {
         this.setEstado(this.estado.siguienteEstado(modalidadEntrega))
     }
 
+    void cancelar(){
+        this.setEstado(this.estado.cancelar())
+    }
+
     // TODO: ver como mejorar ésto y si es necesario, es una asignación manual del estado al cargar el pedido
     def afterLoad() {
         this.setEstado(FabricaEstados.obtenerEstado(this.nombreEstado))
