@@ -7,7 +7,16 @@ class ModalidadParaRetirar extends ModalidadEntrega {
 
     @Override
     BigDecimal aplicarAdicionales(BigDecimal valorBase) {
-        // TODO: Aplicar adicionales si corresponde
         valorBase
+    }
+
+    @Override
+    EstadoPedido siguienteEstadoListo() {
+        new EstadoEntregado()
+    }
+
+    @Override
+    boolean hayRepartidor() {
+        false
     }
 }

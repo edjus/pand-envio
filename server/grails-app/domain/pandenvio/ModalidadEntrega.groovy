@@ -13,5 +13,10 @@ abstract class ModalidadEntrega {
 
         aplicaDescuento ? cuponDeDescuento.aplicarDescuento(precioTotalParcial) : precioTotalParcial
     }
+
     abstract BigDecimal aplicarAdicionales(BigDecimal valorBase)
+
+    abstract EstadoPedido siguienteEstadoListo()
+
+    abstract boolean hayRepartidor()
 }

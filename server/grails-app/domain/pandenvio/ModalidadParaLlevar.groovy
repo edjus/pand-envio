@@ -11,6 +11,17 @@ class ModalidadParaLlevar  extends ModalidadEntrega{
 
     @Override
     BigDecimal aplicarAdicionales(BigDecimal valorBase) {
+        // TODO: Aplicar adicionales si corresponde
         valorBase
+    }
+
+    @Override
+    EstadoPedido siguienteEstadoListo() {
+        (repartidor) ? new EstadoEnEntrega() : new EstadoEnEspera()
+    }
+
+    @Override
+    boolean hayRepartidor() {
+        repartidor
     }
 }

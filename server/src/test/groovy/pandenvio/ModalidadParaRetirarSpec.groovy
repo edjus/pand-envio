@@ -14,4 +14,18 @@ class ModalidadParaRetirarSpec extends Specification implements DomainUnitTest<M
             ModalidadParaRetirar.count == 1
             modalidad == ModalidadParaRetirar.findById(modalidad.id)
     }
+
+    void "test modalidad para retirar no tiene repartidor"() {
+        when:
+        def modalidad = new ModalidadParaRetirar()
+        then:
+        !modalidad.hayRepartidor()
+    }
+
+    void "test siguiente a estado listo es listo"() {
+        when:
+        def modalidad = new ModalidadParaRetirar()
+        then:
+        modalidad.siguienteEstadoListo().class == EstadoEntregado.class
+    }
 }
