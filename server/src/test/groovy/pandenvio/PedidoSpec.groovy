@@ -30,5 +30,12 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
         !pedido.validate()
     }
 
+    void "test Pedido el siguiente estado es correcto según el estado el estado actual"() {
+        when:
+        Pedido pedido = new Pedido(new Cliente(), new ModalidadParaLlevar())
+        pedido.siguienteEstado()
+        then:
+        pedido.estado.class == EstadoEnPreparacion.class
+    }
 
 }

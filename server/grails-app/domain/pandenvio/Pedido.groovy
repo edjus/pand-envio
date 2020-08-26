@@ -38,6 +38,10 @@ class Pedido {
         this.nombreEstado = nuevoEstado.nombre
     }
 
+    void siguienteEstado(){
+        this.setEstado(this.estado.siguienteEstado(modalidadEntrega))
+    }
+
     // TODO: ver como mejorar ésto y si es necesario, es una asignación manual del estado al cargar el pedido
     def afterLoad() {
         this.setEstado(FabricaEstados.obtenerEstado(this.nombreEstado))
