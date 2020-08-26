@@ -9,7 +9,7 @@ class Puntuacion {
         comentario nullable: true
     }
 
-    Puntuacion(Integer estrellas){
+    Puntuacion(Integer estrellas) {
         this.estrellas = estrellas
     }
 }

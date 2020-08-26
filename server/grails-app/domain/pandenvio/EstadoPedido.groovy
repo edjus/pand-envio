@@ -13,7 +13,7 @@ abstract class EstadoPedido {
 }
 
 class EstadoRecibido extends EstadoPedido {
-    EstadoRecibido(){
+    EstadoRecibido() {
         this.nombre = 'recibido'
     }
 
@@ -29,7 +29,7 @@ class EstadoRecibido extends EstadoPedido {
 }
 
 class EstadoEnPreparacion extends EstadoPedido {
-    EstadoEnPreparacion(){
+    EstadoEnPreparacion() {
         this.nombre = 'en_preparacion'
     }
 
@@ -45,7 +45,7 @@ class EstadoEnPreparacion extends EstadoPedido {
 }
 
 class EstadoListo extends EstadoPedido {
-    EstadoListo(){
+    EstadoListo() {
         this.nombre = 'listo'
     }
 
@@ -61,7 +61,7 @@ class EstadoListo extends EstadoPedido {
 }
 
 class EstadoEnEntrega extends EstadoPedido {
-    EstadoEnEntrega(){
+    EstadoEnEntrega() {
         this.nombre = 'en_entrega'
     }
 
@@ -77,7 +77,7 @@ class EstadoEnEntrega extends EstadoPedido {
 }
 
 class EstadoEnEspera extends EstadoPedido {
-    EstadoEnEspera(){
+    EstadoEnEspera() {
         this.nombre = 'en_espera'
     }
 
@@ -93,7 +93,7 @@ class EstadoEnEspera extends EstadoPedido {
 }
 
 class EstadoEntregado extends EstadoPedido {
-    EstadoEntregado(){
+    EstadoEntregado() {
         this.nombre = 'entregado'
     }
 
@@ -109,7 +109,7 @@ class EstadoEntregado extends EstadoPedido {
 }
 
 class EstadoNoEntregado extends EstadoPedido {
-    EstadoNoEntregado(){
+    EstadoNoEntregado() {
         this.nombre = 'no_entregado'
     }
 
@@ -125,7 +125,7 @@ class EstadoNoEntregado extends EstadoPedido {
 }
 
 class EstadoCancelado extends EstadoPedido {
-    EstadoCancelado(){
+    EstadoCancelado() {
         this.nombre = 'cancelado'
     }
 

@@ -9,16 +9,16 @@ class Item {
         cantidad nullable: false, min: 1
     }
 
-    Item(producto, cantidad){
+    Item(producto, cantidad) {
         this.producto = producto
         this.cantidad = cantidad
     }
 
-    BigDecimal calcularPrecio(){
+    BigDecimal calcularPrecio() {
         producto.precio * cantidad
     }
 
-    Boolean admiteA(CuponDescuento descuento){
+    Boolean admiteA(CuponDescuento descuento) {
         producto.admiteA(descuento)
     }
 }

@@ -2,14 +2,16 @@ package pandenvio
 
 class FabricaEstados {
 
-    def static estados = ['recibido': EstadoRecibido.class, 'en_preparacion': EstadoEnPreparacion.class,
-                          'listo': EstadoListo.class, 'en_espera': EstadoEnEspera.class,
-                          'en_entrega': EstadoEnEntrega.class, 'entregado': EstadoEntregado.class,
-                          'no_entregado': EstadoNoEntregado.class, 'cancelado': EstadoCancelado.class]
+    def static estados = ['recibido': EstadoRecibido, 'en_preparacion': EstadoEnPreparacion,
+                          'listo': EstadoListo, 'en_espera': EstadoEnEspera,
+                          'en_entrega': EstadoEnEntrega, 'entregado': EstadoEntregado,
+                          'no_entregado': EstadoNoEntregado, 'cancelado': EstadoCancelado]
 
-    static EstadoPedido obtenerEstado(String nombre){
-        if (!estados.containsKey(nombre))
+    static EstadoPedido obtenerEstado(String nombre) {
+        if (!estados.containsKey(nombre)) {
             throw new EstadoInvalidoException("El estado: ${nombre} no es válido")
-        return estados[nombre].getDeclaredConstructor().newInstance()
+        }
+
+        estados[nombre].getDeclaredConstructor().newInstance()
     }
 }

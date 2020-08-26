@@ -15,7 +15,7 @@ class ClienteController {
     }
 
     def show(Cliente cliente) {
-        if(cliente == null) {
+        if (cliente == null) {
             render status:404
         }
         else {

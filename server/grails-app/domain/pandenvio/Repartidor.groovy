@@ -9,7 +9,7 @@ class Repartidor {
         dni nullable: false, blank: false
     }
 
-    Repartidor(String nombre, String dni){
+    Repartidor(String nombre, String dni) {
         this.nombre = nombre
         this.dni = dni
     }

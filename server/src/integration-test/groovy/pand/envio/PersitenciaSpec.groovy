@@ -9,7 +9,6 @@ import pandenvio.CuponDescuento
 import pandenvio.CuponDescuentoPorcentual
 import pandenvio.EstadoEnPreparacion
 import pandenvio.EstadoPedido
-import pandenvio.EstadoRecibido
 import pandenvio.Item
 import pandenvio.Menu
 import pandenvio.ModalidadEntrega
@@ -27,9 +26,6 @@ class PersitenciaSpec extends Specification {
 
     def setup() {
         Item.executeUpdate('delete from Item')
-    }
-
-    def cleanup() {
     }
 
     void "test Item se guarda bien"() {

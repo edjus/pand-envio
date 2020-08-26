@@ -1,6 +1,5 @@
 package pandenvio
 
-import grails.testing.gorm.DataTest
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 

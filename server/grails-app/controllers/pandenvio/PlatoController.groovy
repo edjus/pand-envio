@@ -14,7 +14,7 @@ class PlatoController {
     }
 
     def show(Plato plato) {
-        if(plato == null) {
+        if (plato == null) {
             render status:404
         }
         else {
@@ -30,7 +30,7 @@ class PlatoController {
             respond plato.errors, view:'create'
         } else {
             try {
-                platoService.agregarPlato(nombre,precio,categoria,descripcion,restaurant)
+                platoService.agregarPlato(nombre, precio, categoria, descripcion, restaurant)
                 respond([plato:plato], status: CREATED)
             } catch (DatosNoPuedenSerNulos error) {
                 render status:BAD_REQUEST, message: error.message

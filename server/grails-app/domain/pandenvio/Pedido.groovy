@@ -17,7 +17,7 @@ class Pedido {
         modalidadEntrega nullable: false
     }
 
-    Pedido(cliente, modalidadEntrega){
+    Pedido(cliente, modalidadEntrega) {
         this.fecha = new Date()
         this.cliente = cliente
         this.cuponDeDescuento = new CuponDescuentoNulo(fecha: fecha, activo: true, codigo: 'NULO')
@@ -25,24 +25,24 @@ class Pedido {
         this.modalidadEntrega = modalidadEntrega
     }
 
-    void agregar(Producto producto, Integer cantidad){
+    void agregar(Producto producto, Integer cantidad) {
         items.add(new Item(producto, cantidad))
     }
 
-    BigDecimal calcularPrecio(){
+    BigDecimal calcularPrecio() {
         return this.modalidadEntrega.calcularPrecioCon(cuponDeDescuento, items)
     }
 
-    void setEstado(EstadoPedido nuevoEstado){
+    void setEstado(EstadoPedido nuevoEstado) {
         this.estado = nuevoEstado
         this.nombreEstado = nuevoEstado.nombre
     }
 
-    void siguienteEstado(){
+    void siguienteEstado() {
         this.setEstado(this.estado.siguienteEstado(modalidadEntrega))
     }
 
-    void cancelar(){
+    void cancelar() {
         this.setEstado(this.estado.cancelar())
     }
 

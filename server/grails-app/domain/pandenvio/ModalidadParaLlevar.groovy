@@ -1,6 +1,6 @@
 package pandenvio
 
-class ModalidadParaLlevar  extends ModalidadEntrega{
+class ModalidadParaLlevar  extends ModalidadEntrega {
     Puntuacion puntuacion
     Repartidor repartidor
 

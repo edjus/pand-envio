@@ -15,7 +15,7 @@ class RestaurantController {
     }
 
     def show(Restaurant restaurant) {
-        if(restaurant == null) {
+        if (restaurant == null) {
             render status:404
         }
         else {

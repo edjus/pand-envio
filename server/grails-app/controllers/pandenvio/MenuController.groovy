@@ -16,7 +16,7 @@ class MenuController {
     }
 
     def show(Menu menu) {
-        if(menu == null) {
+        if (menu == null) {
             render status:404
         }
         else {

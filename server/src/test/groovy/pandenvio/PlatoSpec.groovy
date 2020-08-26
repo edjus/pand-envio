@@ -25,7 +25,7 @@ class PlatoSpec extends Specification implements DomainUnitTest<Plato> {
 
     void "test Plato deberia tener precio fijo "() {
         when:
-        BigDecimal precio = plato.getPrecio()
+        BigDecimal precio = plato.precio
         then:
         precio == 15
     }

@@ -19,12 +19,6 @@ import spock.lang.Specification
 @Rollback
 class PedidoSpec extends Specification {
 
-    def setup() {
-    }
-
-    def cleanup() {
-    }
-
     void "test precio de un pedido sin productos es 0"() {
         given:
             Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar())

@@ -12,10 +12,11 @@ class Ubicacion {
     }
 
     String getUbicacionCompleta() {
-        String direccion = calle + " " + altura;
+        String direccion = calle + " " + altura
         if (pisoYDepartamento) {
             direccion += " - " + pisoYDepartamento
         }
-        return direccion;
+
+        direccion
     }
 }

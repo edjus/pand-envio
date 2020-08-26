@@ -10,15 +10,15 @@ class UbicacionSpec extends Specification implements DomainUnitTest<Ubicacion> {
             Ubicacion casa = new Ubicacion(calle: 'Av. San Martin', altura: 1234)
             String ubicacionCompleta = casa.getUbicacionCompleta()
         then:
-        ubicacionCompleta.equals("Av. San Martin 1234")
+        ubicacionCompleta == 'Av. San Martin 1234'
     }
 
     void "Ubicacion de departamente deberia mostrar calle, altura y piso/depto"() {
         when:
             Ubicacion departamento = new Ubicacion(calle: 'Av. San Martin', altura: 1234, pisoYDepartamento: "5A")
-            String ubicacionCompleta = departamento.getUbicacionCompleta()
+            String ubicacionCompleta = departamento.ubicacionCompleta
         then:
-            ubicacionCompleta.equals("Av. San Martin 1234 - 5A")
+            ubicacionCompleta == 'Av. San Martin 1234 - 5A'
     }
 
     void "Ubicacion se guarda correctamente"() {

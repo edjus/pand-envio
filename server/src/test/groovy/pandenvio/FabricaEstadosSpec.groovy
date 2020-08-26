@@ -18,7 +18,7 @@ class FabricaEstadosSpec extends Specification implements DomainUnitTest<Fabrica
         when:
         def estado = FabricaEstados.obtenerEstado('en_preparacion')
         then:
-        estado.class == EstadoEnPreparacion.class
+        estado.class == EstadoEnPreparacion
         estado.nombre == 'en_preparacion'
     }
 
@@ -27,7 +27,7 @@ class FabricaEstadosSpec extends Specification implements DomainUnitTest<Fabrica
         when:
         def estado = FabricaEstados.obtenerEstado('listo')
         then:
-        estado.class == EstadoListo.class
+        estado.class == EstadoListo
         estado.nombre == 'listo'
     }
 
@@ -35,7 +35,7 @@ class FabricaEstadosSpec extends Specification implements DomainUnitTest<Fabrica
         when:
         def estado = FabricaEstados.obtenerEstado('en_espera')
         then:
-        estado.class == EstadoEnEspera.class
+        estado.class == EstadoEnEspera
         estado.nombre == 'en_espera'
     }
 
@@ -43,7 +43,7 @@ class FabricaEstadosSpec extends Specification implements DomainUnitTest<Fabrica
         when:
         def estado = FabricaEstados.obtenerEstado('en_entrega')
         then:
-        estado.class == EstadoEnEntrega.class
+        estado.class == EstadoEnEntrega
         estado.nombre == 'en_entrega'
     }
 
@@ -51,7 +51,7 @@ class FabricaEstadosSpec extends Specification implements DomainUnitTest<Fabrica
         when:
         def estado = FabricaEstados.obtenerEstado('entregado')
         then:
-        estado.class == EstadoEntregado.class
+        estado.class == EstadoEntregado
         estado.nombre == 'entregado'
     }
 
@@ -59,7 +59,7 @@ class FabricaEstadosSpec extends Specification implements DomainUnitTest<Fabrica
         when:
         def estado = FabricaEstados.obtenerEstado('no_entregado')
         then:
-        estado.class == EstadoNoEntregado.class
+        estado.class == EstadoNoEntregado
         estado.nombre == 'no_entregado'
     }
 
@@ -67,7 +67,7 @@ class FabricaEstadosSpec extends Specification implements DomainUnitTest<Fabrica
         when:
         def estado = FabricaEstados.obtenerEstado('cancelado')
         then:
-        estado.class == EstadoCancelado.class
+        estado.class == EstadoCancelado
         estado.nombre == 'cancelado'
     }
 

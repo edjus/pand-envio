@@ -17,14 +17,14 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         EstadoPedido estadoPedido = new EstadoRecibido()
         ModalidadEntrega modalidad = new ModalidadParaRetirar()
         then:
-        estadoPedido.siguienteEstado(modalidad).class == EstadoEnPreparacion.class
+        estadoPedido.siguienteEstado(modalidad).class == EstadoEnPreparacion
     }
 
     void "test cancelar estado 'recibido'"() {
         when:
         EstadoPedido estadoPedido = new EstadoRecibido()
         then:
-        estadoPedido.cancelar().class == EstadoCancelado.class
+        estadoPedido.cancelar().class == EstadoCancelado
     }
 
     void "test estado en preparacion es correcto"() {
@@ -39,14 +39,14 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         EstadoPedido estadoPedido = new EstadoEnPreparacion()
         ModalidadEntrega modalidad = new ModalidadParaRetirar()
         then:
-        estadoPedido.siguienteEstado(modalidad).class == EstadoListo.class
+        estadoPedido.siguienteEstado(modalidad).class == EstadoListo
     }
 
     void "test cancelar estado 'en preparacion'"() {
         when:
         EstadoPedido estadoPedido = new EstadoEnPreparacion()
         then:
-        estadoPedido.cancelar().class == EstadoCancelado.class
+        estadoPedido.cancelar().class == EstadoCancelado
     }
 
     void "test estado listo es correcto"() {
@@ -61,7 +61,7 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         EstadoPedido estadoPedido = new EstadoListo()
         ModalidadEntrega modalidad = new ModalidadParaRetirar()
         then:
-        estadoPedido.siguienteEstado(modalidad).class == EstadoEntregado.class
+        estadoPedido.siguienteEstado(modalidad).class == EstadoEntregado
     }
 
     void "test cancelar estado 'listo' lanza excepción"() {
@@ -77,7 +77,7 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         EstadoPedido estadoPedido = new EstadoListo()
         ModalidadEntrega modalidad = new ModalidadParaLlevar(repartidor: new Repartidor())
         then:
-        estadoPedido.siguienteEstado(modalidad).class == EstadoEnEntrega.class
+        estadoPedido.siguienteEstado(modalidad).class == EstadoEnEntrega
     }
 
     void "test estado siguiente a 'listo' es 'en espera' si la modalidad es para llevar y no hay repartidor"() {
@@ -85,7 +85,7 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         EstadoPedido estadoPedido = new EstadoListo()
         ModalidadEntrega modalidad = new ModalidadParaLlevar()
         then:
-        estadoPedido.siguienteEstado(modalidad).class == EstadoEnEspera.class
+        estadoPedido.siguienteEstado(modalidad).class == EstadoEnEspera
     }
 
     void "test estado en espera es correcto"() {
@@ -100,7 +100,7 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         EstadoPedido estadoPedido = new EstadoEnEspera()
         ModalidadEntrega modalidad = new ModalidadParaLlevar(repartidor: new Repartidor())
         then:
-        estadoPedido.siguienteEstado(modalidad).class == EstadoEnEntrega.class
+        estadoPedido.siguienteEstado(modalidad).class == EstadoEnEntrega
     }
 
     void "test cancelar estado 'en espera' lanza excepción"() {
@@ -116,7 +116,7 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         EstadoPedido estadoPedido = new EstadoEnEspera()
         ModalidadEntrega modalidad = new ModalidadParaLlevar()
         then:
-        estadoPedido.siguienteEstado(modalidad).class == EstadoEnEspera.class
+        estadoPedido.siguienteEstado(modalidad).class == EstadoEnEspera
     }
 
     void "test estado 'en entrega' es correcto"() {
@@ -131,7 +131,7 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         EstadoPedido estadoPedido = new EstadoEnEntrega()
         ModalidadEntrega modalidad = new ModalidadParaLlevar()
         then:
-        estadoPedido.siguienteEstado(modalidad).class == EstadoEntregado.class
+        estadoPedido.siguienteEstado(modalidad).class == EstadoEntregado
     }
 
     void "test cancelar estado 'en entrega' lanza excepción"() {
@@ -210,6 +210,6 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         when:
         EstadoPedido estadoPedido = new EstadoCancelado()
         then:
-        estadoPedido.cancelar().class == EstadoCancelado.class
+        estadoPedido.cancelar().class == EstadoCancelado
     }
 }

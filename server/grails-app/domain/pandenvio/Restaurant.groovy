@@ -1,7 +1,5 @@
 package pandenvio
 
-import grails.rest.Resource
-
 class Restaurant {
     String nombre
 
