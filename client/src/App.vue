@@ -1,11 +1,15 @@
 <template>
   <div id="app">
-    <router-view/>
+    <cabecera/>
+    <aplicacion/>
   </div>
 </template>
 
 <script>
+import Cabecera from './components/Cabecera'
+import Aplicacion from './components/Aplicacion'
 export default {
-  name: 'App'
+  name: 'App',
+  components: {Aplicacion, Cabecera}
 }
 </script>
