@@ -18,21 +18,21 @@ class ItemSpec extends Specification implements DomainUnitTest<Item> {
 
     void "test item debe tener un producto"() {
         when:
-            Item item = new Item(null, 1)
+            Item item = new Item(null, 1, null)
         then:
             !item.validate()
     }
 
     void "test item debe tener una cantidad positiva"() {
         when:
-            Item item = new Item(plato, 0)
+            Item item = new Item(plato, 0, null)
         then:
             !item.validate()
     }
 
     void "test Item admite descuento si el producto lo admite"() {
         given:
-            Item item = new Item(plato, 1)
+            Item item = new Item(plato, 1, null)
         when:
             Boolean admite = item.admiteA(cupon)
         then:
@@ -41,7 +41,7 @@ class ItemSpec extends Specification implements DomainUnitTest<Item> {
 
     void "test Item no admite descuento si el producto no lo admite"() {
         given:
-            Item item = new Item(menu, 1)
+            Item item = new Item(menu, 1, null)
         when:
             Boolean admite = item.admiteA(cupon)
         then:
@@ -52,7 +52,7 @@ class ItemSpec extends Specification implements DomainUnitTest<Item> {
         given:
             BigDecimal precioPlato = 15
             Integer cantidad = 2
-            Item item = new Item(new Plato(precio: precioPlato), cantidad)
+            Item item = new Item(new Plato(precio: precioPlato), cantidad, null)
         when:
             BigDecimal precioItem = item.calcularPrecio()
         then:

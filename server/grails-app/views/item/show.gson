@@ -1,0 +1,7 @@
+import pandenvio.Item
+
+model {
+	Item item
+}
+
+json tmpl.item(item)

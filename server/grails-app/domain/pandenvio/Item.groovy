@@ -4,14 +4,17 @@ class Item {
     Producto producto
     Integer cantidad
 
+    static belongsTo = [pedido: Pedido]
+
     static constraints = {
         producto nullable: false
         cantidad nullable: false, min: 1
     }
 
-    Item(producto, cantidad) {
+    Item(producto, cantidad, pedido) {
         this.producto = producto
         this.cantidad = cantidad
+        this.pedido = pedido
     }
 
     BigDecimal calcularPrecio() {

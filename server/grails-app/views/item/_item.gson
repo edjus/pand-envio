@@ -1,0 +1,13 @@
+import pandenvio.Item
+
+model {
+	Item item
+}
+
+json {
+	id item.id
+	producto item.producto.nombre
+	precio_unitario item.producto.precio
+	cantidad item.cantidad
+	precio item.calcularPrecio()
+}

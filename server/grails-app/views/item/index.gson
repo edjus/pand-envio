@@ -1,0 +1,8 @@
+import pandenvio.Item
+
+model {
+	Iterable<Item> itemList
+}
+
+json tmpl.item(itemList ?: [])
+
