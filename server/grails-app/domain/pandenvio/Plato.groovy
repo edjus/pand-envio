@@ -6,7 +6,6 @@ enum CategoriaPlato {
 }
 
 
-@Resource(uri = '/plato')
 class Plato extends Producto {
 
     CategoriaPlato categoria;

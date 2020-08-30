@@ -8,6 +8,7 @@ class BootStrap {
     PlatoService platoService
     RestaurantService restaurantService
     ClienteService clienteService
+    MenuService menuService
 
     def init = { servletContext ->
         log.info "Loading database..."
@@ -33,9 +34,9 @@ class BootStrap {
         platoService.agregarPlato("Sanguche de Milanesa", 450.0, CategoriaPlato.PLATO, "Milanga completo", restaurante1)
         platoService.agregarPlato("Buñuelos de acelga", 300.0, CategoriaPlato.ENTRADA, "6 buñuelos de acelga fritos", restaurante1)
 
-        //Menu menu = new Menu(nombre: 'Menu', precio: 400, restaurant: restaurante1)
-        //menu.addToPlatos(plato)
-        //menu.save()
+        Menu menu2 = new Menu(nombre: 'Menu', precio: 400, restaurant: restaurante1)
+        menu2.addToPlatos(new Plato(nombre:'Milanesa con pure', precio: 350, categoria: CategoriaPlato.PLATO, restaurant:  restaurante1))
+        menu2.save(failOnError: true)
         //Item item1 = new Item(menu, 2)
         //item1.save()
         //platoDataService.save("Grande de Muzza", 700.0, CategoriaPlato.PLATO, "Tradional pizza muzzarella", restaurante2)
