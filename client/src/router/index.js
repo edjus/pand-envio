@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Welcome from '@/components/Welcome'
+import Restaurants from '../components/Restaurants'
+import Dashboard from '../components/Dashboard'
 
 Vue.use(Router)
 
@@ -8,8 +9,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Welcome',
-      component: Welcome
+      name: 'Dashboard',
+      component: Dashboard
+    },
+    {
+      path: '/restaurants',
+      name: 'Restaurants',
+      component: Restaurants
     }
   ]
 })
