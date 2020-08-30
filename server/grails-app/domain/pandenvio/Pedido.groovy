@@ -10,7 +10,7 @@ class Pedido {
     EstadoPedido estado
     String nombreEstado
     ModalidadEntrega modalidadEntrega
-    List<Item> items = []
+    static hasMany = [items: Item]
 
     static constraints = {
         cliente nullable: false
@@ -26,7 +26,7 @@ class Pedido {
     }
 
     void agregar(Producto producto, Integer cantidad) {
-        items.add(new Item(producto, cantidad))
+        addToItems(new Item(producto, cantidad, this))
     }
 
     BigDecimal calcularPrecio() {
