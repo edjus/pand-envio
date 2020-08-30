@@ -14,6 +14,7 @@ class ModalidadParaLlevarSpec extends Specification implements DomainUnitTest<Mo
             modalidad.save(failOnError: true)
             ModalidadParaLlevar.count == 1
             modalidad == ModalidadParaLlevar.findById(modalidad.id)
+            'para_llevar' == ModalidadParaLlevar.findById(modalidad.id).nombre
     }
 
     void "test modalidad para llevar tiene repartidor"() {

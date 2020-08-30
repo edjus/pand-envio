@@ -2,10 +2,9 @@ package pandenvio
 
 abstract class ModalidadEntrega {
 
-    static constraints = {
-    }
+    String nombre
 
-    BigDecimal calcularPrecioCon(CuponDescuento cuponDeDescuento, List<Item> items) {
+    BigDecimal calcularPrecioCon(CuponDescuento cuponDeDescuento, Set<Item> items) {
         BigDecimal precioTotalBase = items.sum(0) { it.calcularPrecio() }
         BigDecimal precioTotalParcial = this.aplicarAdicionales(precioTotalBase)
 

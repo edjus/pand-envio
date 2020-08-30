@@ -13,6 +13,7 @@ class ModalidadParaRetirarSpec extends Specification implements DomainUnitTest<M
             modalidad.save(failOnError: true)
             ModalidadParaRetirar.count == 1
             modalidad == ModalidadParaRetirar.findById(modalidad.id)
+            'para_retirar' == ModalidadParaRetirar.findById(modalidad.id).nombre
     }
 
     void "test modalidad para retirar no tiene repartidor"() {

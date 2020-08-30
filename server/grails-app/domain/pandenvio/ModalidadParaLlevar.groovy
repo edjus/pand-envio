@@ -9,6 +9,10 @@ class ModalidadParaLlevar  extends ModalidadEntrega {
         repartidor nullable: true
     }
 
+    ModalidadParaLlevar(){
+        this.nombre = "para_llevar"
+    }
+
     @Override
     BigDecimal aplicarAdicionales(BigDecimal valorBase) {
         // TODO: Aplicar adicionales si corresponde

@@ -2,7 +2,8 @@ package pandenvio
 
 class ModalidadParaRetirar extends ModalidadEntrega {
 
-    static constraints = {
+    ModalidadParaRetirar(){
+        this.nombre = "para_retirar"
     }
 
     @Override
