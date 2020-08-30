@@ -34,15 +34,7 @@ class BootStrap {
         platoService.agregarPlato("Sanguche de Milanesa", 450.0, CategoriaPlato.PLATO, "Milanga completo", restaurante1)
         platoService.agregarPlato("Buñuelos de acelga", 300.0, CategoriaPlato.ENTRADA, "6 buñuelos de acelga fritos", restaurante1)
 
-        Menu menu2 = new Menu(nombre: 'Menu', precio: 400, restaurant: restaurante1)
-        menu2.addToPlatos(new Plato(nombre:'Milanesa con pure', precio: 350, categoria: CategoriaPlato.PLATO, restaurant:  restaurante1))
-        menu2.save(failOnError: true)
-        //Item item1 = new Item(menu, 2)
-        //item1.save()
-        //platoDataService.save("Grande de Muzza", 700.0, CategoriaPlato.PLATO, "Tradional pizza muzzarella", restaurante2)
-        //platoDataService.save("Faina", 100.0, CategoriaPlato.PLATO, "1 porcion de faina", restaurante2)
-
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        /*Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433').save()
         Producto menu = new Menu(nombre: 'Viernes', precio: 400, restaurant: restaurante)
@@ -63,7 +55,7 @@ class BootStrap {
         Pedido pedido2 = new Pedido(cliente, modalidadEntrega)
         pedido2.agregar(plato, 2)
         pedido2.estado = estado
-        pedido2.save(failOnError: true)
+        pedido2.save(failOnError: true)*/
 
     }
     def destroy = {
