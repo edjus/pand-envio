@@ -41,6 +41,29 @@ class BootStrap {
         //platoDataService.save("Grande de Muzza", 700.0, CategoriaPlato.PLATO, "Tradional pizza muzzarella", restaurante2)
         //platoDataService.save("Faina", 100.0, CategoriaPlato.PLATO, "1 porcion de faina", restaurante2)
 
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433').save()
+        Producto menu = new Menu(nombre: 'Viernes', precio: 400, restaurant: restaurante)
+                .addToPlatos(new Plato(nombre:'Milanesa con pure', precio: 350, categoria: CategoriaPlato.PLATO, restaurant:  restaurante))
+                .save(failOnError: true)
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+                .save(failOnError: true)
+        CuponDescuento cupon = new CuponDescuentoPorcentual(activo: true, porcentaje: 10, codigo: 'ABC', fecha: new Date())
+                .save(failOnError: true)
+        ModalidadEntrega modalidadEntrega = new ModalidadParaRetirar()
+                .save(failOnError: true)
+        EstadoPedido estado = new EstadoEnPreparacion().save(failOnError: true)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega)
+        pedido.agregar(plato, 2)
+        pedido.agregar(menu, 2)
+        pedido.cuponDeDescuento = cupon
+        pedido.save(failOnError: true)
+        Pedido pedido2 = new Pedido(cliente, modalidadEntrega)
+        pedido2.agregar(plato, 2)
+        pedido2.estado = estado
+        pedido2.save(failOnError: true)
+
     }
     def destroy = {
     }

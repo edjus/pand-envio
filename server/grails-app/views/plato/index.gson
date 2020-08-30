@@ -1,0 +1,8 @@
+import pandenvio.Plato
+
+model {
+	Iterable<Plato> platoList
+}
+
+json tmpl.plato(platoList ?: [])
+

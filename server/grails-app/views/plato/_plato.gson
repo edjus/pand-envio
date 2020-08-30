@@ -12,6 +12,5 @@ json {
 
     descripcion plato.descripcion
 
-    restaurant nombre:plato.restaurant.nombre,
-            id: plato.restaurant.id
+    restaurant tmpl.'/restaurant/restaurant'(plato.restaurant)
 }

@@ -26,6 +26,7 @@ class PersitenciaSpec extends Specification {
 
     def setup() {
         Item.executeUpdate('delete from Item')
+        Pedido.executeUpdate('delete from Pedido')
     }
 
     void "test Item se guarda bien"() {

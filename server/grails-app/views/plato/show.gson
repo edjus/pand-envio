@@ -1,0 +1,7 @@
+import pandenvio.Plato
+
+model {
+	Plato plato
+}
+
+json tmpl.plato(plato)
