@@ -1,0 +1,8 @@
+import pandenvio.Pedido
+
+model {
+	Iterable<Pedido> pedidoList
+}
+
+json tmpl.pedido(pedidoList ?: [])
+

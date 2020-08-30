@@ -1,0 +1,7 @@
+import pandenvio.Pedido
+
+model {
+	Pedido pedido
+}
+
+json tmpl.pedido(pedido)

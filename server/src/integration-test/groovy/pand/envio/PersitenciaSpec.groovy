@@ -78,5 +78,6 @@ class PersitenciaSpec extends Specification {
             pedidoGuardado.nombreEstado == estado.nombre
             pedidoGuardado.modalidadEntrega == modalidadEntrega
             pedidoGuardado.estado == estado
+            pedidoGuardado.items.size() == 1
     }
 }

@@ -50,5 +50,6 @@ class MenuSpec extends Specification implements DomainUnitTest<Menu> {
         menuConPLatos.save(failOnError: true)
         Menu.count == 1
         menuConPLatos == Menu.findById(menuConPLatos.id)
+        Menu.findById(menuConPLatos.id).platos.size() == 2
     }
 }

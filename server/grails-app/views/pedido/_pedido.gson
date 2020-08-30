@@ -1,0 +1,16 @@
+import pandenvio.Pedido
+
+model {
+	Pedido pedido
+}
+
+json {
+	id pedido.id
+	fecha pedido.fecha
+	cliente id: pedido.cliente.id,
+			nombre: pedido.cliente.nombreCompleto()
+	estado pedido.estado.nombre
+	modalidad pedido.modalidadEntrega.nombre
+	cupon tmpl.'/cuponDescuento/cuponDescuento'(pedido.cuponDeDescuento)
+	items tmpl.'/item/item'(pedido.items)
+}

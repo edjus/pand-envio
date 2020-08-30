@@ -1,0 +1,7 @@
+import pandenvio.CuponDescuento
+
+model {
+	CuponDescuento cuponDescuento
+}
+
+json g.render(cuponDescuento, [resolveTemplate: false])
