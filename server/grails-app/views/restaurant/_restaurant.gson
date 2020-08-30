@@ -1,0 +1,10 @@
+import pandenvio.Restaurant
+
+model {
+	Restaurant restaurant
+}
+
+json {
+	id restaurant.id
+	nombre restaurant.nombre
+}

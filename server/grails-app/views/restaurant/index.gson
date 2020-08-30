@@ -1,0 +1,8 @@
+import pandenvio.Restaurant
+
+model {
+	Iterable<Restaurant> restaurantList
+}
+
+json tmpl.restaurant(restaurantList ?: [])
+

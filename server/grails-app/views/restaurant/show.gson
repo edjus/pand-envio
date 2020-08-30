@@ -1,0 +1,7 @@
+import pandenvio.Restaurant
+
+model {
+	Restaurant restaurant
+}
+
+json tmpl.restaurant(restaurant)
