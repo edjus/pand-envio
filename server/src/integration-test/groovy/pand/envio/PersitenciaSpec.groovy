@@ -24,6 +24,8 @@ import spock.lang.Specification
 @Rollback
 class PersitenciaSpec extends Specification {
 
+    Ubicacion ubicacion
+
     def setup() {
         Item.executeUpdate('delete from Item')
         Pedido.executeUpdate('delete from Pedido')
@@ -35,7 +37,11 @@ class PersitenciaSpec extends Specification {
             Menu menuConPLatos = new Menu(nombre: 'Viernes', precio: 400, restaurant: restaurante)
                     .addToPlatos(new Plato(nombre:'Milanesa con pure', precio: 350, categoria: CategoriaPlato.PLATO, restaurant:  restaurante))
                     .save(failOnError: true)
-            Item item = new Item(menuConPLatos, 2).save(failOnError: true)
+            Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com',
+                    ubicacion: new Ubicacion(calle: "av alala", altura: 646), telefono: '11-5555-4433')
+                .save()
+            Pedido pedido = new Pedido(cliente, new ModalidadParaRetirar()).save(failOnError: true)
+            Item item = new Item(menuConPLatos, 2, pedido).save(failOnError: true)
         then:
             Item.count == 1
             def itemGuardado = Item.findById(item.id)
@@ -48,7 +54,8 @@ class PersitenciaSpec extends Specification {
         given:
             Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
             Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
-            Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433').save()
+            Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+                    .save()
             Producto menu = new Menu(nombre: 'Viernes', precio: 400, restaurant: restaurante)
                     .addToPlatos(new Plato(nombre:'Milanesa con pure', precio: 350, categoria: CategoriaPlato.PLATO, restaurant:  restaurante))
                     .save(failOnError: true)

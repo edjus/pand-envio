@@ -23,6 +23,7 @@ class Pedido {
         this.cuponDeDescuento = new CuponDescuentoNulo(fecha: fecha, activo: true, codigo: 'NULO')
         this.setEstado(new EstadoRecibido())
         this.modalidadEntrega = modalidadEntrega
+        this.items = []
     }
 
     void agregar(Producto producto, Integer cantidad) {
