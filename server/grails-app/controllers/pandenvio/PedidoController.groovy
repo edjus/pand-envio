@@ -13,6 +13,7 @@ class PedidoController {
 	static responseFormats = ['json', 'xml']
 
     ModalidadEntregaService modalidadEntregaService
+    PedidoService pedidoService
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -30,16 +31,15 @@ class PedidoController {
 
     @Transactional
     def save() {
-
-        // TODO: Crear PedidoService que reciba Long clienteId y String modalidad y usarlo para crear pedido
-        Cliente cliente = Cliente.findById(request.JSON.cliente_id)
-        ModalidadEntrega modalidadEntrega = modalidadEntregaService.obtenerModalidadPorNombre(request.JSON.modalidad)
-        if (!cliente || !modalidadEntrega){
-            // TODO: Ver como enviar mensaje de error
-            respond 'Parámetros inválidos', status: BAD_REQUEST
-        } else {
-            Pedido pedido= new Pedido(cliente, modalidadEntrega).save(failOnError: true)
+        try {
+            Long clienteId = request.JSON.cliente_id
+            String modalidad = request.JSON.modalidad
+            println("PARAMETROS: id: ${clienteId} - modalidad: ${modalidad}")
+            Pedido pedido = pedidoService.crearPedido(clienteId, modalidad)
             respond([pedido: pedido], status: OK)
+        } catch (RuntimeException e) {
+            println("ERRRRROOOORRRR!!!!: ${e.message}")
+            respond e.message, status: BAD_REQUEST
         }
     }
 
