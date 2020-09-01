@@ -12,6 +12,8 @@ import static org.springframework.http.HttpStatus.OK
 class PedidoController {
 	static responseFormats = ['json', 'xml']
 
+    ModalidadEntregaService modalidadEntregaService
+
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Pedido.list(params), model:[pedidoCount: Pedido.count()]
@@ -31,7 +33,7 @@ class PedidoController {
 
         // TODO: Crear PedidoService que reciba Long clienteId y String modalidad y usarlo para crear pedido
         Cliente cliente = Cliente.findById(request.JSON.cliente_id)
-        ModalidadEntrega modalidadEntrega = obtenerModadalidad(request.JSON.modalidad)
+        ModalidadEntrega modalidadEntrega = modalidadEntregaService.obtenerModalidadPorNombre(request.JSON.modalidad)
         if (!cliente || !modalidadEntrega){
             // TODO: Ver como enviar mensaje de error
             respond 'Parámetros inválidos', status: BAD_REQUEST
@@ -41,15 +43,4 @@ class PedidoController {
         }
     }
 
-
-    // TODO: Crear un ModalidadService que dado un string devuelva la modalidad
-    private ModalidadEntrega obtenerModadalidad(String modalidad){
-        if (modalidad == 'para_llevar'){
-            return  new ModalidadParaLlevar();
-        } else if (modalidad == 'para_retirar'){
-            return  new  ModalidadParaRetirar()
-        } else{
-            return null
-        }
-    }
 }
