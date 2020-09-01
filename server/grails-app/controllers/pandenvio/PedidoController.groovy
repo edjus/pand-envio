@@ -41,4 +41,14 @@ class PedidoController {
         }
     }
 
+    @Transactional
+    def actualizarEstado(Long pedidoId) {
+        try {
+            Pedido pedido = pedidoService.siguienteEstadoPedido(pedidoId)
+            respond([pedido: pedido], status: OK)
+        } catch (RuntimeException e) {
+            respond e.message, status: BAD_REQUEST
+        }
+    }
+
 }

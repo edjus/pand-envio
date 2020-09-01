@@ -8,11 +8,16 @@ import pandenvio.Cliente
 import pandenvio.CuponDescuento
 import pandenvio.CuponDescuentoPorcentual
 import pandenvio.CuponYaUtilizadoException
+import pandenvio.EstadoEnPreparacion
+import pandenvio.EstadoPedido
 import pandenvio.Menu
+import pandenvio.ModalidadEntrega
 import pandenvio.ModalidadParaRetirar
 import pandenvio.Pedido
 import pandenvio.Plato
 import pandenvio.Producto
+import pandenvio.Restaurant
+import pandenvio.Ubicacion
 import spock.lang.Specification
 
 @Integration
@@ -90,5 +95,33 @@ class PedidoSpec extends Specification {
             BigDecimal precio = pedido.calcularPrecio()
         then:
             precio == 1000 // (200*2 + 300*2)
+    }
+
+    void "test pedido actualiza bien el estado"() {
+        given:
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+                .save()
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+                .save(failOnError: true)
+        CuponDescuento cupon = new CuponDescuentoPorcentual(activo: true, porcentaje: 10, codigo: 'ABC', fecha: new Date())
+                .save(failOnError: true)
+        ModalidadEntrega modalidadEntrega = new ModalidadParaRetirar()
+                .save(failOnError: true)
+        EstadoPedido estado = new EstadoEnPreparacion().save(failOnError: true)
+        when:
+        Pedido pedido = new Pedido(cliente, modalidadEntrega)
+        pedido.agregar(plato, 2)
+        pedido.cuponDeDescuento = cupon
+        pedido.save(failOnError: true)
+
+        then:
+        def pedidoGuardado = Pedido.findById(pedido.id)
+        pedidoGuardado.siguienteEstado()
+        pedidoGuardado.nombreEstado == 'en_preparacion'
+        pedidoGuardado.save(failOnError: true)
+        def pedidoGuardado2 = Pedido.findById(pedido.id)
+        pedidoGuardado2.nombreEstado == 'en_preparacion'
     }
 }

@@ -21,4 +21,13 @@ class PedidoService {
 
         new Pedido(cliente, modalidadEntrega).save(failOnError: true)
     }
+
+    def siguienteEstadoPedido(Long pedidoId) {
+        Pedido pedido = Pedido.findById(pedidoId)
+        if (!pedido){
+            throw new RuntimeException('El pedido no es válido')
+        }
+        pedido.siguienteEstado()
+        pedido.save(failOnError: true, flush: true)
+    }
 }

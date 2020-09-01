@@ -35,6 +35,7 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
         pedido.siguienteEstado()
         then:
         pedido.estado.class == EstadoEnPreparacion.class
+        pedido.nombreEstado == 'en_preparacion'
     }
 
     void "test cancelar Pedido se cancela según estado"() {
@@ -43,5 +44,6 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
         pedido.cancelar()
         then:
         pedido.estado.class == EstadoCancelado.class
+        pedido.nombreEstado == 'cancelado'
     }
 }

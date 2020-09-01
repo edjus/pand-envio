@@ -74,7 +74,7 @@ class PersitenciaSpec extends Specification {
             pedido.save(failOnError: true)
             Pedido pedido2 = new Pedido(cliente, modalidadEntrega)
             pedido2.agregar(plato, 2)
-            pedido2.estado = estado
+            pedido2.cambiarEstado(estado)
             pedido2.save(failOnError: true)
 
         then:
