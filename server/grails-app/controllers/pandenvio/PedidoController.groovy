@@ -34,11 +34,9 @@ class PedidoController {
         try {
             Long clienteId = request.JSON.cliente_id
             String modalidad = request.JSON.modalidad
-            println("PARAMETROS: id: ${clienteId} - modalidad: ${modalidad}")
             Pedido pedido = pedidoService.crearPedido(clienteId, modalidad)
             respond([pedido: pedido], status: OK)
         } catch (RuntimeException e) {
-            println("ERRRRROOOORRRR!!!!: ${e.message}")
             respond e.message, status: BAD_REQUEST
         }
     }
