@@ -18,6 +18,7 @@ class UrlMappings {
         // pedido
         "/pedido"(resources:"pedido")
         put "/pedido/$pedidoId/siguienteEstado"(controller: 'pedido', action: 'actualizarEstado')
+        put "/pedido/$pedidoId/cancelar"(controller: 'pedido', action: 'cancelar')
 
 
         "/"(controller: 'application', action:'index')

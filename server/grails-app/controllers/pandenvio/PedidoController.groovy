@@ -51,4 +51,13 @@ class PedidoController {
         }
     }
 
+    @Transactional
+    def cancelar(Long pedidoId) {
+        try {
+            Pedido pedido = pedidoService.cancelar(pedidoId)
+            respond([pedido: pedido], status: OK)
+        } catch (RuntimeException e) {
+            respond e.message, status: BAD_REQUEST
+        }
+    }
 }

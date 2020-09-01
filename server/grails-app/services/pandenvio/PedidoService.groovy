@@ -30,4 +30,13 @@ class PedidoService {
         pedido.siguienteEstado()
         pedido.save(failOnError: true, flush: true)
     }
+
+    def cancelar(Long pedidoId) {
+        Pedido pedido = Pedido.findById(pedidoId)
+        if (!pedido){
+            throw new RuntimeException('El pedido no es válido')
+        }
+        pedido.cancelar()
+        pedido.save(failOnError: true, flush: true)
+    }
 }
