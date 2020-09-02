@@ -39,4 +39,17 @@ class PedidoService {
         pedido.cancelar()
         pedido.save(failOnError: true, flush: true)
     }
+
+    def agregarItem(Long pedidoId, Long productoId, Integer cantidad) {
+        Pedido pedido = Pedido.findById(pedidoId)
+        if (!pedido){
+            throw new RuntimeException('El pedido no es válido')
+        }
+        Producto producto = Producto.findById(productoId)
+        if (!producto){
+            throw new RuntimeException('El producto no es válido')
+        }
+        pedido.agregar(producto, cantidad)
+        pedido.save(failOnError: true, flush: true)
+    }
 }

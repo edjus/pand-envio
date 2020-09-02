@@ -61,6 +61,18 @@ class PedidoController {
         }
     }
 
+    @Transactional
+    def agregarItem(Long pedidoId) {
+        try {
+            Long producoId = request.JSON.producto_id
+            Integer cantidad = request.JSON.cantidad
+            Pedido pedido = pedidoService.agregarItem(pedidoId, producoId, cantidad)
+            respond([pedido: pedido], status: OK)
+        } catch (RuntimeException e) {
+            respond e.message, status: BAD_REQUEST
+        }
+    }
+
     def dominioException(final PedidoNoTieneItemsException exception) {
         log.error "Exception occurred. ${exception?.message}", exception
         respond exception.message, status: BAD_REQUEST
