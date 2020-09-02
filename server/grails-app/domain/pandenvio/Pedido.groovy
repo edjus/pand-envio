@@ -39,6 +39,10 @@ class Pedido {
         setNombreEstado(nuevoEstado.nombre)
     }
     void siguienteEstado() {
+        if (items.size() <= 0) {
+            throw new PedidoNoTieneItemsException("El pedido no tiene items no se puede cambiar estado")
+        }
+
         setEstado(this.estado.siguienteEstado(modalidadEntrega))
     }
 

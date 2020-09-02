@@ -60,4 +60,9 @@ class PedidoController {
             respond e.message, status: BAD_REQUEST
         }
     }
+
+    def dominioException(final PedidoNoTieneItemsException exception) {
+        log.error "Exception occurred. ${exception?.message}", exception
+        respond exception.message, status: BAD_REQUEST
+    }
 }
