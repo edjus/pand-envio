@@ -21,7 +21,7 @@ class Pedido {
         this.fecha = new Date()
         this.cliente = cliente
         this.cuponDeDescuento = new CuponDescuentoNulo(fecha: fecha, activo: true, codigo: 'NULO')
-        this.cambiarEstado(new EstadoRecibido())
+        this.setEstado(new EstadoRecibido())
         this.modalidadEntrega = modalidadEntrega
         this.items = []
     }
@@ -34,17 +34,16 @@ class Pedido {
         return this.modalidadEntrega.calcularPrecioCon(cuponDeDescuento, items)
     }
 
-    void cambiarEstado(EstadoPedido nuevoEstado) {
-        setEstado(nuevoEstado)
+    void setEstado(EstadoPedido nuevoEstado){
+        this.estado = nuevoEstado
         setNombreEstado(nuevoEstado.nombre)
     }
-
     void siguienteEstado() {
-        this.cambiarEstado(this.estado.siguienteEstado(modalidadEntrega))
+        setEstado(this.estado.siguienteEstado(modalidadEntrega))
     }
 
     void cancelar() {
-        this.cambiarEstado(this.estado.cancelar())
+        setEstado(this.estado.cancelar())
     }
 
     // TODO: ver como mejorar ésto y si es necesario, es una asignación manual del estado al cargar el pedido

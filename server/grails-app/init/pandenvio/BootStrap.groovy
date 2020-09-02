@@ -34,13 +34,14 @@ class BootStrap {
         platoService.agregarPlato("Sanguche de Milanesa", 450.0, CategoriaPlato.PLATO, "Milanga completo", restaurante1)
         platoService.agregarPlato("Buñuelos de acelga", 300.0, CategoriaPlato.ENTRADA, "6 buñuelos de acelga fritos", restaurante1)
 
-        /*Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433').save()
-        Producto menu = new Menu(nombre: 'Viernes', precio: 400, restaurant: restaurante)
-                .addToPlatos(new Plato(nombre:'Milanesa con pure', precio: 350, categoria: CategoriaPlato.PLATO, restaurant:  restaurante))
-                .save(failOnError: true)
+
         Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+                .save(failOnError: true)
+        Producto menu = new Menu(nombre: 'Viernes', precio: 400, restaurant: restaurante)
+                .addToPlatos(plato)
                 .save(failOnError: true)
         CuponDescuento cupon = new CuponDescuentoPorcentual(activo: true, porcentaje: 10, codigo: 'ABC', fecha: new Date())
                 .save(failOnError: true)
@@ -55,7 +56,7 @@ class BootStrap {
         Pedido pedido2 = new Pedido(cliente, modalidadEntrega)
         pedido2.agregar(plato, 2)
         pedido2.estado = estado
-        pedido2.save(failOnError: true)*/
+        pedido2.save(failOnError: true)
 
     }
     def destroy = {
