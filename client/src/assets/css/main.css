@@ -33,8 +33,9 @@ html * {
 }
 
 body {
-  background-color: #F5F5F5;
+  background-color: #fff;
   color: #333333;
+  height:100%;
   overflow-x: hidden; /* prevents box-shadow causing a horizontal scrollbar in firefox when viewport < 960px wide */
   -moz-box-shadow: 0 0 0.3em #424649;
   -webkit-box-shadow: 0 0 0.3em #424649;
@@ -139,7 +140,7 @@ img {
   float: left;
   list-style-type: none;
   margin-right: 0.5em;
-  padding: 0;
+  padding: 0.2em;
 }
 
 .nav a {
@@ -160,13 +161,13 @@ img {
 
 .nav a:active, .nav a:visited {
   color: #666666;
+  font-weight: bold
 }
 
 .nav a:focus, .nav a:hover {
-  background-color: #999999;
-  color: #ffffff;
+  background-color: #F5F5F5;
+  color: #333333;
   outline: none;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
 }
 
 .no-borderradius .nav a:focus, .no-borderradius .nav a:hover {
@@ -626,8 +627,7 @@ img.grails-logo {
 }
 
 .sidebar .nav-link {
-  font-weight: 500;
-  color: #333;
+  font-weight: bold;
 }
 
 .sidebar .nav-link .feather {

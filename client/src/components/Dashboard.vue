@@ -1,8 +1,13 @@
 <template>
-  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-    <h1 class="h2">Bienvenid@ a PandEnvio !</h1>
-
-  </div>
+    <div class="jumbotron">
+      <h1 class="display-4">Bienvenid@ a PandEnvio !</h1>
+      <p class="lead">Este es un sistema unico en el mundo surgido en la pandemia.</p>
+      <hr class="my-4">
+      <p>Permite a pequeños comerciantes seguir adelante con sus emprendimientos gastronómicos.</p>
+      <p class="lead">
+        <a class="btn btn-primary btn-lg mt-4" href="/restaurants" role="button">Empezar <i class="fas fa-chevron-right"></i></a>
+      </p>
+    </div>
 </template>
 
 <script>
