@@ -72,20 +72,12 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         thrown PedidoNoSePuedeCancelarException
     }
 
-    void "test estado siguiente a 'listo' es 'en entrega' si la modalidad es para llevar y hay repartidor"() {
+    void "test estado siguiente a 'listo' es 'en entrega' si la modalidad es para llevar"() {
         when:
         EstadoPedido estadoPedido = new EstadoListo()
         ModalidadEntrega modalidad = new ModalidadParaLlevar(repartidor: new Repartidor())
         then:
         estadoPedido.siguienteEstado(modalidad).class == EstadoEnEntrega
-    }
-
-    void "test estado siguiente a 'listo' es 'en espera' si la modalidad es para llevar y no hay repartidor"() {
-        when:
-        EstadoPedido estadoPedido = new EstadoListo()
-        ModalidadEntrega modalidad = new ModalidadParaLlevar()
-        then:
-        estadoPedido.siguienteEstado(modalidad).class == EstadoEnEspera
     }
 
     void "test estado en espera es correcto"() {

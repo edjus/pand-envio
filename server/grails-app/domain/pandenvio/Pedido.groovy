@@ -43,6 +43,7 @@ class Pedido {
             throw new PedidoNoTieneItemsException("El pedido no tiene items no se puede cambiar estado")
         }
         setEstado(this.estado.siguienteEstado(modalidadEntrega))
+        this.estado.alAsignar(this, modalidadEntrega)
     }
 
     void cancelar() {

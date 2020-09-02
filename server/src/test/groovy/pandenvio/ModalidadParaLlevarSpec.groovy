@@ -34,20 +34,12 @@ class ModalidadParaLlevarSpec extends Specification implements DomainUnitTest<Mo
         !modalidad.hayRepartidor()
     }
 
-    void "test siguiente a estado listo es en entrega cuando hay repartidor es en entrega"() {
+    void "test siguiente a estado listo es 'en entrega'"() {
         when:
         def repartidor = new Repartidor('Lucas', '989764699')
         def puntuacion = new Puntuacion(3)
         def modalidad = new ModalidadParaLlevar(repartidor: repartidor, puntuacion: puntuacion)
         then:
         modalidad.siguienteEstadoListo().class == EstadoEnEntrega.class
-    }
-
-    void "test siguiente a estado listo es en entrega cuando no hay repartidor es en espera"() {
-        when:
-        def puntuacion = new Puntuacion(3)
-        def modalidad = new ModalidadParaLlevar(repartidor: null, puntuacion: puntuacion)
-        then:
-        modalidad.siguienteEstadoListo().class == EstadoEnEspera.class
     }
 }

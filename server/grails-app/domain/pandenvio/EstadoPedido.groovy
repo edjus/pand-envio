@@ -10,6 +10,8 @@ abstract class EstadoPedido {
     abstract EstadoPedido siguienteEstado(ModalidadEntrega modalidadEntrega)
 
     abstract EstadoPedido cancelar()
+
+    def alAsignar(Pedido pedido, ModalidadEntrega modalidadEntrega) {}
 }
 
 class EstadoRecibido extends EstadoPedido {
@@ -73,6 +75,12 @@ class EstadoEnEntrega extends EstadoPedido {
     @Override
     EstadoPedido cancelar() {
         throw new PedidoNoSePuedeCancelarException("El pedido tiene estado ${this.nombre}, no se puede cancelar")
+    }
+
+    @Override
+    def alAsignar(Pedido pedido, ModalidadEntrega modalidadEntrega) {
+        // TODO: Ver lógica de asignación a pedido
+        pedido.estado = modalidadEntrega.hayRepartidor() ? this : new EstadoEnEspera()
     }
 }
 

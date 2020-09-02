@@ -21,7 +21,7 @@ class ModalidadParaLlevar  extends ModalidadEntrega {
 
     @Override
     EstadoPedido siguienteEstadoListo() {
-        (repartidor) ? new EstadoEnEntrega() : new EstadoEnEspera()
+        new EstadoEnEntrega()
     }
 
     @Override
