@@ -24,11 +24,12 @@ class RepartidorSpec extends Specification implements DomainUnitTest<Repartidor>
             !repartidor2.validate()
     }
 
-    void "test repartidor tiene que tener nombre y dni"() {
+    void "test repartidor tiene que tener nombre y dni, por defecto está disponible"() {
         when:
             Repartidor repartidor = new Repartidor('Pepe', '987987')
         then:
             repartidor.validate()
+            repartidor.disponible
     }
 
     void "Repartidor se guarda correctamente"() {
