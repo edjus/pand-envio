@@ -8,7 +8,7 @@
       </button>
     </div>
   </div>
-  <tabla-restaurant :restaurantes='restaurantes'></tabla-restaurant>
+  <tabla-restaurant :restaurantes='restaurantes' @restaurantEdicion="editarRestaurant"></tabla-restaurant>
   <formulario-restaurant
     ref='modal'
     :restaurant='restauranteActual'
@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import TablaRestaurant from './table/TablaRestaurant'
-import FormularioRestaurant from './table/FormularioRestaurant'
+import TablaRestaurant from './restaurant/TablaRestaurant'
+import FormularioRestaurant from './restaurant/FormularioRestaurant'
 export default {
   name: 'Restaurants',
   components: {FormularioRestaurant, TablaRestaurant},
@@ -34,11 +34,23 @@ export default {
     this.cargarRestaurantes()
   },
   methods: {
+    editarRestaurant: function(restaurant) {
+      this.restauranteActual = restaurant
+      this.$refs.modal.show()
+    },
     nuevoRestauranteActual: function () {
       return {
         id: 0,
         nombre: '',
         direccion: ''
+      }
+    },
+    actualizarListadoRestaurantes: function(restaurant) {
+      const index = this.restaurantes.findIndex(x => x.id === restaurant.id);
+      if (index >= 0 ) {
+        this.restaurantes[index] = restaurant
+      } else {
+        this.restaurantes.push(restaurant)
       }
     },
     guardarRestaurante: function (restaurante) {
@@ -52,7 +64,7 @@ export default {
         body: JSON.stringify(restaurante)
       }).then(r => r.json())
         .then(json => {
-          this.restaurantes.push(json.restaurant)
+          this.actualizarListadoRestaurantes(json.restaurant)
           this.restauranteActual = this.nuevoRestauranteActual()
         })
         .catch(ex => console.error('No es posible guardar el restaurant', ex))

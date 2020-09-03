@@ -10,7 +10,7 @@
       </tr>
       </thead>
       <tbody>
-      <fila-restaurant v-for='restaurante in restaurantes'
+      <fila-restaurant v-for='restaurante in restaurantes' @restaurantEdicion="editarRestaurant"
                  :item='restaurante' :key='restaurante.id'></fila-restaurant>
       </tbody>
     </table>
@@ -22,7 +22,12 @@ import FilaRestaurant from './FilaRestaurant'
 export default {
   name: 'TablaRestaurant',
   components: {FilaRestaurant},
-  props: ['restaurantes']
+  props: ['restaurantes'],
+  methods: {
+    editarRestaurant: function (item) {
+      this.$emit('restaurantEdicion', item)
+    },
+  }
 }
 </script>
 
