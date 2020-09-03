@@ -24,6 +24,12 @@ class RestaurantController {
     }
 
     @Transactional
+    def delete(Long id) {
+        restaurantService.borrar(id)
+        respond([id:id], status: OK)
+    }
+
+    @Transactional
     def save(Restaurant restaurant) {
 
         //Common controller validations: empty values, non-zero values, etc..
