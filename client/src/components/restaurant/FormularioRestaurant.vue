@@ -3,7 +3,7 @@
     <div class='modal-dialog' role='document'>
       <div class='modal-content'>
         <div class='modal-header'>
-          <h5 class='modal-title' id='exampleModalLabel'>{{getTitulo()}}</h5>
+          <h5 class='modal-title' id='exampleModalLabel'>{{getTitulo}}</h5>
           <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
             <span aria-hidden='true'>&times;</span>
           </button>
@@ -39,13 +39,15 @@ export default {
   props: [
     'restaurant'
   ],
-  methods: {
-    getTitulo: () => {
+  computed: {
+    getTitulo: function () {
       if (this.restaurant && this.restaurant.id !== 0) {
-        return 'Editando Restaurante'
+        return 'Editando Restaurante #' + this.restaurant.id
       }
       return 'Nuevo Restaurante'
-    },
+    }
+  },
+  methods: {
     confirm: function () {
       this.$emit('restaurantConfirmation', this.restaurant)
       $$('#FormularioRestaurant').modal('hide')
