@@ -55,4 +55,25 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
         pedido.estado.class == EstadoCancelado.class
         pedido.nombreEstado == 'cancelado'
     }
+
+    void "test Pedido para retirar no tiene repartidor"() {
+        when:
+        Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar())
+        then:
+        !pedido.tieneRepartidor()
+    }
+
+    void "test Pedido para llevar sin repartidor"() {
+        when:
+        Pedido pedido = new Pedido(new Cliente(), new ModalidadParaLlevar())
+        then:
+        !pedido.tieneRepartidor()
+    }
+
+    void "test Pedido para llevar con repartidor"() {
+        when:
+        Pedido pedido = new Pedido(new Cliente(), new ModalidadParaLlevar(repartidor: new Repartidor("Juan", "9897954")))
+        then:
+        pedido.tieneRepartidor()
+    }
 }

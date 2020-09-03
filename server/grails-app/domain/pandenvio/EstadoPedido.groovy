@@ -11,7 +11,7 @@ abstract class EstadoPedido {
 
     abstract EstadoPedido cancelar()
 
-    def alAsignar(Pedido pedido, ModalidadEntrega modalidadEntrega) {}
+    def iniciarPara(Pedido pedido) {}
 }
 
 class EstadoRecibido extends EstadoPedido {
@@ -78,9 +78,9 @@ class EstadoEnEntrega extends EstadoPedido {
     }
 
     @Override
-    def alAsignar(Pedido pedido, ModalidadEntrega modalidadEntrega) {
+    def iniciarPara(Pedido pedido) {
         // TODO: Ver lógica de asignación a pedido
-        pedido.estado = modalidadEntrega.hayRepartidor() ? this : new EstadoEnEspera()
+        pedido.estado = pedido.tieneRepartidor() ? this : new EstadoEnEspera()
     }
 }
 

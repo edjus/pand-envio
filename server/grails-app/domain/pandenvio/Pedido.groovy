@@ -43,11 +43,15 @@ class Pedido {
             throw new PedidoNoTieneItemsException("El pedido no tiene items no se puede cambiar estado")
         }
         setEstado(this.estado.siguienteEstado(modalidadEntrega))
-        this.estado.alAsignar(this, modalidadEntrega)
+        this.estado.iniciarPara(this)
     }
 
     void cancelar() {
         setEstado(this.estado.cancelar())
+    }
+
+    Boolean tieneRepartidor(){
+        modalidadEntrega.hayRepartidor()
     }
 
     // TODO: ver como mejorar ésto y si es necesario, es una asignación manual del estado al cargar el pedido
