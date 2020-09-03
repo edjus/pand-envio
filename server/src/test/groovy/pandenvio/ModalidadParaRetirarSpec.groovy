@@ -29,4 +29,14 @@ class ModalidadParaRetirarSpec extends Specification implements DomainUnitTest<M
         then:
         modalidad.siguienteEstadoListo().class == EstadoEntregado.class
     }
+
+    void "test asignar repartidor no tiene repartidor"() {
+        when:
+        def repartidor = new Repartidor('Lucas', '989764699')
+        def modalidad = new ModalidadParaRetirar()
+        modalidad.asignarRepartidor(repartidor)
+        then:
+        !modalidad.hayRepartidor()
+        repartidor.disponible
+    }
 }

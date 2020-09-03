@@ -20,4 +20,8 @@ class ModalidadParaRetirar extends ModalidadEntrega {
     boolean hayRepartidor() {
         false
     }
+
+    @Override
+    void asignarRepartidor(Repartidor repartidor) {
+    }
 }

@@ -54,8 +54,12 @@ class Pedido {
         modalidadEntrega.hayRepartidor()
     }
 
+    void asignarA(Repartidor repartidor){
+        this.modalidadEntrega.asignarRepartidor(repartidor)
+    }
+
     // TODO: ver como mejorar ésto y si es necesario, es una asignación manual del estado al cargar el pedido
     def afterLoad() {
-        this.setEstado(FabricaEstados.obtenerEstado(this.nombreEstado))
+        setEstado(FabricaEstados.obtenerEstado(this.nombreEstado))
     }
 }

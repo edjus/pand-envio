@@ -76,4 +76,25 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
         then:
         pedido.tieneRepartidor()
     }
+
+    void "test Pedido para llevar asignado a repartidor"() {
+        when:
+        Pedido pedido = new Pedido(new Cliente(), new ModalidadParaLlevar())
+        Repartidor repartidor = new Repartidor("Juan", "9897954")
+        pedido.asignarA(repartidor)
+        then:
+        pedido.tieneRepartidor()
+        !repartidor.disponible
+    }
+
+    void "test Pedido para retirnar asignado a repartidor no tiene repartidor"() {
+        when:
+        Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar())
+        Repartidor repartidor = new Repartidor("Juan", "9897954")
+        pedido.asignarA(repartidor)
+        then:
+        !pedido.tieneRepartidor()
+        repartidor.disponible
+    }
+
 }

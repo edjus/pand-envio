@@ -28,4 +28,10 @@ class ModalidadParaLlevar  extends ModalidadEntrega {
     boolean hayRepartidor() {
         repartidor
     }
+
+    @Override
+    void asignarRepartidor(Repartidor repartidor) {
+        this.repartidor = repartidor
+        this.repartidor.disponible = false
+    }
 }
