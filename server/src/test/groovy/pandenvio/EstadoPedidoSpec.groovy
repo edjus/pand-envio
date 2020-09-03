@@ -87,7 +87,7 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         estadoPedido.nombre == 'en_espera'
     }
 
-    void "test estado siguiente a 'en espera' es 'en entrega' si hay repartidor"() {
+    void "test estado siguiente a 'en espera' es 'en entrega'"() {
         when:
         EstadoPedido estadoPedido = new EstadoEnEspera()
         ModalidadEntrega modalidad = new ModalidadParaLlevar(repartidor: new Repartidor())
@@ -101,14 +101,6 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         estadoPedido.cancelar()
         then:
         thrown PedidoNoSePuedeCancelarException
-    }
-
-    void "test estado siguiente a 'en espera' sigue 'en espera' si no hay repartidor"() {
-        when:
-        EstadoPedido estadoPedido = new EstadoEnEspera()
-        ModalidadEntrega modalidad = new ModalidadParaLlevar()
-        then:
-        estadoPedido.siguienteEstado(modalidad).class == EstadoEnEspera
     }
 
     void "test estado 'en entrega' es correcto"() {

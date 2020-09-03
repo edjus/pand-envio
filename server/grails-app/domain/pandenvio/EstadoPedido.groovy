@@ -79,7 +79,7 @@ class EstadoEnEntrega extends EstadoPedido {
 
     @Override
     def iniciarPara(Pedido pedido) {
-        // TODO: Ver lógica de asignación a pedido
+        AsignadorRepartidor.instance.asignarPara(pedido)
         pedido.estado = pedido.tieneRepartidor() ? this : new EstadoEnEspera()
     }
 }
@@ -91,7 +91,7 @@ class EstadoEnEspera extends EstadoPedido {
 
     @Override
     EstadoPedido siguienteEstado(ModalidadEntrega modalidadEntrega) {
-        modalidadEntrega.hayRepartidor() ? new EstadoEnEntrega() : this;
+        new EstadoEnEntrega()
     }
 
     @Override

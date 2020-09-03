@@ -32,6 +32,6 @@ class ModalidadParaLlevar  extends ModalidadEntrega {
     @Override
     void asignarRepartidor(Repartidor repartidor) {
         this.repartidor = repartidor
-        this.repartidor.disponible = false
+        this.repartidor?.disponible = false
     }
 }
