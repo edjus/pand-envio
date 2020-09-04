@@ -28,7 +28,7 @@ class ClienteController {
 
         //Common controller validations: empty values, non-zero values, etc..
         if (cliente.hasErrors()) {
-            respond cliente.errors, view:'create'
+            respond cliente.errors, view:'create', status:BAD_REQUEST
         } else {
             try {
                 clienteService.agregarCliente(cliente)

@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import TablaRestaurant from './restaurant/TablaRestaurant'
-import FormularioRestaurant from './restaurant/FormularioRestaurant'
+import TablaRestaurant from './TablaRestaurant'
+import FormularioRestaurant from './FormularioRestaurant'
 export default {
   name: 'Restaurants',
   components: {FormularioRestaurant, TablaRestaurant},

@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <cabecera/>
+    <notifications group="notifications" position="bottom right" />
     <aplicacion/>
   </div>
 </template>
