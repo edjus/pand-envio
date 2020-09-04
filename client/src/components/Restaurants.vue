@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     editarRestaurant: function(restaurant) {
-      this.restauranteActual = restaurant
+      this.restauranteActual = Object.assign({},restaurant)
       this.$refs.modal.show()
     },
     nuevoRestauranteActual: function () {
@@ -49,6 +49,7 @@ export default {
       const index = this.restaurantes.findIndex(x => x.id === restaurant.id);
       if (index >= 0 ) {
         this.restaurantes[index] = restaurant
+        this.restaurantes = this.restaurantes.map(r => r)
       } else {
         this.restaurantes.push(restaurant)
       }
