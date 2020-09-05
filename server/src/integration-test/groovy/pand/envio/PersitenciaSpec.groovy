@@ -40,7 +40,7 @@ class PersitenciaSpec extends Specification {
             Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com',
                     ubicacion: new Ubicacion(calle: "av alala", altura: 646), telefono: '11-5555-4433')
                 .save()
-            Pedido pedido = new Pedido(cliente, new ModalidadParaRetirar()).save(failOnError: true)
+            Pedido pedido = new Pedido(cliente, new ModalidadParaRetirar(), restaurante).save(failOnError: true)
             Item item = new Item(menuConPLatos, 2, pedido).save(failOnError: true)
         then:
             Item.count == 1
@@ -67,12 +67,12 @@ class PersitenciaSpec extends Specification {
                     .save(failOnError: true)
             EstadoPedido estado = new EstadoEnPreparacion().save(failOnError: true)
         when:
-            Pedido pedido = new Pedido(cliente, modalidadEntrega)
+            Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
             pedido.agregar(plato, 2)
             pedido.agregar(menu, 2)
             pedido.cuponDeDescuento = cupon
             pedido.save(failOnError: true)
-            Pedido pedido2 = new Pedido(cliente, modalidadEntrega)
+            Pedido pedido2 = new Pedido(cliente, modalidadEntrega, restaurante)
             pedido2.agregar(plato, 2)
             pedido2.estado = estado
             pedido2.save(failOnError: true)

@@ -31,7 +31,7 @@ class PedidoSpec extends Specification {
 
     void "test precio de un pedido sin productos es 0"() {
         given:
-            Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar())
+            Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), new Restaurant())
         when:
             BigDecimal precio = pedido.calcularPrecio()
         then:
@@ -40,7 +40,7 @@ class PedidoSpec extends Specification {
 
     void "test precio de un pedido con productos"() {
         given:
-            Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar())
+            Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), new Restaurant())
             Producto plato = new Plato(nombre: 'Alto Guiso', precio: 15, categoria: CategoriaPlato.PLATO)
             Integer cantidad = 2
         when:
@@ -52,7 +52,7 @@ class PedidoSpec extends Specification {
 
     void "test precio de un pedido sin productos con cupon activo es 0"() {
         given:
-            Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar())
+            Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), new Restaurant())
             CuponDescuento cupon = new CuponDescuentoPorcentual(activo: true, porcentaje: 10)
         when:
             pedido.cuponDeDescuento = cupon
@@ -63,7 +63,7 @@ class PedidoSpec extends Specification {
 
     void "test precio de un pedido sin productos con cupon inactivo lanza error"() {
         given:
-            Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar())
+            Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), new Restaurant())
             CuponDescuento cupon = new CuponDescuentoPorcentual(activo: false, porcentaje: 10)
         when:
             pedido.cuponDeDescuento = cupon
@@ -74,7 +74,7 @@ class PedidoSpec extends Specification {
 
     void "test precio de un pedido con productos con cupon activo aplica descuento"() {
         given:
-            Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar())
+            Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), new Restaurant())
             CuponDescuento cupon = new CuponDescuentoPorcentual(activo: true, porcentaje: 10)
             Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO)
             Producto plato2 = new Plato(nombre: 'Flan', precio: 100, categoria: CategoriaPlato.POSTRE)
@@ -89,7 +89,7 @@ class PedidoSpec extends Specification {
 
     void "test precio de un pedido con productos y cupon activo  no aplica si hay menu"() {
         given:
-            Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar())
+            Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), new Restaurant())
             CuponDescuento cupon = new CuponDescuentoPorcentual(activo: true, porcentaje: 10)
             Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO)
             Producto menu = new Menu(nombre: 'Viernes', precio: 300)
@@ -116,7 +116,7 @@ class PedidoSpec extends Specification {
                 .save(failOnError: true)
         EstadoPedido estado = new EstadoEnPreparacion().save(failOnError: true)
         when:
-        Pedido pedido = new Pedido(cliente, modalidadEntrega)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
         pedido.agregar(plato, 2)
         pedido.cuponDeDescuento = cupon
         pedido.save(failOnError: true)
@@ -141,7 +141,7 @@ class PedidoSpec extends Specification {
         ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
                 .save(failOnError: true)
         EstadoPedido estado = new EstadoListo().save(failOnError: true)
-        Pedido pedido = new Pedido(cliente, modalidadEntrega)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
         pedido.agregar(plato, 2)
         pedido.estado = estado
         pedido.save(failOnError: true)
@@ -165,7 +165,7 @@ class PedidoSpec extends Specification {
         ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
                 .save(failOnError: true)
         EstadoPedido estado = new EstadoListo().save(failOnError: true)
-        Pedido pedido = new Pedido(cliente, modalidadEntrega)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
         pedido.agregar(plato, 2)
         pedido.estado = estado
         pedido.save(failOnError: true)

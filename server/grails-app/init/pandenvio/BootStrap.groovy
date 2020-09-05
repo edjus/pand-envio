@@ -48,12 +48,12 @@ class BootStrap {
         ModalidadEntrega modalidadEntrega = new ModalidadParaRetirar()
                 .save(failOnError: true)
         EstadoPedido estado = new EstadoEnPreparacion().save(failOnError: true)
-        Pedido pedido = new Pedido(cliente, modalidadEntrega)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
         pedido.agregar(plato, 2)
         pedido.agregar(menu, 2)
         pedido.cuponDeDescuento = cupon
         pedido.save(failOnError: true)
-        Pedido pedido2 = new Pedido(cliente, modalidadEntrega)
+        Pedido pedido2 = new Pedido(cliente, modalidadEntrega, restaurante)
         pedido2.agregar(plato, 2)
         pedido2.estado = estado
         pedido2.save(failOnError: true)

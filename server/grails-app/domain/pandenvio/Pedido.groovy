@@ -10,20 +10,24 @@ class Pedido {
     EstadoPedido estado
     String nombreEstado
     ModalidadEntrega modalidadEntrega
+    Restaurant restaurant
+
     static hasMany = [items: Item]
 
     static constraints = {
         cliente nullable: false
         modalidadEntrega nullable: false
+        restaurant nullable: false
     }
 
-    Pedido(cliente, modalidadEntrega) {
+    Pedido(cliente, modalidadEntrega, restaurant) {
         this.fecha = new Date()
         this.cliente = cliente
         this.cuponDeDescuento = new CuponDescuentoNulo(fecha: fecha, activo: true, codigo: 'NULO')
         this.setEstado(new EstadoRecibido())
         this.modalidadEntrega = modalidadEntrega
         this.items = []
+        this.restaurant = restaurant
     }
 
     void agregar(Producto producto, Integer cantidad) {

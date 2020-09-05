@@ -10,10 +10,12 @@ class AsignadorRepartidor {
 
     Repartidor obtenerRepartidor(){
         // TODO: Agregar lógica de repartidores disponibles
-        def repartidores = Repartidor.findAll()
+        def repartidores = Repartidor.findAll { r -> r.disponible }
         if (repartidores.empty){
             return null
         }
+         log.info("REPARTIDORES HABILATOS: ${repartidores.count}")
+        println("REPARTIDORES HABILATOS: ${repartidores.count}")
         repartidores.first()
     }
 }
