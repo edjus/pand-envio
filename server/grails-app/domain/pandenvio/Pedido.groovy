@@ -31,6 +31,9 @@ class Pedido {
     }
 
     void agregar(Producto producto, Integer cantidad) {
+        if (producto.restaurant != this.restaurant){
+            throw new ProductoNoPerteneceAlRestauranteException("El producto no pertenece al restaurante")
+        }
         addToItems(new Item(producto, cantidad, this))
     }
 

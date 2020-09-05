@@ -39,8 +39,9 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
 
     void "test Pedido el siguiente estado es correcto según el estado el estado actual"() {
         when:
-        Pedido pedido = new Pedido(new Cliente(), new ModalidadParaLlevar(), new Restaurant())
-        pedido.agregar(new Plato(), 3)
+        Restaurant restaurant = new Restaurant()
+        Pedido pedido = new Pedido(new Cliente(), new ModalidadParaLlevar(), restaurant)
+        pedido.agregar(new Plato(restaurant: restaurant), 3)
         pedido.siguienteEstado()
         then:
         pedido.estado.class == EstadoEnPreparacion.class

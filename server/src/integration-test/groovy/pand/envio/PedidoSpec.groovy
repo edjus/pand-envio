@@ -20,6 +20,7 @@ import pandenvio.ModalidadParaRetirar
 import pandenvio.Pedido
 import pandenvio.Plato
 import pandenvio.Producto
+import pandenvio.ProductoNoPerteneceAlRestauranteException
 import pandenvio.Repartidor
 import pandenvio.Restaurant
 import pandenvio.Ubicacion
@@ -38,16 +39,29 @@ class PedidoSpec extends Specification {
             precio == 0
     }
 
-    void "test precio de un pedido con productos"() {
+    void "test precio de un pedido con productos del mismo restaurante"() {
         given:
-            Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), new Restaurant())
-            Producto plato = new Plato(nombre: 'Alto Guiso', precio: 15, categoria: CategoriaPlato.PLATO)
+        Restaurant restaurant = new Restaurant(nombre:  "Don Juan")
+        Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), restaurant)
+            Producto plato = new Plato(nombre: 'Alto Guiso', precio: 15, categoria: CategoriaPlato.PLATO, restaurant: restaurant)
             Integer cantidad = 2
         when:
             pedido.agregar(plato, cantidad)
             BigDecimal precio = pedido.calcularPrecio()
         then:
             precio == plato.getPrecio() * cantidad
+    }
+
+    void "test no se puede agregar productos a pedido de un restaurante diferente"() {
+        given:
+        Restaurant restaurant = new Restaurant(nombre:  "Don Juan")
+        Restaurant restaurant2 = new Restaurant(nombre:  "Don José")
+        Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), restaurant)
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 15, categoria: CategoriaPlato.PLATO, restaurant: restaurant2)
+        when:
+        pedido.agregar(plato, 2)
+        then:
+        thrown(ProductoNoPerteneceAlRestauranteException)
     }
 
     void "test precio de un pedido sin productos con cupon activo es 0"() {
@@ -74,10 +88,11 @@ class PedidoSpec extends Specification {
 
     void "test precio de un pedido con productos con cupon activo aplica descuento"() {
         given:
-            Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), new Restaurant())
+            Restaurant restaurant = new Restaurant(nombre:  "Don Juan")
+            Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), restaurant)
             CuponDescuento cupon = new CuponDescuentoPorcentual(activo: true, porcentaje: 10)
-            Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO)
-            Producto plato2 = new Plato(nombre: 'Flan', precio: 100, categoria: CategoriaPlato.POSTRE)
+            Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurant)
+            Producto plato2 = new Plato(nombre: 'Flan', precio: 100, categoria: CategoriaPlato.POSTRE, restaurant: restaurant)
             pedido.agregar(plato, 1)
             pedido.agregar(plato2, 2)
         when:
@@ -89,10 +104,11 @@ class PedidoSpec extends Specification {
 
     void "test precio de un pedido con productos y cupon activo  no aplica si hay menu"() {
         given:
-            Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), new Restaurant())
+            Restaurant restaurant = new Restaurant(nombre:  "Don Juan")
+            Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), restaurant)
             CuponDescuento cupon = new CuponDescuentoPorcentual(activo: true, porcentaje: 10)
-            Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO)
-            Producto menu = new Menu(nombre: 'Viernes', precio: 300)
+            Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurant)
+            Producto menu = new Menu(nombre: 'Viernes', precio: 300, restaurant: restaurant)
             pedido.agregar(plato, 2)
             pedido.agregar(menu, 2)
         when:
