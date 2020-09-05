@@ -5,14 +5,12 @@ import grails.rest.*
 import grails.converters.*
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST
-import static org.springframework.http.HttpStatus.CREATED
 import static org.springframework.http.HttpStatus.OK
 
 @Transactional(readOnly = true)
 class PedidoController {
 	static responseFormats = ['json', 'xml']
 
-    ModalidadEntregaService modalidadEntregaService
     PedidoService pedidoService
 
     def index(Integer max) {
@@ -29,6 +27,12 @@ class PedidoController {
         }
     }
 
+    /*
+    POST: Crear un pedido
+    - cliente_id: long con el id de un cliente existente
+    - restaurant_id: long con el id de un restaurante existente
+    - modalidad: string puede ser 'para_llevar', 'para_retirar'.
+    */
     @Transactional
     def save() {
         try {
@@ -62,6 +66,11 @@ class PedidoController {
         }
     }
 
+    /*
+    POST: Agregar item a pedido
+    - producto_id: long con el id de un pruducto existente del mismo restaurant del pedido
+    - cantidad: número con la cantidad del producto a agregar al pedido (min 1)
+    */
     @Transactional
     def agregarItem(Long pedidoId) {
         try {
@@ -75,6 +84,11 @@ class PedidoController {
     }
 
     def dominioException(final PedidoNoTieneItemsException exception) {
+        log.error "Exception occurred. ${exception?.message}", exception
+        respond exception.message, status: BAD_REQUEST
+    }
+
+    def handlerException(final ProductoNoPerteneceAlRestauranteException exception) {
         log.error "Exception occurred. ${exception?.message}", exception
         respond exception.message, status: BAD_REQUEST
     }
