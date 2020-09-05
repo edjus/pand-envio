@@ -34,7 +34,8 @@ class PedidoController {
         try {
             Long clienteId = request.JSON.cliente_id
             String modalidad = request.JSON.modalidad
-            Pedido pedido = pedidoService.crearPedido(clienteId, modalidad)
+            Long resturanteId = request.JSON.restaurant_id
+            Pedido pedido = pedidoService.crearPedido(clienteId, modalidad, resturanteId)
             respond([pedido: pedido], status: OK)
         } catch (RuntimeException e) {
             respond e.message, status: BAD_REQUEST

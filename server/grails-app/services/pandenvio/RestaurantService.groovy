@@ -12,4 +12,8 @@ class RestaurantService {
         Restaurant restaurante = Restaurant.get(id)
         restaurante.delete flush:true
     }
+
+    def  obtenerRestaurante(Long restauranteId) {
+        Restaurant.findById(restauranteId)
+    }
 }

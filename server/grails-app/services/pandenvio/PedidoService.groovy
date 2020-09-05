@@ -7,8 +7,9 @@ class PedidoService {
 
     ClienteService clienteService
     ModalidadEntregaService modalidadEntregaService
+    RestaurantService restaurantService
 
-    def crearPedido(Long clienteId, String modalidad) {
+    def crearPedido(Long clienteId, String modalidad, Long restauranteId) {
         Cliente cliente = clienteService.obtenerCliente(clienteId)
         if (!cliente) {
             throw new RuntimeException('El cliente es inválido')
@@ -19,7 +20,12 @@ class PedidoService {
             throw new RuntimeException('La modalidad es inválida')
         }
 
-        new Pedido(cliente, modalidadEntrega).save(failOnError: true)
+        Restaurant restaurant = restaurantService.obtenerRestaurante(restauranteId)
+        if (!restaurant) {
+            throw new RuntimeException('El resturante es inválido')
+        }
+
+        new Pedido(cliente, modalidadEntrega, restaurant).save(failOnError: true)
     }
 
     def siguienteEstadoPedido(Long pedidoId) {
