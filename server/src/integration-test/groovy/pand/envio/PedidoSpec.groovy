@@ -170,9 +170,8 @@ class PedidoSpec extends Specification {
 
     void "test pedido estado siguiente a listo con modalidad para llevar y hay repartidores es 'en entrega'"() {
         given:
-        Repartidor repartidor = new  Repartidor("Juan", "9798797")
-        repartidor.save()
         Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
                 .save()
@@ -191,5 +190,59 @@ class PedidoSpec extends Specification {
         pedido.estado.class == EstadoEnEntrega
         pedido.nombreEstado == 'en_entrega'
         !repartidor.disponible
+    }
+
+    void "test pedido estado siguiente a listo con modalidad para llevar y no hay repartidores disponibles es 'en espera'"() {
+        given:
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante)
+        repartidor.disponible = false
+        repartidor.save(failOnError: true)
+
+        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+                .save(failOnError: true)
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+                .save(failOnError: true)
+        ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        EstadoPedido estado = new EstadoListo().save(failOnError: true)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
+        pedido.agregar(plato, 2)
+        pedido.estado = estado
+        pedido.save(failOnError: true)
+        when:
+        pedido.siguienteEstado()
+        then:
+        pedido.estado.class == EstadoEnEspera
+        pedido.nombreEstado == 'en_espera'
+        !repartidor.disponible
+    }
+
+    void "test pedido estado siguiente a listo con modalidad para llevar y hay repartidores en otro restaurante es 'en espera'"() {
+        given:
+        Restaurant restaurante = new Restaurant(nombre: 'La esquina').save(failOnError: true)
+        Restaurant restaurante2 = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+
+        Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante2).save(failOnError: true)
+
+        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+                .save(failOnError: true)
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+                .save(failOnError: true)
+        ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        EstadoPedido estado = new EstadoListo().save(failOnError: true)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
+        pedido.agregar(plato, 2)
+        pedido.estado = estado
+        pedido.save(failOnError: true)
+        when:
+        pedido.siguienteEstado()
+        then:
+        pedido.estado.class == EstadoEnEspera
+        pedido.nombreEstado == 'en_espera'
+        repartidor.disponible
     }
 }

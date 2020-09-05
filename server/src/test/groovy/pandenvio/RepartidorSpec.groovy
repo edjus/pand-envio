@@ -8,8 +8,8 @@ class RepartidorSpec extends Specification implements DomainUnitTest<Repartidor>
 
     void "test repartidor no puede tener nombre null ni vacio"() {
         when:
-            Repartidor repartidor = new Repartidor(null, '989798723')
-            Repartidor repartidor2 = new Repartidor('', '989798723')
+            Repartidor repartidor = new Repartidor(null, '989798723', new Restaurant())
+            Repartidor repartidor2 = new Repartidor('', '989798723', new Restaurant())
         then:
             !repartidor.validate()
             !repartidor2.validate()
@@ -17,27 +17,27 @@ class RepartidorSpec extends Specification implements DomainUnitTest<Repartidor>
 
     void "test repartidor no puede tener dni null ni vacio"() {
         when:
-            Repartidor repartidor = new Repartidor('Pepe', '')
-            Repartidor repartidor2 = new Repartidor('Lucho', null)
+            Repartidor repartidor = new Repartidor('Pepe', '', new Restaurant())
+            Repartidor repartidor2 = new Repartidor('Lucho', null, new Restaurant())
         then:
             !repartidor.validate()
             !repartidor2.validate()
     }
 
-    void "test repartidor tiene que tener nombre y dni, por defecto está disponible"() {
+    void "test repartidor no puede tener restaurant null"() {
         when:
-            Repartidor repartidor = new Repartidor('Pepe', '987987')
+        Repartidor repartidor = new Repartidor('Lucho', '98798764', null)
+        then:
+        !repartidor.validate()
+    }
+
+    void "test repartidor tiene que tener nombre, dni y restaurante por defecto está disponible"() {
+        when:
+            Repartidor repartidor = new Repartidor('Pepe', '987987', new Restaurant())
         then:
             repartidor.validate()
             repartidor.disponible
     }
 
-    void "Repartidor se guarda correctamente"() {
-        when:
-            Repartidor repartidor = new Repartidor('Lucas', '989764699')
-            repartidor.save()
-        then:
-            Repartidor.count == 1
-            repartidor == Repartidor.findById(repartidor.id)
-    }
+
 }

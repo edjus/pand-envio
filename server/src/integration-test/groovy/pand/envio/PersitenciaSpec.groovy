@@ -16,6 +16,7 @@ import pandenvio.ModalidadParaRetirar
 import pandenvio.Pedido
 import pandenvio.Plato
 import pandenvio.Producto
+import pandenvio.Repartidor
 import pandenvio.Restaurant
 import pandenvio.Ubicacion
 import spock.lang.Specification
@@ -24,11 +25,19 @@ import spock.lang.Specification
 @Rollback
 class PersitenciaSpec extends Specification {
 
-    Ubicacion ubicacion
-
     def setup() {
         Item.executeUpdate('delete from Item')
         Pedido.executeUpdate('delete from Pedido')
+    }
+
+    void "Repartidor se guarda correctamente"() {
+        when:
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Repartidor repartidor = new Repartidor('Lucas', '989764699', restaurante)
+        repartidor.save()
+        then:
+        Repartidor.count == 1
+        repartidor == Repartidor.findById(repartidor.id)
     }
 
     void "test Item se guarda bien"() {

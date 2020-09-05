@@ -7,7 +7,7 @@ class ModalidadParaLlevarSpec extends Specification implements DomainUnitTest<Mo
 
     void "test modalidad para llevar se guarda bien"() {
         when:
-            def repartidor = new Repartidor('Lucas', '989764699')
+            def repartidor = new Repartidor('Lucas', '989764699', new Restaurant())
             def puntuacion = new Puntuacion(3)
             def modalidad = new ModalidadParaLlevar(repartidor: repartidor, puntuacion: puntuacion)
         then:
@@ -19,7 +19,7 @@ class ModalidadParaLlevarSpec extends Specification implements DomainUnitTest<Mo
 
     void "test modalidad para llevar tiene repartidor"() {
         when:
-        def repartidor = new Repartidor('Lucas', '989764699')
+        def repartidor = new Repartidor('Lucas', '989764699', new Restaurant())
         def puntuacion = new Puntuacion(3)
         def modalidad = new ModalidadParaLlevar(repartidor: repartidor, puntuacion: puntuacion)
         then:
@@ -36,7 +36,7 @@ class ModalidadParaLlevarSpec extends Specification implements DomainUnitTest<Mo
 
     void "test siguiente a estado listo es 'en entrega'"() {
         when:
-        def repartidor = new Repartidor('Lucas', '989764699')
+        def repartidor = new Repartidor('Lucas', '989764699', new Restaurant())
         def puntuacion = new Puntuacion(3)
         def modalidad = new ModalidadParaLlevar(repartidor: repartidor, puntuacion: puntuacion)
         then:
@@ -45,7 +45,7 @@ class ModalidadParaLlevarSpec extends Specification implements DomainUnitTest<Mo
 
     void "test asignar repartidor tiene repartidor y repartidor deja de estar disponible"() {
         when:
-        def repartidor = new Repartidor('Lucas', '989764699')
+        def repartidor = new Repartidor('Lucas', '989764699', new Restaurant())
         def modalidad = new ModalidadParaLlevar()
         modalidad.asignarRepartidor(repartidor)
         then:

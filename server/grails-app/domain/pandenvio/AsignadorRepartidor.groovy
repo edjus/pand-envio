@@ -4,13 +4,13 @@ package pandenvio
 class AsignadorRepartidor {
 
     void asignarPara(Pedido pedido){
-        Repartidor repartidor = obtenerRepartidor()
+        Repartidor repartidor = obtenerRepartidor(pedido.restaurant)
         pedido.asignarA(repartidor)
     }
 
-    Repartidor obtenerRepartidor(){
+    Repartidor obtenerRepartidor(Restaurant restaurant){
         // TODO: Agregar lógica de repartidores disponibles
-        def repartidores = Repartidor.findAll { r -> r.disponible }
+        def repartidores = Repartidor.findAllWhere(disponible: true, restaurant: restaurant)
         if (repartidores.empty){
             return null
         }

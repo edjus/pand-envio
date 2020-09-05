@@ -81,7 +81,7 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
 
     void "test Pedido para llevar con repartidor"() {
         when:
-        Pedido pedido = new Pedido(new Cliente(), new ModalidadParaLlevar(repartidor: new Repartidor("Juan", "9897954")), new Restaurant())
+        Pedido pedido = new Pedido(new Cliente(), new ModalidadParaLlevar(repartidor: new Repartidor("Juan", "9897954", new Restaurant())), new Restaurant())
         then:
         pedido.tieneRepartidor()
     }
@@ -89,17 +89,17 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
     void "test Pedido para llevar asignado a repartidor"() {
         when:
         Pedido pedido = new Pedido(new Cliente(), new ModalidadParaLlevar(), new Restaurant())
-        Repartidor repartidor = new Repartidor("Juan", "9897954")
+        Repartidor repartidor = new Repartidor("Juan", "9897954", new Restaurant())
         pedido.asignarA(repartidor)
         then:
         pedido.tieneRepartidor()
         !repartidor.disponible
     }
 
-    void "test Pedido para retirnar asignado a repartidor no tiene repartidor"() {
+    void "test Pedido para retirar asignado a repartidor no tiene repartidor"() {
         when:
         Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), new Restaurant())
-        Repartidor repartidor = new Repartidor("Juan", "9897954")
+        Repartidor repartidor = new Repartidor("Juan", "9897954", new Restaurant())
         pedido.asignarA(repartidor)
         then:
         !pedido.tieneRepartidor()
