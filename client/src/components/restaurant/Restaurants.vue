@@ -34,8 +34,8 @@ export default {
     this.cargarRestaurantes()
   },
   methods: {
-    editarRestaurant: function(restaurant) {
-      this.restauranteActual = Object.assign({},restaurant)
+    editarRestaurant: function (restaurant) {
+      this.restauranteActual = Object.assign({}, restaurant)
       this.$refs.modal.show()
     },
     nuevoRestauranteActual: function () {
@@ -45,9 +45,9 @@ export default {
         direccion: ''
       }
     },
-    actualizarListadoRestaurantes: function(restaurant) {
-      const index = this.restaurantes.findIndex(x => x.id === restaurant.id);
-      if (index >= 0 ) {
+    actualizarListadoRestaurantes: function (restaurant) {
+      const index = this.restaurantes.findIndex(x => x.id === restaurant.id)
+      if (index >= 0) {
         this.restaurantes[index] = restaurant
         this.restaurantes = this.restaurantes.map(r => r)
       } else {

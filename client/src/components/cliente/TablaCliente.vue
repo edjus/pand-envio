@@ -28,7 +28,7 @@ export default {
   methods: {
     editarCliente: function (item) {
       this.$emit('edicionCliente', item)
-    },
+    }
   }
 }
 </script>

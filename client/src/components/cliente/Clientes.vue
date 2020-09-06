@@ -14,8 +14,9 @@
 </template>
 
 <script>
-import TablaCliente from "./TablaCliente";
-import FormularioCliente from "./FormularioCliente";
+import TablaCliente from './TablaCliente'
+import FormularioCliente from './FormularioCliente'
+
 export default {
   name: 'Clientes',
   components: {FormularioCliente, TablaCliente},
@@ -30,14 +31,14 @@ export default {
     this.cargarclientes()
   },
   methods: {
-    clearNotifications: function() {
+    clearNotifications: function () {
       this.$notify({
-        group: "notifications",
+        group: 'notifications',
         clean: true
-      });
+      })
     },
-    editarCliente: function(cliente) {
-      this.clienteActual = Object.assign({},cliente)
+    editarCliente: function (cliente) {
+      this.clienteActual = Object.assign({}, cliente)
       this.$refs.modal.show()
     },
     nuevoCliente: function () {
@@ -54,9 +55,9 @@ export default {
         }
       }
     },
-    actualizarListadoclientes: function(cliente) {
-      const index = this.clientes.findIndex(x => x.id === cliente.id);
-      if (index >= 0 ) {
+    actualizarListadoclientes: function (cliente) {
+      const index = this.clientes.findIndex(x => x.id === cliente.id)
+      if (index >= 0) {
         this.clientes[index] = cliente
         this.clientes = this.clientes.map(r => r)
       } else {
@@ -64,7 +65,7 @@ export default {
       }
     },
     guardarcliente: function (cliente) {
-      this.clearNotifications();
+      this.clearNotifications()
       if (cliente.id === 0) {
         delete cliente.id
       }
@@ -76,21 +77,21 @@ export default {
         .then(json => {
           if (!(json._embedded && json._embedded.errors)) {
             this.$notify({
-              group: "notifications",
-              type: "success",
-              title: "Cliente guardado exitosamente",
-            });
+              group: 'notifications',
+              type: 'success',
+              title: 'Cliente guardado exitosamente'
+            })
             this.actualizarListadoclientes(json.cliente)
             this.clienteActual = this.nuevoCliente()
           } else {
             console.error('Error cargando clientes: ' + json._embedded.errors[0])
             this.$notify({
-              group: "notifications",
-              type: "error",
+              group: 'notifications',
+              type: 'error',
               duration: 5000,
-              title: "No se puede guardar el cliente",
+              title: 'No se puede guardar el cliente',
               text: json._embedded.errors[0]
-            });
+            })
           }
         })
         .catch(error => {
@@ -102,25 +103,25 @@ export default {
       this.$refs.modal.show()
     },
     cargarclientes: async function () {
-      this.clearNotifications();
+      this.clearNotifications()
       fetch(`${this.serverURL}/cliente`)
         .then(r => r.json())
         .then(json => {
           this.clientes = json
           this.$notify({
-            group: "notifications",
-            type: "success",
-            title: "Carga de clientes exitosa"
-          });
+            group: 'notifications',
+            type: 'success',
+            title: 'Carga de clientes exitosa'
+          })
         })
         .catch(error => {
           console.error('Error cargando clientes: ' + error)
           this.$notify({
-            group: "notifications",
-            type: "error",
-            title: "No se pueden cargar clientes",
+            group: 'notifications',
+            type: 'error',
+            title: 'No se pueden cargar clientes',
             text: error
-          });
+          })
         })
     }
   }

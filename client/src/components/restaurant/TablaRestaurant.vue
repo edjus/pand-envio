@@ -26,7 +26,7 @@ export default {
   methods: {
     editarRestaurant: function (item) {
       this.$emit('restaurantEdicion', item)
-    },
+    }
   }
 }
 </script>

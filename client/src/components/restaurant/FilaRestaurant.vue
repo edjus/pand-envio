@@ -18,7 +18,7 @@ export default {
   methods: {
     editar: function () {
       this.$emit('restaurantEdicion', this.item)
-    },
+    }
   }
 }
 </script>

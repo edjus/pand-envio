@@ -14,12 +14,12 @@
 
 <script>
 export default {
-  name: "FilaCliente",
+  name: 'FilaCliente',
   props: ['item'],
   methods: {
     editar: function () {
       this.$emit('edicionCliente', this.item)
-    },
+    }
   }
 
 }

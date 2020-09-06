@@ -12,6 +12,7 @@
 
 <script>
 import { loguear } from '../services/AutenticacionService'
+
 export default {
   name: 'Cabecera',
   methods: {

@@ -2,8 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Restaurants from '../components/restaurant/Restaurants'
 import Dashboard from '../components/Dashboard'
-import Clientes from '../components/cliente/Clientes';
-import { esRol } from '../services/AutenticacionService';
+import Clientes from '../components/cliente/Clientes'
+import { esRol } from '../services/AutenticacionService'
 
 Vue.use(Router)
 
