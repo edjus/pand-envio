@@ -1,6 +1,6 @@
 <template>
   <nav class="col-2 d-none d-md-block bg-light sidebar">
-    <div class="sidebar-sticky">
+    <div class="sidebar-sticky" v-if="esRol('admin')">
       <ul class="nav flex-column">
         <li class="nav-item">
           <router-link to="/" class="nav-link" v-bind:class="getClass('/')">
@@ -38,11 +38,17 @@
 </template>
 
 <script>
+import { esRol } from '../services/AutenticacionService'
+
 export default {
   name: 'Botonera',
   methods: {
     getClass (property) {
       return property === this.$route.path ? 'active' : ''
+    },
+
+    esRol (rol) {
+      return esRol(rol)
     }
   }
 }
