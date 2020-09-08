@@ -32,6 +32,11 @@
             <i class="fas fa-tags"></i> Cupones
           </router-link>
         </li>
+        <li class="nav-item" v-if="esRol('cliente')">
+          <router-link to="/catalogo" class="nav-link" v-bind:class="getClass('/catalogo')">
+            <i class="fas fa-book-open"></i> Catálogo
+          </router-link>
+        </li>
       </ul>
     </div>
   </nav>
