@@ -5,8 +5,12 @@ const loguear = (nuevoRol) => {
 }
 
 const esRol = (rol) => {
-  const rolActual = localStorage.getItem('login')
-  return rolActual === rol
+  const curRol = localStorage.getItem('login')
+  return curRol === rol
 }
 
-export { loguear, esRol }
+const rolActual = () => {
+  return localStorage.getItem('login')
+}
+
+export { loguear, esRol, rolActual }
