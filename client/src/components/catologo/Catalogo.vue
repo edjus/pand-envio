@@ -43,6 +43,7 @@ export default {
     async agregarItem (producto) {
       try {
         await AppService.agregarItem(producto.id, producto.restaurant.id)
+        this.$emit('actualizarItems')
       } catch (error) {
         console.log(`error:  ${error.data}`)
       }
