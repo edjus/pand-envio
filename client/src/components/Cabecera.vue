@@ -1,7 +1,9 @@
 <template>
   <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">PandEnvio</a>
-    <button class="btn btn-secondary pull-left" v-show="esRol('cliente')" title="Pedido actual"><i class="fas fa-shopping-cart"></i> ({{ cantidadItems}})</button>
+    <a class="btn btn-secondary pull-left active" href="/pedido" v-show="esRol('cliente')" title="Pedido actual">
+      <i class="fas fa-shopping-cart"></i> ({{ cantidadItems}})
+      </a>
     <div class="form-inline my-2 my-lg-0 mr-2">
       <button id="btnadmin" class="btn btn-outline-secondary my-2 my-sm-0" @click="actualizarLogin('admin')">Login admin</button>
       <button id="btnduenio" class="btn btn-outline-secondary my-2 my-sm-0 ml-2" @click="actualizarLogin('duenio')">Login due&ntilde;o</button>

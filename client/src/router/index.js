@@ -4,6 +4,7 @@ import Restaurants from '../components/restaurant/Restaurants'
 import Dashboard from '../components/Dashboard'
 import Clientes from '../components/cliente/Clientes'
 import Catalogo from '../components/catologo/Catalogo'
+import Pedido from '../components/catologo/Pedido'
 import { esRol } from '../services/AutenticacionService'
 
 Vue.use(Router)
@@ -41,6 +42,15 @@ const router = new Router({
       path: '/catalogo',
       name: 'Catalogo',
       component: Catalogo,
+      meta: {
+        publico: false,
+        rol: 'cliente'
+      }
+    },
+    {
+      path: '/pedido',
+      name: 'Pedido',
+      component: Pedido,
       meta: {
         publico: false,
         rol: 'cliente'

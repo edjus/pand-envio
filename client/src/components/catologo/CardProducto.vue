@@ -12,7 +12,7 @@
 <script>
 
 export default {
-  name: 'Dashboard',
+  name: 'CardProducto',
   props: ['producto'],
   methods: {
     agregarProducto () {
