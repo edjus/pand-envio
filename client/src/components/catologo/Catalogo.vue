@@ -4,7 +4,7 @@
     <br>
     <ul :style="gridStyle" class="card-list">
       <li v-for="(producto, index) in productos" :key="index" class="card-item">
-        <card-producto :producto="producto"></card-producto>
+        <card-producto :producto="producto" @agregarProducto="agregarItem"></card-producto>
       </li>
     </ul>
   </div>
@@ -38,6 +38,14 @@ export default {
     async obtenerProductos () {
       const platos = await AppService.obtenerPlatos()
       this.productos = platos
+    },
+
+    async agregarItem (producto) {
+      try {
+        await AppService.agregarItem(producto.id, producto.restaurant.id)
+      } catch (error) {
+        console.log(`error:  ${error.data}`)
+      }
     }
   }
 }

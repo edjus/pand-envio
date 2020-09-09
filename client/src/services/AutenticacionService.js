@@ -13,4 +13,8 @@ const rolActual = () => {
   return localStorage.getItem('login')
 }
 
-export { loguear, esRol, rolActual }
+const idUsuarioActual = () => {
+  return 1 // TODO se permite cambiar o todos los roles van a ser con el usuario id 1 ?
+}
+
+export { loguear, esRol, rolActual, idUsuarioActual }
