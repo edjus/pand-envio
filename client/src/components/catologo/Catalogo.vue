@@ -3,17 +3,8 @@
     <h4>Platos</h4>
     <br>
     <ul :style="gridStyle" class="card-list">
-      <li v-for="(producto, index) in productos" v-bind:key="index" class="card-item">
-        <!-- TODO: CREAR COMPONENTE pasandole el producto-->
-        <div class="card" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title">{{ producto.nombre }} - {{ producto.id }}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">{{ producto.descripcion }}</h6>
-            <p class="card-text">Precio: {{ producto.precio }}</p>
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
-          </div>
-        </div>
+      <li v-for="(producto, index) in productos" :key="index" class="card-item">
+        <card-producto :producto="producto"></card-producto>
       </li>
     </ul>
   </div>
@@ -21,9 +12,11 @@
 
 <script>
 import * as AppService from '../../services/AppService'
+import CardProducto from './CardProducto'
 
 export default {
   name: 'Catologo',
+  components: {CardProducto},
   data () {
     return {
       productos: [],
@@ -60,6 +53,10 @@ export default {
 .card-item {
   background-color:#264d73;
   padding: 1em;
+}
+
+.card-item:hover {
+  background-color: #669999;
 }
 
 body {
