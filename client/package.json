@@ -18,6 +18,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.22",
     "@fortawesome/free-solid-svg-icons": "^5.10.2",
     "@fortawesome/vue-fontawesome": "^0.1.7",
+    "axios": "^0.20.0",
     "bootstrap": "^4.3.1",
     "husky": "^4.2.5",
     "jquery": "^3.5.1",

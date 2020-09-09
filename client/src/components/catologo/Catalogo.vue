@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import * as AppService from '../../services/AppService'
+
 export default {
   name: 'Catologo',
   data () {
@@ -40,16 +42,9 @@ export default {
     }
   },
   methods: {
-    obtenerProductos () {
-      fetch(`${this.serverURL}/plato`)
-        .then(r => r.json())
-        .then(json => {
-          console.log(json)
-          this.productos = json
-        })
-        .catch(error => {
-          console.error('Error cargando productos: ' + error)
-        })
+    async obtenerProductos () {
+      const platos = await AppService.obtenerPlatos()
+      this.productos = platos
     }
   }
 }
