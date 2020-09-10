@@ -25,6 +25,10 @@ class PedidoService {
             throw new RuntimeException('El resturante es inválido')
         }
 
+        if (tienePedidoEnArmado(cliente)){
+            throw new RuntimeException('No puede agregar otro pedido ya tiene uno en armando')
+        }
+
         new Pedido(cliente, modalidadEntrega, restaurant).save(failOnError: true)
     }
 
@@ -57,5 +61,10 @@ class PedidoService {
         }
         pedido.agregar(producto, cantidad)
         pedido.save(failOnError: true, flush: true)
+    }
+
+    boolean tienePedidoEnArmado(Cliente cliente) {
+        def pedidos = Pedido.findAllWhere(cliente: cliente, nombreEstado: 'en_armado')
+        !pedidos.empty
     }
 }
