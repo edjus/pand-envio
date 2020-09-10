@@ -11,6 +11,10 @@ class Item {
         cantidad nullable: false, min: 1
     }
 
+    static mapping = {
+        producto lazy: false
+    }
+
     Item(producto, cantidad, pedido) {
         this.producto = producto
         this.cantidad = cantidad

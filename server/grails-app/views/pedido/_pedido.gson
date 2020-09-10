@@ -11,6 +11,7 @@ json {
 			nombre: pedido.cliente.nombreCompleto()
 	estado pedido.estado.nombre
 	modalidad pedido.modalidadEntrega.nombre
+	precio pedido.calcularPrecio()
 	cupon tmpl.'/cuponDescuento/cuponDescuento'(pedido.cuponDeDescuento)
 	items tmpl.'/item/item'(pedido.items)
 	resturant tmpl.'/restaurant/restaurant'(pedido.restaurant)

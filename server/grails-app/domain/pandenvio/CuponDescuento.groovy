@@ -7,7 +7,7 @@ abstract class CuponDescuento {
 
     abstract BigDecimal aplicarDescuento(BigDecimal precio) throws CuponYaUtilizadoException
 
-    void permitirEn(Producto producto) {
+    boolean permitirEn(Producto producto) {
         producto.admiteA(this)
     }
 

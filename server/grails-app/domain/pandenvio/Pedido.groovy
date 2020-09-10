@@ -20,6 +20,10 @@ class Pedido {
         restaurant nullable: false
     }
 
+    static mapping = {
+        cuponDeDescuento lazy: false
+    }
+
     Pedido(cliente, modalidadEntrega, restaurant) {
         this.fecha = new Date()
         this.cliente = cliente
