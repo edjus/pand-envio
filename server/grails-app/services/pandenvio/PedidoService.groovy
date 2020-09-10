@@ -67,4 +67,13 @@ class PedidoService {
         def pedidos = Pedido.findAllWhere(cliente: cliente, nombreEstado: 'en_armado')
         !pedidos.empty
     }
+
+    List<Pedido> pedidoActual(Long clienteId) {
+        Cliente cliente = clienteService.obtenerCliente(clienteId)
+        if (!cliente) {
+            throw new RuntimeException('El cliente es inválido')
+        }
+
+        Pedido.findAllWhere(cliente: cliente, nombreEstado: 'en_armado')
+    }
 }

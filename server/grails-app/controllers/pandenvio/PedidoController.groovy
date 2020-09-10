@@ -5,6 +5,7 @@ import grails.rest.*
 import grails.converters.*
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST
+import static org.springframework.http.HttpStatus.NOT_FOUND
 import static org.springframework.http.HttpStatus.OK
 
 @Transactional(readOnly = true)
@@ -78,6 +79,19 @@ class PedidoController {
             Integer cantidad = request.JSON.cantidad
             Pedido pedido = pedidoService.agregarItem(pedidoId, producoId, cantidad)
             respond([pedido: pedido], status: OK)
+        } catch (RuntimeException e) {
+            respond e.message, status: BAD_REQUEST
+        }
+    }
+
+    def pedidoActual(Long clienteId){
+        try {
+            def pedidos = pedidoService.pedidoActual(clienteId)
+            if (pedidos.empty){
+                respond pedidos.empty, status: NOT_FOUND
+            } else{
+                respond([pedido: pedidos.first()], status: OK)
+            }
         } catch (RuntimeException e) {
             respond e.message, status: BAD_REQUEST
         }

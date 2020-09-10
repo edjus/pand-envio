@@ -20,6 +20,7 @@ class UrlMappings {
         put "/pedido/$pedidoId/siguienteEstado"(controller: 'pedido', action: 'actualizarEstado')
         put "/pedido/$pedidoId/cancelar"(controller: 'pedido', action: 'cancelar')
         post "/pedido/$pedidoId/item"(controller: 'pedido', action: 'agregarItem')
+        get "/pedido/actual/$clienteId"(controller: 'pedido', action: 'pedidoActual')
 
         "/"(controller: 'application', action:'index')
         "500"(view: '/error')
