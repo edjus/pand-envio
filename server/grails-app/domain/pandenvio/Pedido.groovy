@@ -28,7 +28,7 @@ class Pedido {
         this.fecha = new Date()
         this.cliente = cliente
         this.cuponDeDescuento = new CuponDescuentoNulo(fecha: fecha, activo: true, codigo: 'NULO')
-        this.setEstado(new EstadoRecibido())
+        this.setEstado(new EstadoEnArmado())
         this.modalidadEntrega = modalidadEntrega
         this.items = []
         this.restaurant = restaurant

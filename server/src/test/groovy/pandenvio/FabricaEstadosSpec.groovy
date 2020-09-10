@@ -6,11 +6,19 @@ import spock.lang.Specification
 
 class FabricaEstadosSpec extends Specification implements DomainUnitTest<FabricaEstados> {
 
+    void "test fabrica crea correctamente estado 'en_armado'"() {
+        when:
+        def estado = FabricaEstados.obtenerEstado('en_armado')
+        then:
+        estado.class == EstadoEnArmado
+        estado.nombre == 'en_armado'
+    }
+
     void "test fabrica crea correctamente estado recibido"() {
         when:
             def estado = FabricaEstados.obtenerEstado('recibido')
         then:
-            estado.class == EstadoRecibido.class
+            estado.class == EstadoRecibido
             estado.nombre == 'recibido'
     }
 

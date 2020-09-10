@@ -5,6 +5,29 @@ import spock.lang.Specification
 
 class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPedido> {
 
+    void "test estado 'en_armado' es correcto"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoEnArmado()
+        then:
+        estadoPedido.nombre == 'en_armado'
+    }
+
+
+    void "test estado siguiente a 'en_armado' es 'recibido'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoEnArmado()
+        ModalidadEntrega modalidad = new ModalidadParaRetirar()
+        then:
+        estadoPedido.siguienteEstado(modalidad).class == EstadoRecibido
+    }
+
+    void "test cancelar estado 'en_armado'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoEnArmado()
+        then:
+        estadoPedido.cancelar().class == EstadoCancelado
+    }
+
     void "test estado recibido es correcto"() {
         when:
             EstadoPedido estadoPedido = new EstadoRecibido()

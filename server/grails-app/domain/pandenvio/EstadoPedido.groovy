@@ -13,6 +13,21 @@ abstract class EstadoPedido {
 
     def iniciarPara(Pedido pedido) {}
 }
+class EstadoEnArmado extends EstadoPedido {
+    EstadoEnArmado() {
+        this.nombre = 'en_armado'
+    }
+
+    @Override
+    EstadoPedido siguienteEstado(ModalidadEntrega modalidadEntrega) {
+        new EstadoRecibido()
+    }
+
+    @Override
+    EstadoPedido cancelar() {
+        new EstadoCancelado()
+    }
+}
 
 class EstadoRecibido extends EstadoPedido {
     EstadoRecibido() {

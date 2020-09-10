@@ -134,16 +134,18 @@ class PedidoSpec extends Specification {
         when:
         Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
         pedido.agregar(plato, 2)
+        pedido.estado = estado
         pedido.cuponDeDescuento = cupon
         pedido.save(failOnError: true)
 
         then:
         def pedidoGuardado = Pedido.findById(pedido.id)
-        pedidoGuardado.siguienteEstado()
         pedidoGuardado.nombreEstado == 'en_preparacion'
+        pedidoGuardado.siguienteEstado()
+        pedidoGuardado.nombreEstado == 'listo'
         pedidoGuardado.save(failOnError: true)
         def pedidoGuardado2 = Pedido.findById(pedido.id)
-        pedidoGuardado2.nombreEstado == 'en_preparacion'
+        pedidoGuardado2.nombreEstado == 'listo'
     }
 
     void "test pedido estado siguiente a listo con modalidad para llevar y no hay repartidores es 'en espera'"() {

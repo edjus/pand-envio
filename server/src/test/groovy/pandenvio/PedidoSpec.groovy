@@ -12,7 +12,7 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
             pedido.validate()
             pedido.fecha.date.toString() == (new Date()).date.toString()
             pedido.cuponDeDescuento.class == CuponDescuentoNulo
-            pedido.estado.class == EstadoRecibido
+            pedido.estado.class == EstadoEnArmado
     }
 
     void "test cliente de un Pedido no puede ser null"() {
@@ -44,8 +44,8 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
         pedido.agregar(new Plato(restaurant: restaurant), 3)
         pedido.siguienteEstado()
         then:
-        pedido.estado.class == EstadoEnPreparacion.class
-        pedido.nombreEstado == 'en_preparacion'
+        pedido.estado.class == EstadoRecibido
+        pedido.nombreEstado == 'recibido'
     }
 
     void "test Pedido sin items no actualiza su estado"() {

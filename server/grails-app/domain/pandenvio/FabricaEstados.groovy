@@ -2,7 +2,7 @@ package pandenvio
 
 class FabricaEstados {
 
-    def static estados = ['recibido': EstadoRecibido, 'en_preparacion': EstadoEnPreparacion,
+    def static estados = ['en_armado': EstadoEnArmado, 'recibido': EstadoRecibido, 'en_preparacion': EstadoEnPreparacion,
                           'listo': EstadoListo, 'en_espera': EstadoEnEspera,
                           'en_entrega': EstadoEnEntrega, 'entregado': EstadoEntregado,
                           'no_entregado': EstadoNoEntregado, 'cancelado': EstadoCancelado]
