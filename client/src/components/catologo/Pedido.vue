@@ -28,7 +28,7 @@
           </div>
           <div class="card-footer">
               <div class="col-12 col-lg-4 offset-lg-8 col-md-6 offset-md-6">
-                  <a href=# class="btn btn-success form-control">
+                  <a href=# class="btn btn-success form-control" @click="confirmarPedido">
                     Confirmar pedido
                   </a>
               </div>
@@ -52,10 +52,18 @@ export default {
       pedido: null
     }
   },
+  methods: {
+    async confirmarPedido () {
+      try {
+        await AppService.confirmarPedido(this.pedido.id)
+      } catch (error) {
+        console.log(`Error: ${error}`)
+      }
+    }
+  },
   async created () {
     try {
       this.pedido = await AppService.obtenerPedidoActual()
-      console.log(this.pedido)
     } catch (error) {
       console.log(`error: ${error}`)
     }

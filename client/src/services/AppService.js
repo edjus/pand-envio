@@ -50,4 +50,9 @@ const obtenerPedidoActual = async () => {
   }
 }
 
-export { obtenerPlatos, crearPedido, agregarItem, obtenerPedidoActual }
+const confirmarPedido = async (pedidoId) => {
+  await axios.put(`${SERVER_URL}/pedido/${pedidoId}/siguienteEstado`)
+  location.reload()
+}
+
+export { obtenerPlatos, crearPedido, agregarItem, obtenerPedidoActual, confirmarPedido }
