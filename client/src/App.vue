@@ -9,6 +9,8 @@
 <script>
 import Cabecera from './components/Cabecera'
 import Aplicacion from './components/Aplicacion'
+import * as AppService from './services/AppService'
+import { esRol } from './services/AutenticacionService'
 
 export default {
   name: 'App',
@@ -24,7 +26,10 @@ export default {
     }
   },
   mounted () {
-    this.cantidadItems = localStorage.getItem('cantidadItems')
+    if (esRol('cliente')) {
+      AppService.obtenerPedidoActual()
+      this.cantidadItems = localStorage.getItem('cantidadItems')
+    }
   }
 }
 </script>

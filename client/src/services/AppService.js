@@ -36,12 +36,18 @@ const agregarItem = async (productoId, restaurantId) => {
 }
 
 const obtenerPedidoActual = async () => {
-  const pedidoId = localStorage.getItem('pedidoActual')
-  if (pedidoId) {
-    const response = await axios.get(`${SERVER_URL}/pedido/${pedidoId}`)
-    return response.data
+  try {
+    const clienteId = idUsuarioActual()
+    const response = await axios.get(`${SERVER_URL}/pedido/actual/${clienteId}`)
+    localStorage.setItem('cantidadItems', response.data.pedido.items.length)
+    localStorage.setItem('pedidoActual', response.data.pedido.id)
+    return response.data.pedido
+  } catch (error) {
+    localStorage.removeItem('cantidadItems')
+    localStorage.removeItem('pedidoActual')
+    console.log(`error: ${error}`)
+    return null
   }
-  return null
 }
 
 export { obtenerPlatos, crearPedido, agregarItem, obtenerPedidoActual }

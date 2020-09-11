@@ -12,21 +12,9 @@
           </div>
           <div class="card-body">
             <item-pedido v-for='item in pedido.items' :item='item' :key='item.id'></item-pedido>
-            <div class="row">
+            <div class="row cupon-total">
               <div class="col-12 col-md-5">
-                <div class="row">
-                  <div class="col-7">
-                    <input  id="txtCouponCode" class="form-control" placeholder="coupon code" />
-                  </div>
-                  <div class="col-5" style="margin-top:2px">
-                    <button type="submit" class="btn btn-sm btn-outline-success form-control" id="btnCoupon">
-                        Aplicar
-                    </button>
-                    <button type="submit" class="btn btn-sm btn-outline-danger form-control" id="btnRemoveCoupon">
-                        Quitar
-                    </button>
-                  </div>
-                </div>
+                <!-- TODO: AGREGAR componente cupon (input y botón activar) -->
               </div>
               <div class="col-12 col-md-6 offset-md-1 col-lg-4 offset-lg-3 pr-4">
                 <ul class="list-group">
@@ -76,5 +64,7 @@ export default {
 </script>
 
 <style scoped>
-
+.cupon-total {
+  padding-top: 10px;
+}
 </style>
