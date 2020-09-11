@@ -106,4 +106,28 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
         repartidor.disponible
     }
 
+    void "test Pedido agregar producto crea item con producto"() {
+        when:
+        Restaurant restaurant = new Restaurant()
+        Plato plato = new Plato(restaurant: restaurant)
+        Pedido pedido = new Pedido(new Cliente(), new ModalidadParaLlevar(), restaurant)
+        pedido.agregar(plato, 3)
+        then:
+        pedido.items.size() == 1
+        def item = pedido.items.find {i -> i.producto == plato}
+        item.cantidad == 3
+    }
+
+    void "test Pedido para agregar varias veces el mismo producto actualiza cantidad en item"() {
+        when:
+        Restaurant restaurant = new Restaurant()
+        Plato plato = new Plato(restaurant: restaurant)
+        Pedido pedido = new Pedido(new Cliente(), new ModalidadParaLlevar(), restaurant)
+        pedido.agregar(plato, 3)
+        pedido.agregar(plato, 5)
+        then:
+        pedido.items.size() == 1
+        def item = pedido.items.find {i -> i.producto == plato}
+        item.cantidad == 8
+    }
 }

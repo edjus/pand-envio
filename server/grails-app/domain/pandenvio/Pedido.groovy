@@ -38,7 +38,12 @@ class Pedido {
         if (producto.restaurant != this.restaurant){
             throw new ProductoNoPerteneceAlRestauranteException("El producto no pertenece al restaurante")
         }
-        addToItems(new Item(producto, cantidad, this))
+        Item item = items.find {i -> i.producto == producto}
+        if (!item) {
+            addToItems(new Item(producto, cantidad, this))
+        } else {
+            item.cantidad += cantidad
+        }
     }
 
     BigDecimal calcularPrecio() {
