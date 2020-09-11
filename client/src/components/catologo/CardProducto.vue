@@ -1,6 +1,9 @@
 <template>
     <div class="card" style="width: 18rem;">
       <div class="card-body">
+        <div class="d-none d-lg-block text-center py-2">
+          <img :src="'https://www.hola.com/imagenes/cocina/recetas/2014100174000/albondigas-cordero/0-784-791/albondigas-de-cordero-con-salsa-de-tomate-m.jpg'" width="120" height="80" class="rounded" />
+        </div>
         <h5 class="card-title">{{ producto.nombre }} - {{ producto.restaurant.id }}</h5>
         <h6 class="card-subtitle mb-2 text-muted">{{ producto.descripcion }}</h6>
         <p class="card-text">Precio: {{ producto.precio }}</p>
