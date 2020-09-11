@@ -22,6 +22,7 @@ class Pedido {
 
     static mapping = {
         cuponDeDescuento lazy: false
+        items cascade: "all-delete-orphan"
     }
 
     Pedido(cliente, modalidadEntrega, restaurant) {
@@ -72,6 +73,11 @@ class Pedido {
 
     void asignarA(Repartidor repartidor){
         this.modalidadEntrega.asignarRepartidor(repartidor)
+    }
+
+    void removerProducto(Producto producto){
+        def item = this.items.find {i -> i.producto == producto}
+        removeFromItems(item)
     }
 
     // TODO: ver como mejorar ésto y si es necesario, es una asignación manual del estado al cargar el pedido

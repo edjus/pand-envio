@@ -130,4 +130,22 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
         def item = pedido.items.find {i -> i.producto == plato}
         item.cantidad == 8
     }
+
+    void "test Pedido remover producto"() {
+        when:
+        Restaurant restaurant = new Restaurant()
+        Plato plato = new Plato(restaurant: restaurant)
+        Menu menu = new Menu(restaurant: restaurant)
+        Pedido pedido = new Pedido(new Cliente(), new ModalidadParaLlevar(), restaurant)
+        pedido.agregar(plato, 3)
+        pedido.agregar(menu, 2)
+        then:
+        pedido.items.size() == 2
+        def item = pedido.items.find {i -> i.producto == plato}
+        item.cantidad == 3
+        pedido.removerProducto(plato)
+        pedido.items.size() == 1
+        def item2 = pedido.items.find {i -> i.producto == plato}
+        !item2
+    }
 }

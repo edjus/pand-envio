@@ -75,9 +75,9 @@ class PedidoController {
     @Transactional
     def agregarItem(Long pedidoId) {
         try {
-            Long producoId = request.JSON.producto_id
+            Long productoId = request.JSON.producto_id
             Integer cantidad = request.JSON.cantidad
-            Pedido pedido = pedidoService.agregarItem(pedidoId, producoId, cantidad)
+            Pedido pedido = pedidoService.agregarItem(pedidoId, productoId, cantidad)
             respond([pedido: pedido], status: OK)
         } catch (RuntimeException e) {
             respond e.message, status: BAD_REQUEST
@@ -92,6 +92,16 @@ class PedidoController {
             } else{
                 respond([pedido: pedidos.first()], status: OK)
             }
+        } catch (RuntimeException e) {
+            respond e.message, status: BAD_REQUEST
+        }
+    }
+
+    @Transactional
+    def removerProducto(Long pedidoId, Long productoId) {
+        try {
+            Pedido pedido = pedidoService.removerProducto(pedidoId, productoId)
+            respond([], status: OK)
         } catch (RuntimeException e) {
             respond e.message, status: BAD_REQUEST
         }

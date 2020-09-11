@@ -76,4 +76,18 @@ class PedidoService {
 
         Pedido.findAllWhere(cliente: cliente, nombreEstado: 'en_armado')
     }
+
+    def removerProducto(Long pedidoId, Long productoId) {
+        Pedido pedido = Pedido.findById(pedidoId)
+        if (!pedido){
+            throw new RuntimeException('El pedido no es válido')
+        }
+        Producto producto = Producto.findById(productoId)
+        if (!producto){
+            throw new RuntimeException('El producto no es válido')
+        }
+        pedido.removerProducto(producto)
+        println("PEDIDO DIRTY: ${pedido.dirty}")
+        pedido.save(failOnError: true, flush: true)
+    }
 }

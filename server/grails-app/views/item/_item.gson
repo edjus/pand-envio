@@ -5,7 +5,7 @@ model {
 }
 
 json {
-	id item.id
+	producto_id item.producto.id
 	producto item.producto.nombre
 	precio_unitario item.producto.precio
 	cantidad item.cantidad
