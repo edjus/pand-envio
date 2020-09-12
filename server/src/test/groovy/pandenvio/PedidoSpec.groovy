@@ -148,4 +148,20 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
         def item2 = pedido.items.find {i -> i.producto == plato}
         !item2
     }
+
+    void "test Pedido no se puede remover producto en pedido con estado distinto a 'en armado"() {
+        when:
+        Restaurant restaurant = new Restaurant()
+        Plato plato = new Plato(restaurant: restaurant)
+        Menu menu = new Menu(restaurant: restaurant)
+        Pedido pedido = new Pedido(new Cliente(), new ModalidadParaLlevar(), restaurant)
+        pedido.agregar(plato, 3)
+        pedido.agregar(menu, 2)
+        pedido.estado = new EstadoRecibido()
+        pedido.removerProducto(plato)
+        then:
+        thrown NoSePudeRemoverProductoException
+        pedido.items.size() == 2
+
+    }
 }
