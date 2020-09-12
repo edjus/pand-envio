@@ -6,6 +6,7 @@ import Clientes from '../components/cliente/Clientes'
 import Catalogo from '../components/catologo/Catalogo'
 import Pedido from '../components/catologo/Pedido'
 import { esRol } from '../services/AutenticacionService'
+import Repartidor from "../components/repartidor/Repartidor";
 
 Vue.use(Router)
 
@@ -54,6 +55,16 @@ const router = new Router({
       meta: {
         publico: false,
         rol: 'cliente'
+      }
+    },
+    ,
+    {
+      path: '/repartidores',
+      name: 'Repartidor',
+      component: Repartidor,
+      meta: {
+        publico: false,
+        rol: 'admin'
       }
     }
   ]
