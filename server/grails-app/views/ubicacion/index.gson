@@ -1,0 +1,8 @@
+import pandenvio.Ubicacion
+
+model {
+	Iterable<Ubicacion> ubicacionList
+}
+
+json tmpl.ubicacion(ubicacionList ?: [])
+

@@ -1,0 +1,7 @@
+import pandenvio.Ubicacion
+
+model {
+	Ubicacion ubicacion
+}
+
+json g.render(ubicacion, [resolveTemplate: false])

@@ -4,4 +4,11 @@ model {
 	Cliente cliente
 }
 
-json g.render(cliente, [resolveTemplate: false])
+json {
+	id cliente.id
+	nombre cliente.nombre
+	apellido cliente.apellido
+	mail cliente.mail
+	ubicacion tmpl.'/ubicacion/ubicacion'(cliente.ubicacion)
+	telefono cliente.telefono
+}
