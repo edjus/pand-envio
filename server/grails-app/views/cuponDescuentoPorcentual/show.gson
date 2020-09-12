@@ -1,0 +1,7 @@
+import pandenvio.CuponDescuentoPorcentual
+
+model {
+	CuponDescuentoPorcentual cuponDescuentoPorcentual
+}
+
+json tmpl.cuponDescuentoPorcentual(cuponDescuentoPorcentual)

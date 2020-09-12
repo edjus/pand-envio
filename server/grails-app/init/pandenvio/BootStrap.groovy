@@ -14,10 +14,11 @@ class BootStrap {
         log.info "Loading database..."
 
         Ubicacion juanPerezUbicacion = new Ubicacion(calle: "Paunero", altura: 2030, pisoYDepartamento: null)
-        Cliente juanPerez = new Cliente(nombre: "Juan", apellido: "Perez", mail: "juanperez@yahoo.com.ar", ubicacion: juanPerezUbicacion, telefono: "1138465977")
+        Cliente juanPerez = new Cliente(nombre: "Juan", apellido: "Perez", mail: "juanperez@yahoo.com.ar", ubicacion: juanPerezUbicacion, telefono: "1138465977",cupones:null)
+        CuponDescuento cupon1 = new CuponDescuentoPorcentual(cliente:juanPerez, activo: true, porcentaje: 10, codigo: 'ABC', fecha: new Date())
 
         Ubicacion pepeArgentoUbicacion = new Ubicacion(calle: "Paseo Colon", altura: 850, pisoYDepartamento: null)
-        Cliente pepeArgento = new Cliente(nombre: "Pepe", apellido: "Argento", mail: "pepeargento@fi.uba.com.ar", ubicacion: pepeArgentoUbicacion, telefono: "1125146958")
+        Cliente pepeArgento = new Cliente(nombre: "Pepe", apellido: "Argento", mail: "pepeargento@fi.uba.com.ar", ubicacion: pepeArgentoUbicacion, telefono: "1125146958",cupones:cupon1)
 
         clienteService.agregarCliente(juanPerez)
         clienteService.agregarCliente(pepeArgento)
@@ -43,7 +44,7 @@ class BootStrap {
         Producto menu = new Menu(nombre: 'Viernes', precio: 400, restaurant: restaurante)
                 .addToPlatos(plato)
                 .save(failOnError: true)
-        CuponDescuento cupon = new CuponDescuentoPorcentual(activo: true, porcentaje: 10, codigo: 'ABC', fecha: new Date())
+        CuponDescuento cupon = new CuponDescuentoPorcentual(cliente:pepeArgento, activo: true, porcentaje: 10, codigo: 'ABC', fecha: new Date())
                 .save(failOnError: true)
         ModalidadEntrega modalidadEntrega = new ModalidadParaRetirar()
                 .save(failOnError: true)

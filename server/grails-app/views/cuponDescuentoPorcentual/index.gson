@@ -1,0 +1,8 @@
+import pandenvio.CuponDescuentoPorcentual
+
+model {
+	Iterable<CuponDescuentoPorcentual> cuponDescuentoPorcentualList
+}
+
+json tmpl.cuponDescuentoPorcentual(cuponDescuentoPorcentualList ?: [])
+

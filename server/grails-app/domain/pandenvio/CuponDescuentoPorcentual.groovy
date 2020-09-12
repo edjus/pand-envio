@@ -2,7 +2,10 @@ package pandenvio
 
 class CuponDescuentoPorcentual extends CuponDescuento {
 
+    static belongsTo = [cliente: Cliente]
+
     BigDecimal porcentaje
+
 
     static constraints = {
         porcentaje(range: 1..99)

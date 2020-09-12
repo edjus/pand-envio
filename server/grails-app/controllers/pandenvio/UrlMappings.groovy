@@ -15,6 +15,7 @@ class UrlMappings {
         "/plato"(resources:"plato")
         "/menu"(resources:"menu")
         "/repartidor"(resources:"repartidor")
+        "/cupones"(resources:"cupones")
 
 
 
