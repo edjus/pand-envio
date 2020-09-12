@@ -9,5 +9,5 @@ json {
 	nombre repartidor.nombre
 	disponible repartidor.disponible
 	dni repartidor.dni
-	resturant tmpl.'/restaurant/restaurant'(repartidor.restaurant)
+	restaurant tmpl.'/restaurant/restaurant'(repartidor.restaurant)
 }
