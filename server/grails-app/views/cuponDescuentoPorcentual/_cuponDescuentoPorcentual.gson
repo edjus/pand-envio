@@ -1,0 +1,14 @@
+import pandenvio.CuponDescuentoPorcentual
+
+model {
+	CuponDescuentoPorcentual cuponDescuentoPorcentual
+}
+
+json {
+	    id cuponDescuentoPorcentual.id
+        activo cuponDescuentoPorcentual.activo
+        fecha cuponDescuentoPorcentual.fecha
+        codigo cuponDescuentoPorcentual.codigo
+        porcentaje cuponDescuentoPorcentual.porcentaje
+		cliente tmpl.'/cliente/cliente'(cuponDescuentoPorcentual.cliente)
+}
