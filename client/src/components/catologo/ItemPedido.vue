@@ -23,7 +23,7 @@
               </div>
           </div>
           <div class="col-2 col-sm-4 col-lg-2 text-right">
-              <button type="submit" class="btn btn-outline-danger" >
+              <button type="submit" class="btn btn-outline-danger" @click="removerProducto" >
                   <i class="fas fa-trash"></i>
               </button>
           </div>
@@ -33,9 +33,16 @@
 </template>
 
 <script>
+import * as AppService from '../../services/AppService'
+
 export default {
   name: 'ItemPedido',
-  props: ['item']
+  props: ['item', 'pedidoId'],
+  methods: {
+    async removerProducto () {
+      await AppService.removerProducto(this.pedidoId, this.item.producto_id)
+    }
+  }
 }
 </script>
 
