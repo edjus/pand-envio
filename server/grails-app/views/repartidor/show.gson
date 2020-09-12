@@ -1,0 +1,7 @@
+import pandenvio.Repartidor
+
+model {
+	Repartidor repartidor
+}
+
+json tmpl.repartidor(repartidor)

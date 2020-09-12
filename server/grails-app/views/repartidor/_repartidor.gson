@@ -1,0 +1,13 @@
+import pandenvio.Repartidor
+
+model {
+	Repartidor repartidor
+}
+
+json {
+	id repartidor.id
+	nombre repartidor.nombre
+	disponible repartidor.disponible
+	dni repartidor.dni
+	resturant tmpl.'/restaurant/restaurant'(repartidor.restaurant)
+}

@@ -1,0 +1,8 @@
+import pandenvio.Repartidor
+
+model {
+	Iterable<Repartidor> repartidorList
+}
+
+json tmpl.repartidor(repartidorList ?: [])
+
