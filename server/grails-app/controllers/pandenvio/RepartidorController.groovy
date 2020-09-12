@@ -22,12 +22,6 @@ class RepartidorController {
         }
     }
 
-    @Transactional
-    def delete(String dni) {
-        RepartidorService.borrar(dni)
-        respond([dni:dni], status: OK)
-    }
-
 
     @Transactional
     def save(Repartidor repartidor) {
