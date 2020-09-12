@@ -11,10 +11,11 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for='cupon in cupones'>
+      <tr v-for='cupon in cupones' v-bind:class="getClass(cupon)">
         <td>{{ cupon.id }}</td>
-        <td>{{ cupon.Fecha }}</td>
-        <td>{{ cupon.Activo }}</td>
+        <td>{{ cupon.fecha }}</td>
+        <td>{{ cupon.codigo }}</td>
+        <td>{{ cupon.activo }}</td>
         <td>{{ cupon.cliente.nombre + ' ' + cupon.cliente.apellido}}</td>
       </tr>
       </tbody>
@@ -25,10 +26,20 @@
 <script>
 export default {
   props: ['cupones'],
-  name: "TablaCupon"
+  name: "TablaCupon",
+  methods:{
+    getClass (cupon) {
+      return cupon.activo ? 'activo' : 'usado'
+    },
+  }
 }
 </script>
 
 <style scoped>
-
+.activo {
+  background-color: #ecffe9 !important;
+}
+.usado {
+  background-color: #ffe9ec !important;
+}
 </style>
