@@ -11,7 +11,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for='cupon in cupones' v-bind:class="getClass(cupon)">
+      <tr v-for='cupon in cupones' v-bind:class="getClass(cupon)" :key='cupon.id'>
         <td>{{ cupon.id }}</td>
         <td>{{ cupon.fecha }}</td>
         <td>{{ cupon.codigo }}</td>
@@ -26,11 +26,11 @@
 <script>
 export default {
   props: ['cupones'],
-  name: "TablaCupon",
-  methods:{
+  name: 'TablaCupon',
+  methods: {
     getClass (cupon) {
       return cupon.activo ? 'activo' : 'usado'
-    },
+    }
   }
 }
 </script>
