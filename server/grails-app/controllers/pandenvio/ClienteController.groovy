@@ -25,7 +25,6 @@ class ClienteController {
 
     @Transactional
     def save(Cliente cliente) {
-
         //Common controller validations: empty values, non-zero values, etc..
         if (cliente.hasErrors()) {
             respond cliente.errors, view:'create', status:BAD_REQUEST
