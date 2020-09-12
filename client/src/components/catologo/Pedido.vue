@@ -11,7 +11,8 @@
             </div>
           </div>
           <div class="card-body">
-            <item-pedido v-for='item in pedido.items' :item='item' :key='item.id'></item-pedido>
+            <item-pedido v-for='item in pedido.items' :item='item' :pedidoId='pedido.id' :key='item.id'>
+            </item-pedido>
             <div class="row cupon-total">
               <div class="col-12 col-md-5">
                 <!-- TODO: AGREGAR componente cupon (input y botón activar) -->
@@ -64,6 +65,7 @@ export default {
   async created () {
     try {
       this.pedido = await AppService.obtenerPedidoActual()
+      console.log(this.pedido.items)
     } catch (error) {
       console.log(`error: ${error}`)
     }

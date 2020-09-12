@@ -55,4 +55,13 @@ const confirmarPedido = async (pedidoId) => {
   location.reload()
 }
 
-export { obtenerPlatos, crearPedido, agregarItem, obtenerPedidoActual, confirmarPedido }
+const removerProducto = async (pedidoId, productoId) => {
+  try {
+    await axios.delete(`${SERVER_URL}/pedido/${pedidoId}/producto/${productoId}`)
+    location.reload()
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export { obtenerPlatos, crearPedido, agregarItem, obtenerPedidoActual, confirmarPedido, removerProducto }
