@@ -17,6 +17,8 @@ class UrlMappings {
         "/repartidor"(resources:"repartidor")
 
 
+
+
         // pedido
         "/pedido"(resources:"pedido")
         put "/pedido/$pedidoId/siguienteEstado"(controller: 'pedido', action: 'actualizarEstado')

@@ -8,12 +8,8 @@ class RepartidorService {
         repartidor.save flush:true
     }
 
-    def borrar(String dni) {
-        Repartidor repartidor = Repartidor.get(dni)
-        repartidor.delete flush:true
-    }
 
-    def  obtenerRepartidor(String dni) {
-        Repartidor.findById(dni)
+    def  obtenerRepartidor(Long id) {
+        Repartidor.findById(id)
     }
 }
