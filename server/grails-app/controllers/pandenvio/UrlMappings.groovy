@@ -14,6 +14,8 @@ class UrlMappings {
         "/restaurant"(resources:"restaurant")
         "/plato"(resources:"plato")
         "/menu"(resources:"menu")
+        "/repartidor"(resources:"repartidor")
+
 
         // pedido
         "/pedido"(resources:"pedido")
