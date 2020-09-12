@@ -28,6 +28,13 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         estadoPedido.cancelar().class == EstadoCancelado
     }
 
+    void "test puede remover producto en estado 'en_armado'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoEnArmado()
+        then:
+        estadoPedido.puedeRemoverProducto()
+    }
+
     void "test estado recibido es correcto"() {
         when:
             EstadoPedido estadoPedido = new EstadoRecibido()
@@ -48,6 +55,13 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         EstadoPedido estadoPedido = new EstadoRecibido()
         then:
         estadoPedido.cancelar().class == EstadoCancelado
+    }
+
+    void "test no puede remover producto en estado 'recibido'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoRecibido()
+        then:
+        !estadoPedido.puedeRemoverProducto()
     }
 
     void "test estado en preparacion es correcto"() {
@@ -72,6 +86,13 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         estadoPedido.cancelar().class == EstadoCancelado
     }
 
+    void "test no puede remover producto en estado 'en preparacion'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoEnPreparacion()
+        then:
+        !estadoPedido.puedeRemoverProducto()
+    }
+
     void "test estado listo es correcto"() {
         when:
             EstadoPedido estadoPedido = new EstadoListo()
@@ -93,6 +114,13 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         estadoPedido.cancelar()
         then:
         thrown PedidoNoSePuedeCancelarException
+    }
+
+    void "test no puede remover producto en estado 'listo'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoListo()
+        then:
+        !estadoPedido.puedeRemoverProducto()
     }
 
     void "test estado siguiente a 'listo' es 'en entrega' si la modalidad es para llevar"() {
@@ -126,6 +154,13 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         thrown PedidoNoSePuedeCancelarException
     }
 
+    void "test no puede remover producto en estado 'en espera'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoEnEspera()
+        then:
+        !estadoPedido.puedeRemoverProducto()
+    }
+
     void "test estado 'en entrega' es correcto"() {
         when:
         EstadoPedido estadoPedido = new EstadoEnEntrega()
@@ -147,6 +182,13 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         estadoPedido.cancelar()
         then:
         thrown PedidoNoSePuedeCancelarException
+    }
+
+    void "test no puede remover producto en estado 'en entrega'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoEnEntrega()
+        then:
+        !estadoPedido.puedeRemoverProducto()
     }
 
     void "test estado entregado es correcto"() {
@@ -173,6 +215,13 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         thrown PedidoNoSePuedeCancelarException
     }
 
+    void "test no puede remover producto en estado 'entregado'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoEntregado()
+        then:
+        !estadoPedido.puedeRemoverProducto()
+    }
+
     void "test estado no entregado es correcto"() {
         when:
         EstadoPedido estadoPedido = new EstadoNoEntregado()
@@ -197,6 +246,13 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         thrown PedidoNoSePuedeCancelarException
     }
 
+    void "test no puede remover producto en estado 'no entregado'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoNoEntregado()
+        then:
+        !estadoPedido.puedeRemoverProducto()
+    }
+
     void "test estado cancelado es correcto"() {
         when:
         EstadoPedido estadoPedido = new EstadoCancelado()
@@ -218,5 +274,12 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         EstadoPedido estadoPedido = new EstadoCancelado()
         then:
         estadoPedido.cancelar().class == EstadoCancelado
+    }
+
+    void "test no puede remover producto en estado 'cancelado'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoCancelado()
+        then:
+        !estadoPedido.puedeRemoverProducto()
     }
 }

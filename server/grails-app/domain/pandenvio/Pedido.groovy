@@ -76,8 +76,11 @@ class Pedido {
     }
 
     void removerProducto(Producto producto){
+        if (!this.estado.puedeRemoverProducto()){
+            throw  new NoSePudeRemoverProductoException()
+        }
         def item = this.items.find {i -> i.producto == producto}
-        removeFromItems(item)
+        removeFromItems (item)
     }
 
     // TODO: ver como mejorar ésto y si es necesario, es una asignación manual del estado al cargar el pedido
