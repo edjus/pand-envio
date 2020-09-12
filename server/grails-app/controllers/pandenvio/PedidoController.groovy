@@ -114,4 +114,9 @@ class PedidoController {
         log.error "Exception occurred. ${exception?.message}", exception
         respond exception.message, status: BAD_REQUEST
     }
+
+    def handlerException(final NoSePudeRemoverProductoException exception) {
+        log.error "Exception occurred. ${exception?.message}", exception
+        respond exception.message, status: BAD_REQUEST
+    }
 }
