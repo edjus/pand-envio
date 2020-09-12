@@ -46,7 +46,7 @@ export default {
     eliminarRepartidor: function (repartidor) {
       this.clearNotifications()
       fetch(`${this.serverURL}/repartidor/${repartidor.id}`, {
-        method: 'DELETE',
+        method: 'DELETE'
       })
         .then(res => res.json())
         .then(json => {

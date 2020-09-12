@@ -7,7 +7,7 @@
     <td>{{ item.restaurant.nombre }}</td>
     <td>
       <button class='btn btn-primary' v-on:click="editar"><i class='fas fa-edit'></i> Editar</button>
-      <button class='btn btn-danger' v-on:click="eliminar"><i class='fas fa-trash-alt'></i> Eliminar</button>
+      <button class='btn btn-danger disabled' disabled="true" v-on:click="eliminar"><i class='fas fa-trash-alt'></i> Eliminar</button>
     </td>
   </tr>
 </template>
