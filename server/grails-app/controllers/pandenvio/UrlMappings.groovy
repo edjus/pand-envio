@@ -24,7 +24,7 @@ class UrlMappings {
         "/pedido"(resources:"pedido")
         put "/pedido/$pedidoId/siguienteEstado"(controller: 'pedido', action: 'actualizarEstado')
         put "/pedido/$pedidoId/cancelar"(controller: 'pedido', action: 'cancelar')
-        post "/pedido/$pedidoId/item"(controller: 'pedido', action: 'agregarItem')
+        post "/pedido/$pedidoId/producto"(controller: 'pedido', action: 'agregarProducto')
         get "/pedido/actual/$clienteId"(controller: 'pedido', action: 'pedidoActual')
         delete "/pedido/$pedidoId/producto/$productoId"(controller: 'pedido', action: 'removerProducto')
 

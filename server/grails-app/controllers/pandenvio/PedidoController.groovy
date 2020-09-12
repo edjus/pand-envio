@@ -1,8 +1,6 @@
 package pandenvio
 
 import grails.gorm.transactions.Transactional
-import grails.rest.*
-import grails.converters.*
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST
 import static org.springframework.http.HttpStatus.NOT_FOUND
@@ -73,11 +71,11 @@ class PedidoController {
     - cantidad: número con la cantidad del producto a agregar al pedido (min 1)
     */
     @Transactional
-    def agregarItem(Long pedidoId) {
+    def agregarProducto(Long pedidoId) {
         try {
             Long productoId = request.JSON.producto_id
             Integer cantidad = request.JSON.cantidad
-            Pedido pedido = pedidoService.agregarItem(pedidoId, productoId, cantidad)
+            Pedido pedido = pedidoService.agregarProducto(pedidoId, productoId, cantidad)
             respond([pedido: pedido], status: OK)
         } catch (RuntimeException e) {
             respond e.message, status: BAD_REQUEST
