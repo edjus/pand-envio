@@ -18,7 +18,7 @@ class BootStrap {
         CuponDescuento cupon1 = new CuponDescuentoPorcentual(cliente:juanPerez, activo: true, porcentaje: 10, codigo: 'ABC', fecha: new Date())
 
         Ubicacion pepeArgentoUbicacion = new Ubicacion(calle: "Paseo Colon", altura: 850, pisoYDepartamento: null)
-        Cliente pepeArgento = new Cliente(nombre: "Pepe", apellido: "Argento", mail: "pepeargento@fi.uba.com.ar", ubicacion: pepeArgentoUbicacion, telefono: "1125146958",cupones:cupon1)
+        Cliente pepeArgento = new Cliente(nombre: "Pepe", apellido: "Argento", mail: "pepeargento@fi.uba.com.ar", ubicacion: pepeArgentoUbicacion, telefono: "1125146958")
 
         clienteService.agregarCliente(juanPerez)
         clienteService.agregarCliente(pepeArgento)

@@ -50,7 +50,7 @@ class PedidoService {
         pedido.save(failOnError: true, flush: true)
     }
 
-    def agregarItem(Long pedidoId, Long productoId, Integer cantidad) {
+    def agregarProducto(Long pedidoId, Long productoId, Integer cantidad) {
         Pedido pedido = Pedido.findById(pedidoId)
         if (!pedido){
             throw new RuntimeException('El pedido no es válido')
