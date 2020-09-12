@@ -4,7 +4,7 @@
     <br>
     <ul :style="gridStyle" class="card-list">
       <li v-for="(producto, index) in productos" :key="index" class="card-item">
-        <card-producto :producto="producto" @agregarProducto="agregarItem"></card-producto>
+        <card-producto :producto="producto" @agregarProducto="agregarProducto"></card-producto>
       </li>
     </ul>
   </div>
@@ -40,9 +40,9 @@ export default {
       this.productos = platos
     },
 
-    async agregarItem (producto) {
+    async agregarProducto (producto) {
       try {
-        await AppService.agregarItem(producto.id, producto.restaurant.id)
+        await AppService.agregarProducto(producto.id, producto.restaurant.id)
         this.$emit('actualizarItems')
       } catch (error) {
         console.log(`error:  ${error.data}`)
