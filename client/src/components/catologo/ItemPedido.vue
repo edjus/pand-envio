@@ -12,12 +12,12 @@
           </div>
           <div class="col-6 col-sm-4 col-lg-6">
               <div class="float-right mx-1">
-                  <button type="submit" class="btn btn-primary" >
+                  <button type="submit" class="btn btn-primary" @click="sumarUno" >
                       <i class="fas fa-plus"></i>
                   </button>
               </div>
               <div class="float-right mx-1">
-                  <button type="submit" class="btn btn-danger" >
+                  <button type="submit" class="btn btn-danger" @click="restarUno" >
                       <i class="fas fa-minus"></i>
                   </button>
               </div>
@@ -37,10 +37,18 @@ import * as AppService from '../../services/AppService'
 
 export default {
   name: 'ItemPedido',
-  props: ['item', 'pedidoId'],
+  props: ['item', 'pedidoId', 'restaurnteId'],
   methods: {
     async removerProducto () {
       await AppService.removerProducto(this.pedidoId, this.item.producto_id)
+    },
+
+    sumarUno () {
+      this.$emit('sumarUno', this.item.producto_id, this.item.cantidad)
+    },
+
+    restarUno () {
+      this.$emit('restarUno', this.item.producto_id, this.item.cantidad)
     }
   }
 }
