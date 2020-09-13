@@ -13,7 +13,7 @@ abstract class EstadoPedido {
 
     def iniciarPara(Pedido pedido) {}
 
-    boolean puedeRemoverProducto() { false }
+    boolean puedeActualizarProductos() { false }
 }
 class EstadoEnArmado extends EstadoPedido {
     EstadoEnArmado() {
@@ -31,7 +31,7 @@ class EstadoEnArmado extends EstadoPedido {
     }
 
     @Override
-    boolean puedeRemoverProducto() { true }
+    boolean puedeActualizarProductos() { true }
 }
 
 class EstadoRecibido extends EstadoPedido {

@@ -87,7 +87,20 @@ class PedidoService {
             throw new RuntimeException('El producto no es válido')
         }
         pedido.removerProducto(producto)
-        println("PEDIDO DIRTY: ${pedido.dirty}")
+        pedido.save(failOnError: true, flush: true)
+    }
+
+    def actualizarProducto(Long pedidoId, Long productoId, Integer cantidad) {
+        Pedido pedido = Pedido.findById(pedidoId)
+        if (!pedido){
+            throw new RuntimeException('El pedido no es válido')
+        }
+        Producto producto = Producto.findById(productoId)
+        if (!producto){
+            throw new RuntimeException('El producto no es válido')
+        }
+
+        pedido.actualizarCantidad(producto, cantidad)
         pedido.save(failOnError: true, flush: true)
     }
 }

@@ -32,7 +32,7 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         when:
         EstadoPedido estadoPedido = new EstadoEnArmado()
         then:
-        estadoPedido.puedeRemoverProducto()
+        estadoPedido.puedeActualizarProductos()
     }
 
     void "test estado recibido es correcto"() {
@@ -61,7 +61,7 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         when:
         EstadoPedido estadoPedido = new EstadoRecibido()
         then:
-        !estadoPedido.puedeRemoverProducto()
+        !estadoPedido.puedeActualizarProductos()
     }
 
     void "test estado en preparacion es correcto"() {
@@ -90,7 +90,7 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         when:
         EstadoPedido estadoPedido = new EstadoEnPreparacion()
         then:
-        !estadoPedido.puedeRemoverProducto()
+        !estadoPedido.puedeActualizarProductos()
     }
 
     void "test estado listo es correcto"() {
@@ -120,7 +120,7 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         when:
         EstadoPedido estadoPedido = new EstadoListo()
         then:
-        !estadoPedido.puedeRemoverProducto()
+        !estadoPedido.puedeActualizarProductos()
     }
 
     void "test estado siguiente a 'listo' es 'en entrega' si la modalidad es para llevar"() {
@@ -158,7 +158,7 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         when:
         EstadoPedido estadoPedido = new EstadoEnEspera()
         then:
-        !estadoPedido.puedeRemoverProducto()
+        !estadoPedido.puedeActualizarProductos()
     }
 
     void "test estado 'en entrega' es correcto"() {
@@ -188,7 +188,7 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         when:
         EstadoPedido estadoPedido = new EstadoEnEntrega()
         then:
-        !estadoPedido.puedeRemoverProducto()
+        !estadoPedido.puedeActualizarProductos()
     }
 
     void "test estado entregado es correcto"() {
@@ -219,7 +219,7 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         when:
         EstadoPedido estadoPedido = new EstadoEntregado()
         then:
-        !estadoPedido.puedeRemoverProducto()
+        !estadoPedido.puedeActualizarProductos()
     }
 
     void "test estado no entregado es correcto"() {
@@ -250,7 +250,7 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         when:
         EstadoPedido estadoPedido = new EstadoNoEntregado()
         then:
-        !estadoPedido.puedeRemoverProducto()
+        !estadoPedido.puedeActualizarProductos()
     }
 
     void "test estado cancelado es correcto"() {
@@ -280,6 +280,6 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         when:
         EstadoPedido estadoPedido = new EstadoCancelado()
         then:
-        !estadoPedido.puedeRemoverProducto()
+        !estadoPedido.puedeActualizarProductos()
     }
 }
