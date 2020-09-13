@@ -64,4 +64,22 @@ const removerProducto = async (pedidoId, productoId) => {
   }
 }
 
-export { obtenerPlatos, crearPedido, agregarProducto, obtenerPedidoActual, confirmarPedido, removerProducto }
+const editarProducto = async (pedidoId, productoId, cantidad) => {
+  try {
+    const data = {cantidad: cantidad}
+    const response = await axios.put(`${SERVER_URL}/pedido/${pedidoId}/producto/${productoId}`, data)
+    return response.data.pedido
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export {
+  obtenerPlatos,
+  crearPedido,
+  agregarProducto,
+  obtenerPedidoActual,
+  confirmarPedido,
+  removerProducto,
+  editarProducto
+}
