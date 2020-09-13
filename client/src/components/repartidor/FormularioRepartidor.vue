@@ -37,7 +37,7 @@
 <script>
 
 import $$ from 'jquery'
-import CampoSelect from "../form/CampoSelect";
+import CampoSelect from '../form/CampoSelect'
 
 export default {
   name: 'FormularioRepartidor',

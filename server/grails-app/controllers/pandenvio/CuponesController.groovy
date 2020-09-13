@@ -5,33 +5,33 @@ import grails.gorm.transactions.*
 import static org.springframework.http.HttpStatus.*
 
 @Transactional(readOnly = true)
-class ClienteController {
+class CuponesController {
 
-    ClienteService clienteService;
+    CuponesService cuponesService;
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Cliente.list(params), model:[clienteCount: Cliente.count()]
+        respond CuponDescuentoPorcentual.list(params), model:[cuponesCount: CuponDescuentoPorcentual.count()]
     }
 
-    def show(Cliente cliente) {
-        if (cliente == null) {
+    def show(CuponDescuentoPorcentual cupon) {
+        if (cupon == null) {
             render status:404
         }
         else {
-            return [cliente: cliente]
+            return [cupon: cupon]
         }
     }
 
     @Transactional
-    def save(Cliente cliente) {
+    def save(CuponDescuentoPorcentual cupon) {
         //Common controller validations: empty values, non-zero values, etc..
         if (cliente.hasErrors()) {
-            respond cliente.errors, view:'create', status:BAD_REQUEST
+            respond cupon.errors, view:'create', status:BAD_REQUEST
         } else {
             try {
-                clienteService.agregarCliente(cliente)
-                respond([cliente:cliente], status: CREATED)
+                clienteService.agregarCupon(cupon)
+                respond([cupon:cupon], status: CREATED)
             } catch (DatosNoPuedenSerNulos error) {
                 render status:BAD_REQUEST, message: error.message
             }

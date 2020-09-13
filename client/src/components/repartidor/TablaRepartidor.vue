@@ -29,7 +29,7 @@ export default {
     editarRepartidor: function (item) {
       this.$emit('edicionRepartidor', item)
     },
-    eliminarRepartidor: function(item) {
+    eliminarRepartidor: function (item) {
       this.$emit('eliminarRepartidor', item)
     }
   }

@@ -6,7 +6,8 @@ class Cliente {
     String mail;
     Ubicacion ubicacion;
     String telefono;
-
+    static hasMany = [cupones: CuponDescuentoPorcentual]
+    
     String nombreCompleto() {
         nombre + " " + apellido
     }

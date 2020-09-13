@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: "CampoSelect",
+  name: 'CampoSelect',
   props: ['values', 'field'],
   data: function () {
     return {

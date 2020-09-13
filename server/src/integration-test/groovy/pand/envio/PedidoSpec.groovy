@@ -30,6 +30,10 @@ import spock.lang.Specification
 @Rollback
 class PedidoSpec extends Specification {
 
+    Ubicacion juanPerezUbicacion = new Ubicacion(calle: "Paunero", altura: 2030, pisoYDepartamento: null)
+    Cliente juanPerez = new Cliente(nombre: "Juan", apellido: "Perez", mail: "juanperez@yahoo.com.ar", ubicacion: juanPerezUbicacion, telefono: "1138465977",cupones:null)
+
+
     void "test precio de un pedido sin productos es 0"() {
         given:
             Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), new Restaurant())
@@ -67,7 +71,7 @@ class PedidoSpec extends Specification {
     void "test precio de un pedido sin productos con cupon activo es 0"() {
         given:
             Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), new Restaurant())
-            CuponDescuento cupon = new CuponDescuentoPorcentual(activo: true, porcentaje: 10)
+            CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: juanPerez, activo: true, porcentaje: 10)
         when:
             pedido.cuponDeDescuento = cupon
             BigDecimal precio = pedido.calcularPrecio()
@@ -78,7 +82,7 @@ class PedidoSpec extends Specification {
     void "test precio de un pedido sin productos con cupon inactivo lanza error"() {
         given:
             Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), new Restaurant())
-            CuponDescuento cupon = new CuponDescuentoPorcentual(activo: false, porcentaje: 10)
+            CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: juanPerez, activo: false, porcentaje: 10)
         when:
             pedido.cuponDeDescuento = cupon
             BigDecimal precio = pedido.calcularPrecio()
@@ -106,7 +110,7 @@ class PedidoSpec extends Specification {
         given:
             Restaurant restaurant = new Restaurant(nombre:  "Don Juan")
             Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), restaurant)
-            CuponDescuento cupon = new CuponDescuentoPorcentual(activo: true, porcentaje: 10)
+            CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: juanPerez, activo: true, porcentaje: 10)
             Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurant)
             Producto menu = new Menu(nombre: 'Viernes', precio: 300, restaurant: restaurant)
             pedido.agregar(plato, 2)
@@ -122,11 +126,11 @@ class PedidoSpec extends Specification {
         given:
         Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
-        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433', cupones: null)
                 .save()
         Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
                 .save(failOnError: true)
-        CuponDescuento cupon = new CuponDescuentoPorcentual(activo: true, porcentaje: 10, codigo: 'ABC', fecha: new Date())
+        CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: cliente, activo: true, porcentaje: 10, codigo: 'ABC', fecha: new Date())
                 .save(failOnError: true)
         ModalidadEntrega modalidadEntrega = new ModalidadParaRetirar()
                 .save(failOnError: true)
