@@ -1,0 +1,8 @@
+import pandenvio.Menu
+
+model {
+	Iterable<Menu> menuList
+}
+
+json tmpl.menu(menuList ?: [])
+

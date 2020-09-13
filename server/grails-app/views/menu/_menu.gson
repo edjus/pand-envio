@@ -1,0 +1,7 @@
+import pandenvio.Menu
+
+model {
+	Menu menu
+}
+
+json g.render(menu, [resolveTemplate: false])

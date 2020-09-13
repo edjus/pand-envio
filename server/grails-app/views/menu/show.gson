@@ -1,0 +1,7 @@
+import pandenvio.Menu
+
+model {
+	Menu menu
+}
+
+json tmpl.menu(menu)

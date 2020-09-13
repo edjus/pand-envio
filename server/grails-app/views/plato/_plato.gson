@@ -12,5 +12,7 @@ json {
 
     descripcion plato.descripcion
 
+    categoria plato.categoria;
+
     restaurant tmpl.'/restaurant/restaurant'(plato.restaurant)
 }
