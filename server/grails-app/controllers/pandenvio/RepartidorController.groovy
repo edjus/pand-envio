@@ -1,6 +1,7 @@
 package pandenvio
 
 import grails.gorm.transactions.Transactional
+
 import static org.springframework.http.HttpStatus.CREATED
 
 @Transactional(readOnly = true)
@@ -33,7 +34,7 @@ class RepartidorController {
             try {
                 repartidorService.agregarRepartidor(repartidor)
                 respond([repartidor:repartidor], status: CREATED)
-            } catch (DatosNoPuedenSerNulos error) {
+            } catch (DatosNoPuedenSerNulosException error) {
                 render status:BAD_REQUEST, message: error.message
             }
         }

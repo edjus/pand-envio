@@ -1,10 +1,20 @@
-package pandenvio
+package pand.envio
 
-import grails.testing.gorm.DomainUnitTest
+
+import pandenvio.EstadoCancelado
+import pandenvio.EstadoEnArmado
+import pandenvio.EstadoEnEntrega
+import pandenvio.EstadoEnEspera
+import pandenvio.EstadoEnPreparacion
+import pandenvio.EstadoEntregado
+import pandenvio.EstadoInvalidoException
+import pandenvio.EstadoListo
+import pandenvio.EstadoNoEntregado
+import pandenvio.EstadoRecibido
 import pandenvio.FabricaEstados
 import spock.lang.Specification
 
-class FabricaEstadosSpec extends Specification implements DomainUnitTest<FabricaEstados> {
+class FabricaEstadosSpec extends Specification {
 
     void "test fabrica crea correctamente estado 'en_armado'"() {
         when:

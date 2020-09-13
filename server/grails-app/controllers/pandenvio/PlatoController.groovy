@@ -1,6 +1,7 @@
 package pandenvio
 
 import grails.gorm.transactions.Transactional
+
 import static org.springframework.http.HttpStatus.CREATED
 
 @Transactional(readOnly = true)
@@ -32,7 +33,7 @@ class PlatoController {
             try {
                 platoService.agregarPlato(nombre, precio, categoria, descripcion, restaurant)
                 respond([plato:plato], status: CREATED)
-            } catch (DatosNoPuedenSerNulos error) {
+            } catch (DatosNoPuedenSerNulosException error) {
                 render status:BAD_REQUEST, message: error.message
             }
         }
