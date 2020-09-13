@@ -13,6 +13,11 @@
           </router-link>
         </li>
         <li class="nav-item" v-if="esRol('admin')">
+          <router-link to="/platos" class="nav-link" v-bind:class="getClass('/platos')">
+            <i class="fas fa-hamburger mr-2"></i> Platos
+          </router-link>
+        </li>
+        <li class="nav-item" v-if="esRol('admin')">
           <router-link to="/pedidos" class="nav-link" v-bind:class="getClass('/pedidos')">
             <i class="fas fa-shopping-cart"></i> Pedidos
           </router-link>

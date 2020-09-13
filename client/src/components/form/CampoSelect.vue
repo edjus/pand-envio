@@ -2,7 +2,6 @@
   <div class="form-group">
     <select class="form-control" v-model="selected" @change="updateValue()">
       <option disabled :value="null">Select a {{field}}</option>
-
       <option v-for="value in values" :value="value.id" :key="value.id">
         {{ value.nombre }}
       </option>
