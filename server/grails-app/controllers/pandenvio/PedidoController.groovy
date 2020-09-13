@@ -110,7 +110,7 @@ class PedidoController {
     def removerProducto(Long pedidoId, Long productoId) {
         try {
             Pedido pedido = pedidoService.removerProducto(pedidoId, productoId)
-            respond([], status: OK)
+            respond([pedido: pedido], status: OK)
         } catch (RuntimeException e) {
             respond e.message, status: BAD_REQUEST
         }

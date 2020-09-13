@@ -52,13 +52,12 @@ const obtenerPedidoActual = async () => {
 
 const confirmarPedido = async (pedidoId) => {
   await axios.put(`${SERVER_URL}/pedido/${pedidoId}/siguienteEstado`)
-  location.reload()
 }
 
 const removerProducto = async (pedidoId, productoId) => {
   try {
-    await axios.delete(`${SERVER_URL}/pedido/${pedidoId}/producto/${productoId}`)
-    location.reload()
+    const response = await axios.delete(`${SERVER_URL}/pedido/${pedidoId}/producto/${productoId}`)
+    return response.data.pedido
   } catch (error) {
     console.log(error)
   }
