@@ -11,8 +11,8 @@
             </div>
           </div>
           <div class="card-body">
-            <item-pedido v-for='item in pedido.items' :item='item' :pedidoId='pedido.id' :key='item.id'
-            @sumarUno="sumarUno" @restarUno="restarUno">
+            <item-pedido v-for='item in pedido.items' :item='item' :key='item.id'
+            @sumarUno="sumarUno" @restarUno="restarUno" @removerProducto="removerProducto">
             </item-pedido>
             <div class="row cupon-total">
               <div class="col-12 col-md-5">
@@ -58,6 +58,7 @@ export default {
     async confirmarPedido () {
       try {
         await AppService.confirmarPedido(this.pedido.id)
+        this.pedido = null
       } catch (error) {
         console.log(`Error: ${error}`)
       }
@@ -69,6 +70,9 @@ export default {
     async restarUno (productoId, cantidad) {
       cantidad--
       if (cantidad > 0) { this.pedido = await AppService.editarProducto(this.pedido.id, productoId, cantidad) }
+    },
+    async removerProducto (productoId) {
+      this.pedido = await AppService.removerProducto(this.pedido.id, productoId)
     }
   },
   async created () {

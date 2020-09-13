@@ -33,14 +33,13 @@
 </template>
 
 <script>
-import * as AppService from '../../services/AppService'
 
 export default {
   name: 'ItemPedido',
-  props: ['item', 'pedidoId', 'restaurnteId'],
+  props: ['item', 'restaurnteId'],
   methods: {
     async removerProducto () {
-      await AppService.removerProducto(this.pedidoId, this.item.producto_id)
+      this.$emit('removerProducto', this.item.producto_id)
     },
 
     sumarUno () {
