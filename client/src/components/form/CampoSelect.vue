@@ -1,7 +1,7 @@
 <template>
   <div class="form-group">
     <select class="form-control" v-model="selected" @change="updateValue()">
-      <option disabled :value="null">Select a {{field}}</option>
+      <option disabled :value="null">Seleccione {{field}}</option>
       <option v-for="value in values" :value="value.id" :key="value.id">
         {{ value.nombre }}
       </option>
@@ -12,10 +12,17 @@
 <script>
 export default {
   name: 'CampoSelect',
-  props: ['values', 'field'],
+  props: ['values', 'field', 'elegido'],
   data: function () {
     return {
       selected: null
+    }
+  },
+  watch: {
+    elegido: function (newVal, oldVal) {
+      if (newVal !== undefined) {
+        this.selected = newVal
+      }
     }
   },
   methods: {

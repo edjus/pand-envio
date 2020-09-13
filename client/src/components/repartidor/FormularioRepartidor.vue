@@ -21,7 +21,7 @@
             </div>
             <div class='form-group'>
               <label for='restaurant' class='col-form-label'>Restaurant:</label>
-              <campo-select v-model="repartidor.restaurant" :field="'Restaurant'" :values="restaurantes" id="restaurant"></campo-select>
+              <campo-select v-model="repartidor.restaurant" :field="'un restaurant'" :values="restaurantes" id="restaurant" :elegido="repartidor.restaurant ? repartidor.restaurant.id : null"></campo-select>
             </div>
           </form>
         </div>

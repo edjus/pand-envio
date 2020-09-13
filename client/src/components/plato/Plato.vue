@@ -16,6 +16,7 @@
 <script>
 import TablaPlato from './TablaPlato'
 import FormularioPlato from './FormularioPlato'
+import {getCategoriaDesde} from '../../services/PlatoService'
 
 export default {
   name: 'Plato',
@@ -41,6 +42,7 @@ export default {
     },
     editarPlato: function (plato) {
       this.platoActual = Object.assign({}, plato)
+      this.platoActual.categoria = getCategoriaDesde(this.platoActual.categoria)
       this.$refs.modal.show()
     },
     nuevoPlato: function () {

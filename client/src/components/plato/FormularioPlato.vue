@@ -21,7 +21,7 @@
             </div>
             <div class='form-group'>
               <label for='categoria' class='col-form-label'>Categoria:</label>
-              <campo-select v-model="plato.categoria" :field="'Categoria'" :values="categorias" id="categoria"></campo-select>
+              <campo-select v-model="plato.categoria" :field="'una categoria'" :values="categorias" id="categoria" :elegido="plato.categoria ? plato.categoria.id : null"></campo-select>
             </div>
             <div class='form-group'>
               <label for='descripcion' class='col-form-label'>Descripcion:</label>
@@ -29,7 +29,7 @@
             </div>
             <div class='form-group'>
               <label for='restaurant' class='col-form-label'>Restaurant:</label>
-              <campo-select v-model="plato.restaurant" :field="'Restaurant'" :values="restaurantes" id="restaurant"></campo-select>
+              <campo-select v-model="plato.restaurant" :field="'un restaurant'" :values="restaurantes" id="restaurant" :elegido="plato.restaurant ? plato.restaurant.id : null"></campo-select>
             </div>
           </form>
         </div>
@@ -46,13 +46,13 @@
 
 import $$ from 'jquery'
 import CampoSelect from '../form/CampoSelect'
-
+import {getCategorias, getNombreCategoria} from '../../services/PlatoService'
 export default {
   name: 'FormularioPlato',
   components: {CampoSelect},
   data: function () {
     return {
-      categorias: [{id: 1, nombre: 'ENTRADA'}, {id: 2, nombre: 'BEBIDA'}, {id: 3, nombre: 'PLATO'}, {id: 4, nombre: 'POSTRE'}]
+      categorias: getCategorias()
     }
   },
   props: [
@@ -69,8 +69,7 @@ export default {
   },
   methods: {
     confirm: function () {
-      const categoria = this.categorias.find(categoria => categoria.id === this.plato.categoria)
-      this.plato.categoria = categoria.nombre
+      this.plato.categoria = getNombreCategoria(this.plato.categoria)
       this.$emit('confirmacionPlato', this.plato)
       $$('#FormularioPlato').modal('hide')
     },
