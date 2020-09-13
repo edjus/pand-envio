@@ -162,6 +162,35 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
         then:
         thrown NoSePudeRemoverProductoException
         pedido.items.size() == 2
+    }
 
+    void "test Pedido actualizar cantidad de producto en pedido con estado distinto a 'en armado"() {
+        when:
+        Restaurant restaurant = new Restaurant()
+        Plato plato = new Plato(restaurant: restaurant)
+        Menu menu = new Menu(restaurant: restaurant)
+        Pedido pedido = new Pedido(new Cliente(), new ModalidadParaLlevar(), restaurant)
+        pedido.agregar(plato, 3)
+        pedido.agregar(menu, 2)
+        then:
+        def item = pedido.items.find {i -> i.producto == plato}
+        item.cantidad == 3
+        pedido.actualizarCantidad(plato, 1)
+        def item2 = pedido.items.find {i -> i.producto == plato}
+        item2.cantidad == 1
+    }
+
+    void "test Pedido no se puede actualizar cantidad de producto en pedido con estado distinto a 'en armado"() {
+        when:
+        Restaurant restaurant = new Restaurant()
+        Plato plato = new Plato(restaurant: restaurant)
+        Menu menu = new Menu(restaurant: restaurant)
+        Pedido pedido = new Pedido(new Cliente(), new ModalidadParaLlevar(), restaurant)
+        pedido.agregar(plato, 3)
+        pedido.agregar(menu, 2)
+        pedido.siguienteEstado()
+        pedido.actualizarCantidad(plato, 1)
+        then:
+        thrown(NoSePuedeActualizarProductoException)
     }
 }

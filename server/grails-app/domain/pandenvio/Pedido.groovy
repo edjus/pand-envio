@@ -76,15 +76,24 @@ class Pedido {
     }
 
     void removerProducto(Producto producto){
-        if (!this.estado.puedeRemoverProducto()){
+        if (!this.estado.puedeActualizarProductos()){
             throw  new NoSePudeRemoverProductoException()
         }
         def item = this.items.find {i -> i.producto == producto}
         removeFromItems (item)
     }
 
+    void actualizarCantidad(Producto producto, Integer cantidad) {
+        if (!this.estado.puedeActualizarProductos()){
+            throw  new NoSePuedeActualizarProductoException()
+        }
+        def item = this.items.find {i -> i.producto == producto}
+        item?.cantidad = cantidad
+    }
+
     // TODO: ver como mejorar ésto y si es necesario, es una asignación manual del estado al cargar el pedido
     def afterLoad() {
         setEstado(FabricaEstados.obtenerEstado(this.nombreEstado))
     }
+
 }

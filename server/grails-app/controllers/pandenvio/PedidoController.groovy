@@ -96,6 +96,17 @@ class PedidoController {
     }
 
     @Transactional
+    def actualizarProducto(Long pedidoId, Long productoId) {
+        try {
+            Integer cantidad = request.JSON.cantidad
+            Pedido pedido = pedidoService.actualizarProducto(pedidoId, productoId, cantidad)
+            respond([pedido:  pedido], status: OK)
+        } catch (RuntimeException e) {
+            respond e.message, status: BAD_REQUEST
+        }
+    }
+
+    @Transactional
     def removerProducto(Long pedidoId, Long productoId) {
         try {
             Pedido pedido = pedidoService.removerProducto(pedidoId, productoId)
@@ -116,6 +127,11 @@ class PedidoController {
     }
 
     def handlerException(final NoSePudeRemoverProductoException exception) {
+        log.error "Exception occurred. ${exception?.message}", exception
+        respond exception.message, status: BAD_REQUEST
+    }
+
+    def handlerException(final NoSePuedeActualizarProductoException exception) {
         log.error "Exception occurred. ${exception?.message}", exception
         respond exception.message, status: BAD_REQUEST
     }
