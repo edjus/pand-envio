@@ -25,13 +25,12 @@ class PlatoController {
 
     @Transactional
     def save(Plato plato) {
-
         //Common controller validations: empty values, non-zero values, etc..
         if (plato.hasErrors()) {
             respond plato.errors, view:'create'
         } else {
             try {
-                platoService.agregarPlato(plato.nombre, plato.precio, plato.categoria, plato.descripcion, plato.restaurant)
+                platoService.agregarPlato(plato)
                 respond([plato:plato], status: CREATED)
             } catch (DatosNoPuedenSerNulosException error) {
                 render status:BAD_REQUEST, message: error.message

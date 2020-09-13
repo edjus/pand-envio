@@ -29,17 +29,18 @@ class BootStrap {
 
         restaurantService.agregarRestaurant(restaurante1)
 
-
-
-        platoService.agregarPlato("Tortilla de papas", 350.0, CategoriaPlato.PLATO, "Tortilla de papas clasica", restaurante1)
-        platoService.agregarPlato("Sanguche de Milanesa", 450.0, CategoriaPlato.PLATO, "Milanga completo", restaurante1)
-        platoService.agregarPlato("Buñuelos de acelga", 300.0, CategoriaPlato.ENTRADA, "6 buñuelos de acelga fritos", restaurante1)
+        Plato tortilla = new Plato(nombre: "Tortilla de papas", precio: 350.0, categoria: CategoriaPlato.PLATO, descripcion: "Tortilla de papas clasica", restaurant:restaurante1)
+        platoService.agregarPlato(tortilla)
+        Plato sanguche = new Plato(nombre: "Sanguche de Milanesa", precio: 450.0, categoria: CategoriaPlato.PLATO, descripcion: "Milanga completo", restaurant:restaurante1)
+        platoService.agregarPlato(sanguche)
+        Plato acelga = new Plato(nombre: "Buñuelos de acelga", precio: 225.75, categoria: CategoriaPlato.ENTRADA, descripcion: "6 buñuelos de acelga fritos", restaurant:restaurante1)
+        platoService.agregarPlato(acelga)
 
         Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433').save()
 
-        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, descripcion: '15 te hago alto guiso', restaurant: restaurante)
                 .save(failOnError: true)
         Producto menu = new Menu(nombre: 'Viernes', precio: 400, restaurant: restaurante)
                 .addToPlatos(plato)
