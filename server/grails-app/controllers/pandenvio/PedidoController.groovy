@@ -116,6 +116,17 @@ class PedidoController {
         }
     }
 
+    @Transactional
+    def agregarCupon(Long pedidoId) {
+        try {
+            String codigo = request.JSON.codigo
+            Pedido pedido = pedidoService.agregarCupon(pedidoId, codigo)
+            respond([pedido: pedido], status: OK)
+        } catch (RuntimeException e) {
+            respond e.message, status: BAD_REQUEST
+        }
+    }
+
     def dominioException(final PedidoNoTieneItemsException exception) {
         log.error "Exception occurred. ${exception?.message}", exception
         respond exception.message, status: BAD_REQUEST

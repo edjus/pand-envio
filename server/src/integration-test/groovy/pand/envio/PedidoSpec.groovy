@@ -7,6 +7,7 @@ import pandenvio.CategoriaPlato
 import pandenvio.Cliente
 import pandenvio.CuponDescuento
 import pandenvio.CuponDescuentoPorcentual
+import pandenvio.CuponInvalidoException
 import pandenvio.CuponYaUtilizadoException
 import pandenvio.EstadoEnEntrega
 import pandenvio.EstadoEnEspera
@@ -250,5 +251,57 @@ class PedidoSpec extends Specification {
         pedido.estado.class == EstadoEnEspera
         pedido.nombreEstado == 'en_espera'
         repartidor.disponible
+    }
+
+    void "test pedido acepta cupón del mismo cliente"() {
+        given:
+        Restaurant restaurante = new Restaurant(nombre: 'La esquina').save(failOnError: true)
+
+        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+                .save(failOnError: true)
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+                .save(failOnError: true)
+        ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        EstadoPedido estado = new EstadoListo().save(failOnError: true)
+        CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: cliente, activo: true, porcentaje: 10, codigo: 'ABC', fecha: new Date())
+                .save(failOnError: true)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
+        pedido.agregar(plato, 2)
+        pedido.estado = estado
+        pedido.save(failOnError: true)
+        when:
+        pedido.agregarCupon(cupon)
+        pedido.save(failOnError: true)
+        then:
+        def pedidoGuardado = Pedido.findById(pedido.id)
+        pedidoGuardado.cuponDeDescuento == cupon
+    }
+
+    void "test pedido no acepta cupón de otro  cliente"() {
+        given:
+        Restaurant restaurante = new Restaurant(nombre: 'La esquina').save(failOnError: true)
+
+        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+                .save(failOnError: true)
+        Cliente cliente2 = new Cliente(nombre: 'Pepe', apellido: 'Argento',  mail: 'pepe.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+                .save(failOnError: true)
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+                .save(failOnError: true)
+        ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        EstadoPedido estado = new EstadoListo().save(failOnError: true)
+        CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: cliente2, activo: true, porcentaje: 10, codigo: 'ABC', fecha: new Date())
+                .save(failOnError: true)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
+        pedido.agregar(plato, 2)
+        pedido.estado = estado
+        pedido.save(failOnError: true)
+        when:
+        pedido.agregarCupon(cupon)
+        then:
+        thrown CuponInvalidoException
     }
 }

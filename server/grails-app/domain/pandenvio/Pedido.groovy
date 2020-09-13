@@ -55,6 +55,7 @@ class Pedido {
         this.estado = nuevoEstado
         setNombreEstado(nuevoEstado.nombre)
     }
+
     void siguienteEstado() {
         if (items.size() <= 0) {
             throw new PedidoNoTieneItemsException("El pedido no tiene items no se puede cambiar estado")
@@ -91,9 +92,16 @@ class Pedido {
         item?.cantidad = cantidad
     }
 
+    void agregarCupon(CuponDescuentoPorcentual cupon) {
+        if (cupon.cliente != this.cliente) {
+            throw new CuponInvalidoException("El cupón no pertenece al cliente")
+        }
+
+        setCuponDeDescuento(cupon)
+    }
+
     // TODO: ver como mejorar ésto y si es necesario, es una asignación manual del estado al cargar el pedido
     def afterLoad() {
         setEstado(FabricaEstados.obtenerEstado(this.nombreEstado))
     }
-
 }

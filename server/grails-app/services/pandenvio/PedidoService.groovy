@@ -103,4 +103,18 @@ class PedidoService {
         pedido.actualizarCantidad(producto, cantidad)
         pedido.save(failOnError: true, flush: true)
     }
+
+    def agregarCupon(Long pedidoId, String codigoCupon) {
+        Pedido pedido = Pedido.findById(pedidoId)
+        if (!pedido){
+            throw new RuntimeException('El pedido no es válido')
+        }
+        CuponDescuento cupon = CuponDescuento.findByCodigo(codigoCupon)
+        if (!cupon){
+            throw new RuntimeException('El cupón no es válido')
+        }
+
+        pedido.agregarCupon(cupon)
+        pedido.save(failOnError: true, flush: true)
+    }
 }
