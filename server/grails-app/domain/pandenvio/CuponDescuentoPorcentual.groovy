@@ -11,6 +11,10 @@ class CuponDescuentoPorcentual extends CuponDescuento {
         porcentaje(range: 1..99)
     }
 
+    boolean esValido() {
+      return (this.porcentaje > 0)
+   }
+
     @Override
     BigDecimal aplicarDescuento(BigDecimal precio) throws CuponYaUtilizadoException {
         if (!this.activo) {

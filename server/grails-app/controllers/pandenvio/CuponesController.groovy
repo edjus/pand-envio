@@ -26,11 +26,11 @@ class CuponesController {
     @Transactional
     def save(CuponDescuentoPorcentual cupon) {
         //Common controller validations: empty values, non-zero values, etc..
-        if (cliente.hasErrors()) {
+        if (cupon.hasErrors()) {
             respond cupon.errors, view:'create', status:BAD_REQUEST
         } else {
             try {
-                clienteService.agregarCupon(cupon)
+                cuponesService.agregarCupon(cupon)
                 respond([cupon:cupon], status: CREATED)
             } catch (DatosNoPuedenSerNulos error) {
                 render status:BAD_REQUEST, message: error.message
