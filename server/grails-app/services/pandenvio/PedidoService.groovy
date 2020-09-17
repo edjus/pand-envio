@@ -113,8 +113,13 @@ class PedidoService {
         if (!cupon){
             throw new RuntimeException('El cupón no es válido')
         }
-
+        println("CUPON: ${cupon.codigo} - ${cupon.activo}")
         pedido.agregarCupon(cupon)
         pedido.save(failOnError: true, flush: true)
+
+        println("CUPON: ${pedido.cuponDeDescuento.codigo} - ${pedido.cuponDeDescuento.activo}")
+        println("CUPON: ${cupon.codigo} - ${cupon.activo}")
+
+        pedido
     }
 }

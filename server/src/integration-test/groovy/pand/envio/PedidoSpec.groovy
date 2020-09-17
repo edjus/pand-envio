@@ -69,33 +69,35 @@ class PedidoSpec extends Specification {
         thrown(ProductoNoPerteneceAlRestauranteException)
     }
 
-    void "test precio de un pedido sin productos con cupon activo es 0"() {
+    void "test precio de un pedido sin productos con cupon disponible es 0"() {
         given:
             Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), new Restaurant())
-            CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: juanPerez, activo: true, porcentaje: 10)
+            CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: juanPerez, porcentaje: 10)
         when:
             pedido.cuponDeDescuento = cupon
             BigDecimal precio = pedido.calcularPrecio()
         then:
+            cupon.estaDisponible()
             precio == 0
     }
 
-    void "test precio de un pedido sin productos con cupon inactivo lanza error"() {
+    void "test precio de un pedido sin productos con cupon con otro pedido beneficiado lanza error"() {
         given:
             Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), new Restaurant())
-            CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: juanPerez, activo: false, porcentaje: 10)
+            Pedido pedido2 = new Pedido(new Cliente(), new ModalidadParaRetirar(), new Restaurant())
+            CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: juanPerez, porcentaje: 10, pedidoBeneficiado: pedido2)
         when:
             pedido.cuponDeDescuento = cupon
-            BigDecimal precio = pedido.calcularPrecio()
+            pedido.calcularPrecio()
         then:
             thrown CuponYaUtilizadoException
     }
 
-    void "test precio de un pedido con productos con cupon activo aplica descuento"() {
+    void "test precio de un pedido con productos con cupon con pedido beneficiado correcto aplica descuento"() {
         given:
             Restaurant restaurant = new Restaurant(nombre:  "Don Juan")
             Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), restaurant)
-            CuponDescuento cupon = new CuponDescuentoPorcentual(activo: true, porcentaje: 10)
+            CuponDescuento cupon = new CuponDescuentoPorcentual(porcentaje: 10, pedidoBeneficiado: pedido)
             Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurant)
             Producto plato2 = new Plato(nombre: 'Flan', precio: 100, categoria: CategoriaPlato.POSTRE, restaurant: restaurant)
             pedido.agregar(plato, 1)
@@ -107,11 +109,11 @@ class PedidoSpec extends Specification {
             precio == 360 // (200*1 + 100*2) * (1 - 0.1)
     }
 
-    void "test precio de un pedido con productos y cupon activo  no aplica si hay menu"() {
+    void "test precio de un pedido con productos y cupon disponible  no aplica si hay menu"() {
         given:
             Restaurant restaurant = new Restaurant(nombre:  "Don Juan")
             Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), restaurant)
-            CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: juanPerez, activo: true, porcentaje: 10)
+            CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: juanPerez, porcentaje: 10)
             Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurant)
             Producto menu = new Menu(nombre: 'Viernes', precio: 300, restaurant: restaurant)
             pedido.agregar(plato, 2)
@@ -121,6 +123,7 @@ class PedidoSpec extends Specification {
             BigDecimal precio = pedido.calcularPrecio()
         then:
             precio == 1000 // (200*2 + 300*2)
+            cupon.estaDisponible()
     }
 
     void "test pedido actualiza bien el estado"() {

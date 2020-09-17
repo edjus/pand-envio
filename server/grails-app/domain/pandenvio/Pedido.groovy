@@ -48,7 +48,7 @@ class Pedido {
     }
 
     BigDecimal calcularPrecio() {
-        return this.modalidadEntrega.calcularPrecioCon(cuponDeDescuento, items)
+        return this.modalidadEntrega.calcularPrecioCon(this, cuponDeDescuento)
     }
 
     void setEstado(EstadoPedido nuevoEstado){

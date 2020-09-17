@@ -12,11 +12,10 @@ class CuponDescuentoPorcentual extends CuponDescuento {
     }
 
     @Override
-    BigDecimal aplicarDescuento(BigDecimal precio) throws CuponYaUtilizadoException {
-        if (!this.activo) {
+    BigDecimal aplicarDescuento(BigDecimal precio, Pedido pedidoBeneficiado) {
+        if (!estaDisponible() && this.pedidoBeneficiado != pedidoBeneficiado) {
             throw new CuponYaUtilizadoException()
         }
-        this.activo = false
         precio * (1 - (porcentaje / 100))
     }
 }

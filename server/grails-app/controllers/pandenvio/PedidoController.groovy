@@ -146,4 +146,9 @@ class PedidoController {
         log.error "Exception occurred. ${exception?.message}", exception
         respond exception.message, status: BAD_REQUEST
     }
+
+    def handlerException(final CuponInvalidoException exception) {
+        log.error "Exception occurred. ${exception?.message}", exception
+        respond exception.message, status: BAD_REQUEST
+    }
 }
