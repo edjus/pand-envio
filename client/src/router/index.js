@@ -9,6 +9,7 @@ import { esRol } from '../services/AutenticacionService'
 import Repartidor from '../components/repartidor/Repartidor'
 import Cupon from '../components/cupon/Cupon'
 import Plato from '../components/plato/Plato'
+import Menu from "../components/menu/Menu";
 Vue.use(Router)
 
 const router = new Router({
@@ -80,6 +81,15 @@ const router = new Router({
       path: '/platos',
       name: 'Plato',
       component: Plato,
+      meta: {
+        publico: false,
+        rol: 'admin'
+      }
+    },
+    {
+      path: '/menues',
+      name: 'Menu',
+      component: Menu,
       meta: {
         publico: false,
         rol: 'admin'
