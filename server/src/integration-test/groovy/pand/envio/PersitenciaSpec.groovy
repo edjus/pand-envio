@@ -28,8 +28,6 @@ class PersitenciaSpec extends Specification {
 
     def setup() {
         Item.executeUpdate('delete from Item')
-        Pedido.executeUpdate('delete from Pedido')
-        CuponDescuentoPorcentual.executeUpdate('delete from CuponDescuento')
     }
 
     void "Repartidor se guarda correctamente"() {
@@ -78,6 +76,7 @@ class PersitenciaSpec extends Specification {
                     .save(failOnError: true)
             EstadoPedido estado = new EstadoEnPreparacion().save(failOnError: true)
         when:
+            def cantidadPedidos = Pedido.count
             Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
             pedido.agregar(plato, 2)
             pedido.agregar(menu, 2)
@@ -89,7 +88,7 @@ class PersitenciaSpec extends Specification {
             pedido2.save(failOnError: true)
 
         then:
-            Pedido.count == 2
+            Pedido.count == cantidadPedidos + 2
             def pedidoGuardado = Pedido.findById(pedido2.id)
             pedidoGuardado == pedido2
             pedidoGuardado.cliente == cliente
@@ -109,8 +108,9 @@ class PersitenciaSpec extends Specification {
         Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
         def cupon = new CuponDescuentoPorcentual(cliente:cliente, fecha: new Date(), codigo: 'ABC', porcentaje: 10, pedidoBeneficiado: pedido)
         then:
+        def cantidadCupones = CuponDescuentoPorcentual.count
         cupon.save(failOnError: true)
-        CuponDescuentoPorcentual.count == 1
+        CuponDescuentoPorcentual.count == cantidadCupones + 1
         cupon == CuponDescuentoPorcentual.findById(cupon.id)
     }
 }
