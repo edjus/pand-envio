@@ -4,4 +4,9 @@ model {
 	Menu menu
 }
 
-json g.render(menu, [resolveTemplate: false])
+json {
+	id menu.id
+	nombre menu.nombre
+	precio menu.precio
+	restaurant tmpl.'/restaurant/restaurant'(menu.restaurant)
+}
