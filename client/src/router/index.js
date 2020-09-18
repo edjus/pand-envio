@@ -10,6 +10,7 @@ import Repartidor from '../components/repartidor/Repartidor'
 import Cupon from '../components/cupon/Cupon'
 import Plato from '../components/plato/Plato'
 import Menu from "../components/menu/Menu";
+import ListadoPedido from "../components/pedido/Pedido"
 Vue.use(Router)
 
 const router = new Router({
@@ -90,6 +91,15 @@ const router = new Router({
       path: '/menues',
       name: 'Menu',
       component: Menu,
+      meta: {
+        publico: false,
+        rol: 'admin'
+      }
+    },
+    {
+      path: '/pedidos',
+      name: 'Pedido',
+      component: ListadoPedido,
       meta: {
         publico: false,
         rol: 'admin'
