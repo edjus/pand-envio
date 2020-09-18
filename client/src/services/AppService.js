@@ -26,11 +26,11 @@ const crearPedido = async (restaurantId) => {
   localStorage.setItem('pedidoActual', response.data.pedido.id)
 }
 
-const agregarItem = async (productoId, restaurantId) => {
+const agregarProducto = async (productoId, restaurantId) => {
   await crearPedido(restaurantId)
   const pedidoId = localStorage.getItem('pedidoActual')
   const data = { producto_id: productoId, cantidad: CANTIDAD_DEFECTO }
-  const response = await axios.post(`${SERVER_URL}/pedido/${pedidoId}/item`, data)
+  const response = await axios.post(`${SERVER_URL}/pedido/${pedidoId}/producto`, data)
 
   localStorage.setItem('cantidadItems', response.data.pedido.items.length)
 }
@@ -52,7 +52,33 @@ const obtenerPedidoActual = async () => {
 
 const confirmarPedido = async (pedidoId) => {
   await axios.put(`${SERVER_URL}/pedido/${pedidoId}/siguienteEstado`)
-  location.reload()
 }
 
-export { obtenerPlatos, crearPedido, agregarItem, obtenerPedidoActual, confirmarPedido }
+const removerProducto = async (pedidoId, productoId) => {
+  try {
+    const response = await axios.delete(`${SERVER_URL}/pedido/${pedidoId}/producto/${productoId}`)
+    return response.data.pedido
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const editarProducto = async (pedidoId, productoId, cantidad) => {
+  try {
+    const data = {cantidad: cantidad}
+    const response = await axios.put(`${SERVER_URL}/pedido/${pedidoId}/producto/${productoId}`, data)
+    return response.data.pedido
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export {
+  obtenerPlatos,
+  crearPedido,
+  agregarProducto,
+  obtenerPedidoActual,
+  confirmarPedido,
+  removerProducto,
+  editarProducto
+}

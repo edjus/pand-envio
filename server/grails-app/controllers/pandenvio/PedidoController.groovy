@@ -1,8 +1,6 @@
 package pandenvio
 
 import grails.gorm.transactions.Transactional
-import grails.rest.*
-import grails.converters.*
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST
 import static org.springframework.http.HttpStatus.NOT_FOUND
@@ -73,11 +71,11 @@ class PedidoController {
     - cantidad: número con la cantidad del producto a agregar al pedido (min 1)
     */
     @Transactional
-    def agregarItem(Long pedidoId) {
+    def agregarProducto(Long pedidoId) {
         try {
             Long productoId = request.JSON.producto_id
             Integer cantidad = request.JSON.cantidad
-            Pedido pedido = pedidoService.agregarItem(pedidoId, productoId, cantidad)
+            Pedido pedido = pedidoService.agregarProducto(pedidoId, productoId, cantidad)
             respond([pedido: pedido], status: OK)
         } catch (RuntimeException e) {
             respond e.message, status: BAD_REQUEST
@@ -98,10 +96,32 @@ class PedidoController {
     }
 
     @Transactional
+    def actualizarProducto(Long pedidoId, Long productoId) {
+        try {
+            Integer cantidad = request.JSON.cantidad
+            Pedido pedido = pedidoService.actualizarProducto(pedidoId, productoId, cantidad)
+            respond([pedido:  pedido], status: OK)
+        } catch (RuntimeException e) {
+            respond e.message, status: BAD_REQUEST
+        }
+    }
+
+    @Transactional
     def removerProducto(Long pedidoId, Long productoId) {
         try {
             Pedido pedido = pedidoService.removerProducto(pedidoId, productoId)
-            respond([], status: OK)
+            respond([pedido: pedido], status: OK)
+        } catch (RuntimeException e) {
+            respond e.message, status: BAD_REQUEST
+        }
+    }
+
+    @Transactional
+    def agregarCupon(Long pedidoId) {
+        try {
+            String codigo = request.JSON.codigo
+            Pedido pedido = pedidoService.agregarCupon(pedidoId, codigo)
+            respond([pedido: pedido], status: OK)
         } catch (RuntimeException e) {
             respond e.message, status: BAD_REQUEST
         }
@@ -113,6 +133,21 @@ class PedidoController {
     }
 
     def handlerException(final ProductoNoPerteneceAlRestauranteException exception) {
+        log.error "Exception occurred. ${exception?.message}", exception
+        respond exception.message, status: BAD_REQUEST
+    }
+
+    def handlerException(final NoSePudeRemoverProductoException exception) {
+        log.error "Exception occurred. ${exception?.message}", exception
+        respond exception.message, status: BAD_REQUEST
+    }
+
+    def handlerException(final NoSePuedeActualizarProductoException exception) {
+        log.error "Exception occurred. ${exception?.message}", exception
+        respond exception.message, status: BAD_REQUEST
+    }
+
+    def handlerException(final CuponInvalidoException exception) {
         log.error "Exception occurred. ${exception?.message}", exception
         respond exception.message, status: BAD_REQUEST
     }

@@ -48,13 +48,14 @@ class Pedido {
     }
 
     BigDecimal calcularPrecio() {
-        return this.modalidadEntrega.calcularPrecioCon(cuponDeDescuento, items)
+        return this.modalidadEntrega.calcularPrecioCon(this, cuponDeDescuento)
     }
 
     void setEstado(EstadoPedido nuevoEstado){
         this.estado = nuevoEstado
         setNombreEstado(nuevoEstado.nombre)
     }
+
     void siguienteEstado() {
         if (items.size() <= 0) {
             throw new PedidoNoTieneItemsException("El pedido no tiene items no se puede cambiar estado")
@@ -76,8 +77,31 @@ class Pedido {
     }
 
     void removerProducto(Producto producto){
+        if (!this.estado.puedeActualizarProductos()){
+            throw  new NoSePudeRemoverProductoException()
+        }
         def item = this.items.find {i -> i.producto == producto}
-        removeFromItems(item)
+        removeFromItems (item)
+    }
+
+    void actualizarCantidad(Producto producto, Integer cantidad) {
+        if (!this.estado.puedeActualizarProductos()){
+            throw  new NoSePuedeActualizarProductoException()
+        }
+        def item = this.items.find {i -> i.producto == producto}
+        item?.cantidad = cantidad
+    }
+
+    void agregarCupon(CuponDescuentoPorcentual cupon) {
+        if (!this.estado.puedeActualizarProductos()) {
+            throw  new NoSePuedeActualizarProductoException()
+        }
+        if (!cupon.estaDisponible() || !cupon.esDe(this.cliente)) {
+            throw new CuponInvalidoException("El cupón no puede ser agregado")
+        }
+
+        cupon.pedidoBeneficiado = this
+        setCuponDeDescuento(cupon)
     }
 
     // TODO: ver como mejorar ésto y si es necesario, es una asignación manual del estado al cargar el pedido

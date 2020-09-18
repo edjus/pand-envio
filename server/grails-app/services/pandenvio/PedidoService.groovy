@@ -50,7 +50,7 @@ class PedidoService {
         pedido.save(failOnError: true, flush: true)
     }
 
-    def agregarItem(Long pedidoId, Long productoId, Integer cantidad) {
+    def agregarProducto(Long pedidoId, Long productoId, Integer cantidad) {
         Pedido pedido = Pedido.findById(pedidoId)
         if (!pedido){
             throw new RuntimeException('El pedido no es válido')
@@ -87,7 +87,39 @@ class PedidoService {
             throw new RuntimeException('El producto no es válido')
         }
         pedido.removerProducto(producto)
-        println("PEDIDO DIRTY: ${pedido.dirty}")
         pedido.save(failOnError: true, flush: true)
+    }
+
+    def actualizarProducto(Long pedidoId, Long productoId, Integer cantidad) {
+        Pedido pedido = Pedido.findById(pedidoId)
+        if (!pedido){
+            throw new RuntimeException('El pedido no es válido')
+        }
+        Producto producto = Producto.findById(productoId)
+        if (!producto){
+            throw new RuntimeException('El producto no es válido')
+        }
+
+        pedido.actualizarCantidad(producto, cantidad)
+        pedido.save(failOnError: true, flush: true)
+    }
+
+    def agregarCupon(Long pedidoId, String codigoCupon) {
+        Pedido pedido = Pedido.findById(pedidoId)
+        if (!pedido){
+            throw new RuntimeException('El pedido no es válido')
+        }
+        CuponDescuento cupon = CuponDescuento.findByCodigo(codigoCupon)
+        if (!cupon){
+            throw new RuntimeException('El cupón no es válido')
+        }
+        println("CUPON: ${cupon.codigo} - ${cupon.activo}")
+        pedido.agregarCupon(cupon)
+        pedido.save(failOnError: true, flush: true)
+
+        println("CUPON: ${pedido.cuponDeDescuento.codigo} - ${pedido.cuponDeDescuento.activo}")
+        println("CUPON: ${cupon.codigo} - ${cupon.activo}")
+
+        pedido
     }
 }

@@ -12,6 +12,8 @@ abstract class EstadoPedido {
     abstract EstadoPedido cancelar()
 
     def iniciarPara(Pedido pedido) {}
+
+    boolean puedeActualizarProductos() { false }
 }
 class EstadoEnArmado extends EstadoPedido {
     EstadoEnArmado() {
@@ -27,6 +29,9 @@ class EstadoEnArmado extends EstadoPedido {
     EstadoPedido cancelar() {
         new EstadoCancelado()
     }
+
+    @Override
+    boolean puedeActualizarProductos() { true }
 }
 
 class EstadoRecibido extends EstadoPedido {

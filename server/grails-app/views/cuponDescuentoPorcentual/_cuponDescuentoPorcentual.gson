@@ -6,7 +6,8 @@ model {
 
 json {
 	    id cuponDescuentoPorcentual.id
-        activo cuponDescuentoPorcentual.activo
+        activo !cuponDescuentoPorcentual.estaDisponible()
+        disponible cuponDescuentoPorcentual.estaDisponible()
         fecha cuponDescuentoPorcentual.fecha
         codigo cuponDescuentoPorcentual.codigo
         porcentaje cuponDescuentoPorcentual.porcentaje

@@ -2,16 +2,24 @@ package pandenvio
 
 abstract class CuponDescuento {
     Date fecha;
-    Boolean activo;
     String codigo;
+    Pedido pedidoBeneficiado;
 
-    abstract BigDecimal aplicarDescuento(BigDecimal precio) throws CuponYaUtilizadoException
+    static constraints = {
+        pedidoBeneficiado nullable: true
+    }
+
+    abstract BigDecimal aplicarDescuento(BigDecimal precio, Pedido pedidoBeneficiado)
 
     boolean permitirEn(Producto producto) {
         producto.admiteA(this)
     }
 
-    boolean estoyActivo() {
-        activo
+    boolean estaDisponible() {
+        !pedidoBeneficiado
+    }
+
+    boolean esDe(Cliente cliente){
+        true
     }
 }

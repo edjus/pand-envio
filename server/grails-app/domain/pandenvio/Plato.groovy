@@ -1,5 +1,4 @@
 package pandenvio
-import grails.rest.Resource
 
 enum CategoriaPlato {
     ENTRADA, BEBIDA, PLATO, POSTRE
