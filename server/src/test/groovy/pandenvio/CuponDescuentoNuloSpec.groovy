@@ -33,4 +33,12 @@ class CuponDescuentoNuloSpec extends Specification implements DomainUnitTest<Cup
             CuponDescuentoNulo.count == 1
             cupon == CuponDescuentoNulo.findById(cupon.id)
     }
+
+    void "Cupon Descuento Nulo es de cliente si no tiene cliente"() {
+        when:
+        def cupon = new CuponDescuentoNulo(fecha: new Date(), codigo: 'ABC').save(failOnError: true)
+        Cliente cliente = new Cliente()
+        then:
+        cupon.esDe(cliente)
+    }
 }

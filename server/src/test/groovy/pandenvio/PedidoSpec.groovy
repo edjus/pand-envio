@@ -193,4 +193,60 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
         then:
         thrown(NoSePuedeActualizarProductoException)
     }
+
+    void "test Pedido no se puede agregar cupon en pedido con estado distinto a 'en armado"() {
+        when:
+        Restaurant restaurant = new Restaurant()
+        Cliente cliente = new Cliente()
+        Plato plato = new Plato(restaurant: restaurant)
+        Pedido pedido = new Pedido(cliente, new ModalidadParaLlevar(), restaurant)
+        CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: cliente, porcentaje: 10, codigo: "ABC", fecha: new Date())
+        pedido.agregar(plato, 3)
+        pedido.siguienteEstado()
+        pedido.agregarCupon(cupon)
+        then:
+        thrown(NoSePuedeActualizarProductoException)
+        cupon.estaDisponible()
+    }
+
+    void "test Pedido no se puede agregar cupon si es de otro cliente"() {
+        when:
+        Restaurant restaurant = new Restaurant()
+        Cliente cliente = new Cliente()
+        Cliente cliente2 = new Cliente()
+        Pedido pedido = new Pedido(cliente, new ModalidadParaLlevar(), restaurant)
+        CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: cliente2, porcentaje: 10, codigo: "ABC", fecha: new Date())
+        pedido.agregarCupon(cupon)
+        then:
+        thrown(CuponInvalidoException)
+        cupon.estaDisponible()
+    }
+
+    void "test Pedido puede agregar cupon si es del cliente y esta disponible"() {
+        when:
+        Restaurant restaurant = new Restaurant()
+        Cliente cliente = new Cliente()
+        Pedido pedido = new Pedido(cliente, new ModalidadParaLlevar(), restaurant)
+        CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: cliente, porcentaje: 10, codigo: "ABC", fecha: new Date())
+        then:
+        cupon.estaDisponible()
+        pedido.agregarCupon(cupon)
+        !cupon.estaDisponible()
+        cupon.pedidoBeneficiado == pedido
+    }
+
+
+    void "test Pedido puede no puede agregar cupon si es del cliente y no esta disponible"() {
+        when:
+        Restaurant restaurant = new Restaurant()
+        Cliente cliente = new Cliente()
+        Pedido pedido = new Pedido(cliente, new ModalidadParaLlevar(), restaurant)
+        Pedido pedido2 = new Pedido(cliente, new ModalidadParaLlevar(), restaurant)
+        CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: cliente, porcentaje: 10, codigo: "ABC", fecha: new Date(), pedidoBeneficiado: pedido2)
+        pedido.agregarCupon(cupon)
+        then:
+        thrown(CuponInvalidoException)
+        !cupon.estaDisponible()
+        cupon.pedidoBeneficiado == pedido2
+    }
 }

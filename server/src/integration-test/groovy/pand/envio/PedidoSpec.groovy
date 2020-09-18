@@ -267,12 +267,10 @@ class PedidoSpec extends Specification {
                 .save(failOnError: true)
         ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
                 .save(failOnError: true)
-        EstadoPedido estado = new EstadoListo().save(failOnError: true)
         CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: cliente, activo: true, porcentaje: 10, codigo: 'ABC', fecha: new Date())
                 .save(failOnError: true)
         Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
         pedido.agregar(plato, 2)
-        pedido.estado = estado
         pedido.save(failOnError: true)
         when:
         pedido.agregarCupon(cupon)
@@ -295,12 +293,10 @@ class PedidoSpec extends Specification {
                 .save(failOnError: true)
         ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
                 .save(failOnError: true)
-        EstadoPedido estado = new EstadoListo().save(failOnError: true)
         CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: cliente2, activo: true, porcentaje: 10, codigo: 'ABC', fecha: new Date())
                 .save(failOnError: true)
         Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
         pedido.agregar(plato, 2)
-        pedido.estado = estado
         pedido.save(failOnError: true)
         when:
         pedido.agregarCupon(cupon)

@@ -18,4 +18,8 @@ abstract class CuponDescuento {
     boolean estaDisponible() {
         !pedidoBeneficiado
     }
+
+    boolean esDe(Cliente cliente){
+        true
+    }
 }

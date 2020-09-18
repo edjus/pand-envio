@@ -62,4 +62,22 @@ class CuponDescuentoPorcentualSpec extends Specification implements DomainUnitTe
             cupon == CuponDescuentoPorcentual.findById(cupon.id)
     }
 
+    void "Cupon Descuento Porcentual no es de cliente"() {
+        when:
+        Cliente cliente = new Cliente()
+        Cliente cliente2 = new Cliente()
+        def cupon = new CuponDescuentoPorcentual(cliente: cliente, fecha: new Date(), codigo: 'ABC', porcentaje: 10)
+        then:
+        !cupon.esDe(cliente2)
+    }
+
+
+    void "Cupon Descuento Porcentual es de cliente"() {
+        when:
+        Cliente cliente = new Cliente()
+        def cupon = new CuponDescuentoPorcentual(cliente: cliente, fecha: new Date(), codigo: 'ABC', porcentaje: 10)
+        then:
+        cupon.esDe(cliente)
+    }
+
 }

@@ -93,10 +93,14 @@ class Pedido {
     }
 
     void agregarCupon(CuponDescuentoPorcentual cupon) {
-        if (cupon.cliente != this.cliente) {
-            throw new CuponInvalidoException("El cupón no pertenece al cliente")
+        if (!this.estado.puedeActualizarProductos()) {
+            throw  new NoSePuedeActualizarProductoException()
+        }
+        if (!cupon.estaDisponible() || !cupon.esDe(this.cliente)) {
+            throw new CuponInvalidoException("El cupón no puede ser agregado")
         }
 
+        cupon.pedidoBeneficiado = this
         setCuponDeDescuento(cupon)
     }
 

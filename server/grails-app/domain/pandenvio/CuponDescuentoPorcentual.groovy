@@ -18,4 +18,9 @@ class CuponDescuentoPorcentual extends CuponDescuento {
         }
         precio * (1 - (porcentaje / 100))
     }
+
+    @Override
+    boolean esDe(Cliente cliente){
+        this.cliente == cliente
+    }
 }
