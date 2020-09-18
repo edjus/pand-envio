@@ -109,17 +109,11 @@ class PedidoService {
         if (!pedido){
             throw new RuntimeException('El pedido no es válido')
         }
-        CuponDescuento cupon = CuponDescuento.findByCodigo(codigoCupon)
+        def cupon = CuponDescuentoPorcentual.findByCodigo(codigoCupon)
         if (!cupon){
             throw new RuntimeException('El cupón no es válido')
         }
-        println("CUPON: ${cupon.codigo} - ${cupon.activo}")
         pedido.agregarCupon(cupon)
         pedido.save(failOnError: true, flush: true)
-
-        println("CUPON: ${pedido.cuponDeDescuento.codigo} - ${pedido.cuponDeDescuento.activo}")
-        println("CUPON: ${cupon.codigo} - ${cupon.activo}")
-
-        pedido
     }
 }

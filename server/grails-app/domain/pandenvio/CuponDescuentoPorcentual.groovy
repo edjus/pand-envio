@@ -20,7 +20,7 @@ class CuponDescuentoPorcentual extends CuponDescuento {
     }
 
     @Override
-    boolean esDe(Cliente cliente){
+    boolean perteneceA(Cliente cliente){
         this.cliente == cliente
     }
 }

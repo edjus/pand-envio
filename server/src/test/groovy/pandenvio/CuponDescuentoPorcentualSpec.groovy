@@ -68,7 +68,7 @@ class CuponDescuentoPorcentualSpec extends Specification implements DomainUnitTe
         Cliente cliente2 = new Cliente()
         def cupon = new CuponDescuentoPorcentual(cliente: cliente, fecha: new Date(), codigo: 'ABC', porcentaje: 10)
         then:
-        !cupon.esDe(cliente2)
+        !cupon.perteneceA(cliente2)
     }
 
 
@@ -77,7 +77,7 @@ class CuponDescuentoPorcentualSpec extends Specification implements DomainUnitTe
         Cliente cliente = new Cliente()
         def cupon = new CuponDescuentoPorcentual(cliente: cliente, fecha: new Date(), codigo: 'ABC', porcentaje: 10)
         then:
-        cupon.esDe(cliente)
+        cupon.perteneceA(cliente)
     }
 
 }

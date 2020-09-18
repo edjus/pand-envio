@@ -8,6 +8,7 @@ json {
 	    id cuponDescuentoPorcentual.id
         activo !cuponDescuentoPorcentual.estaDisponible()
         disponible cuponDescuentoPorcentual.estaDisponible()
+        pedidoBeneficiado cuponDescuentoPorcentual.pedidoBeneficiado?.id
         fecha cuponDescuentoPorcentual.fecha
         codigo cuponDescuentoPorcentual.codigo
         porcentaje cuponDescuentoPorcentual.porcentaje
