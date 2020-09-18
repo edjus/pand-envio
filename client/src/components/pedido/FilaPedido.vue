@@ -9,6 +9,7 @@
     <td>{{ item.restaurant.nombre }}</td>
     <td>
       <button class='btn btn-primary' v-on:click="avanzar"><i class='fas fa-arrow-circle-right'></i> Avanzar estado</button>
+      <button class='btn btn-danger' v-on:click="cancelar"><i class='fas fa-window-close'></i> Cancelar</button>
     </td>
   </tr>
 </template>
@@ -20,6 +21,9 @@ export default {
   methods: {
     avanzar: function () {
       this.$emit('avanzarPedido', this.item)
+    },
+    cancelar: function () {
+      this.$emit('cancelarPedido', this.item)
     }
   }
 

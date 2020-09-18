@@ -3,7 +3,7 @@
     <div class='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom'>
       <h1 class='h2'>Pedidos</h1>
     </div>
-    <tabla-pedido :pedidos='pedidos' @avanzarPedido="avanzarPedido"></tabla-pedido>
+    <tabla-pedido :pedidos='pedidos' @avanzarPedido="avanzarPedido" @cancelarPedido="cancelarPedido"></tabla-pedido>
   </div>
 </template>
 
@@ -28,6 +28,34 @@ export default {
         group: 'notifications',
         clean: true
       })
+    },
+    cancelarPedido: function(pedido) {
+      fetch(`${this.serverURL}/pedido/${pedido.id}/cancelar`, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'}
+      }).then(r => r.json())
+        .then(json => {
+          if (!(json._embedded && json._embedded.errors)) {
+            this.$notify({
+              group: 'notifications',
+              type: 'success',
+              title: 'El pedido se canceló exitosamente'
+            })
+            this.actualizarListadoPedidos(json.pedido)
+          } else {
+            console.error('Error cancelando pedido: ' + json._embedded.errors[0])
+            this.$notify({
+              group: 'notifications',
+              type: 'error',
+              duration: 5000,
+              title: 'No se puede cancelar el pedido',
+              text: json._embedded.errors[0]
+            })
+          }
+        })
+        .catch(error => {
+          console.error(error)
+        })
     },
     avanzarPedido: function (pedido) {
       fetch(`${this.serverURL}/pedido/${pedido.id}/siguienteEstado`, {
