@@ -60,8 +60,8 @@ class PedidoController {
         try {
             Pedido pedido = pedidoService.cancelar(pedidoId)
             respond([pedido: pedido], status: OK)
-        } catch (RuntimeException e) {
-            respond e.message, status: BAD_REQUEST
+        } catch (NoSePudeCancelarException e) {
+            respond ([error: e.message], status: BAD_REQUEST)
         }
     }
 

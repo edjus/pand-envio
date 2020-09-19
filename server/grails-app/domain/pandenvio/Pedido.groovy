@@ -65,6 +65,10 @@ class Pedido {
     }
 
     void cancelar() {
+        def estadosValidosParaCancelar = ["recibido","en_preparacion"]
+        if(this.nombreEstado != "recibido"){
+            throw new NoSePudeCancelarException("El pedido no puede cancelarse ya que esta un estado avanzado")
+        }
         setEstado(this.estado.cancelar())
     }
 
