@@ -13,7 +13,6 @@ class AsignadorRepartidor {
         if (repartidores.empty){
             return null
         }
-
         repartidores.first()
     }
 }
