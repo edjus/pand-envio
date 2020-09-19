@@ -5,7 +5,7 @@ class Adicional {
     //adicional por pedido entregado
     Float adicional = 50
 
-    void aplicarAdicional(Float precioBase){
+    Float aplicarAdicional(Float precioBase){
         return precioBase +  adicional
     }
 
