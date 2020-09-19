@@ -106,9 +106,7 @@ class PedidoService {
 
     
     def cambiarModalidadDeProducto(Long pedidoId) {
-
         Pedido pedido = Pedido.findById(pedidoId)
-
         if(pedido.puedeCambiarModalidad()){
             if (pedido.modalidadEntrega.nombre == "para_retirar"){
                 pedido.modalidadEntrega  = modalidadEntregaService.obtenerModalidadPorNombre("para_llevar")

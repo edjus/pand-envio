@@ -6,10 +6,10 @@ import grails.gorm.transactions.Transactional
 class ClienteService {
 
     def agregarCliente(Cliente cliente) {
-        if (cliente.esValido()) {
+        if (cliente.esValidoElMail()) {
             cliente.save flush:true
         } else {
-            throw new DatosNoPuedenSerNulosException("El nombre no puede estar vacio")
+            throw new DatosNoPuedenSerNulosException("El mail es invalido")
         }
     }
 
