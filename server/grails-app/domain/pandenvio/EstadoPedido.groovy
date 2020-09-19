@@ -123,7 +123,6 @@ class EstadoEnEspera extends EstadoPedido {
 class EstadoEntregado extends EstadoPedido {
     EstadoEntregado() {
         this.nombre = 'entregado'
-        AsignadorCupones.instance.calcularPosibleCupon(pedido)
     }
 
     @Override
