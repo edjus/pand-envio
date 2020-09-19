@@ -99,7 +99,17 @@ class PedidoController {
     def actualizarProducto(Long pedidoId, Long productoId) {
         try {
             Integer cantidad = request.JSON.cantidad
-            Pedido pedido = pedidoService.actualizarProducto(pedidoId, productoId, cantidad)
+            Pedido pedido = pedidoService.cambiarModalidadDeProducto(pedidoId, productoId, cantidad)
+            respond([pedido:  pedido], status: OK)
+        } catch (RuntimeException e) {
+            respond e.message, status: BAD_REQUEST
+        }
+    }
+
+    @Transactional
+    def cambiarModalidad(Long pedidoId) {
+        try {
+            Pedido pedido = pedidoService.cambiarModalidadDeProducto(pedidoId)
             respond([pedido:  pedido], status: OK)
         } catch (RuntimeException e) {
             respond e.message, status: BAD_REQUEST

@@ -104,6 +104,25 @@ class PedidoService {
         pedido.save(failOnError: true, flush: true)
     }
 
+    
+    def cambiarModalidadDeProducto(Long pedidoId) {
+
+        Pedido pedido = Pedido.findById(pedidoId)
+
+        if(pedido.puedeCambiarModalidad()){
+            if (pedido.modalidadEntrega.nombre == "para_retirar"){
+                pedido.modalidadEntrega  = modalidadEntregaService.obtenerModalidadPorNombre("para_llevar")
+            }
+            else{
+                pedido.modalidadEntrega  = modalidadEntregaService.obtenerModalidadPorNombre("para_retirar")
+            }
+        }
+        else{
+            throw new RuntimeException('El producto no puede cambiar la modalidad en este estado')
+        }
+        pedido.save(failOnError: true, flush: true)
+    }
+
     def agregarCupon(Long pedidoId, String codigoCupon) {
         Pedido pedido = Pedido.findById(pedidoId)
         if (!pedido){
@@ -120,6 +139,6 @@ class PedidoService {
         println("CUPON: ${pedido.cuponDeDescuento.codigo} - ${pedido.cuponDeDescuento.activo}")
         println("CUPON: ${cupon.codigo} - ${cupon.activo}")
 
-        pedido
+        
     }
 }

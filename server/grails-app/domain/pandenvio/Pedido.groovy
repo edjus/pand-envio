@@ -72,6 +72,11 @@ class Pedido {
         modalidadEntrega.hayRepartidor()
     }
 
+    Boolean puedeCambiarModalidad(){
+        def estadosValidos = ["en_armado","recibido","en_preparacion"]
+        return (this.nombreEstado in estadosValidos)
+    }
+    
     void asignarA(Repartidor repartidor){
         this.modalidadEntrega.asignarRepartidor(repartidor)
     }
