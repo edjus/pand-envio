@@ -15,9 +15,7 @@
             @sumarUno="sumarUno" @restarUno="restarUno" @removerProducto="removerProducto">
             </item-pedido>
             <div class="row cupon-total">
-              <div class="col-12 col-md-5">
-                <!-- TODO: AGREGAR componente cupon (input y botón activar) -->
-              </div>
+              <cupon-pedido :cupon="pedido.cupon" @aplicarCupon="aplicarCupon"></cupon-pedido>
               <div class="col-12 col-md-6 offset-md-1 col-lg-4 offset-lg-3 pr-4">
                 <ul class="list-group">
                   <li class="list-group-item d-flex justify-content-between bg-light">
@@ -45,10 +43,11 @@
 <script>
 import * as AppService from '../../services/AppService'
 import ItemPedido from './ItemPedido'
+import CuponPedido from './CuponPedido'
 
 export default {
   name: 'Pedido',
-  components: {ItemPedido},
+  components: {ItemPedido, CuponPedido},
   data () {
     return {
       pedido: null
@@ -73,15 +72,18 @@ export default {
     },
     async removerProducto (productoId) {
       this.pedido = await AppService.removerProducto(this.pedido.id, productoId)
+    },
+    async aplicarCupon (codigoCupon) {
+      try {
+        this.pedido = await AppService.aplicarCupon(this.pedido.id, codigoCupon)
+      } catch (error) {
+        console.log(error.response.data.error)
+      }
     }
   },
   async created () {
-    try {
-      this.pedido = await AppService.obtenerPedidoActual()
-      console.log(this.pedido.items)
-    } catch (error) {
-      console.log(`error: ${error}`)
-    }
+    this.pedido = await AppService.obtenerPedidoActual()
+    console.log(this.pedido)
   }
 }
 </script>

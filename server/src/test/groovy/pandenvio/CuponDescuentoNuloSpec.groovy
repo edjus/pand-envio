@@ -39,6 +39,6 @@ class CuponDescuentoNuloSpec extends Specification implements DomainUnitTest<Cup
         def cupon = new CuponDescuentoNulo(fecha: new Date(), codigo: 'ABC').save(failOnError: true)
         Cliente cliente = new Cliente()
         then:
-        cupon.esDe(cliente)
+        cupon.perteneceA(cliente)
     }
 }

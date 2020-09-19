@@ -56,7 +56,7 @@ export default {
         { name: 'Vue.js', code: 'vu' },
         { name: 'Javascript', code: 'js' },
         { name: 'Open Source', code: 'os' }
-      ]    }
+      ] }
   },
   props: [
     'menu',

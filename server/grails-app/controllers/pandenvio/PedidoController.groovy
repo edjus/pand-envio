@@ -78,7 +78,7 @@ class PedidoController {
             Pedido pedido = pedidoService.agregarProducto(pedidoId, productoId, cantidad)
             respond([pedido: pedido], status: OK)
         } catch (RuntimeException e) {
-            respond e.message, status: BAD_REQUEST
+            respond ([error: e.message], status: BAD_REQUEST)
         }
     }
 
@@ -91,7 +91,7 @@ class PedidoController {
                 respond([pedido: pedidos.first()], status: OK)
             }
         } catch (RuntimeException e) {
-            respond e.message, status: BAD_REQUEST
+            respond([error: e.message], status: BAD_REQUEST)
         }
     }
 
@@ -112,7 +112,7 @@ class PedidoController {
             Pedido pedido = pedidoService.cambiarModalidadDeProducto(pedidoId)
             respond([pedido:  pedido], status: OK)
         } catch (RuntimeException e) {
-            respond e.message, status: BAD_REQUEST
+            respond ([error: e.message], status: BAD_REQUEST)
         }
     }
 
@@ -122,7 +122,7 @@ class PedidoController {
             Pedido pedido = pedidoService.removerProducto(pedidoId, productoId)
             respond([pedido: pedido], status: OK)
         } catch (RuntimeException e) {
-            respond e.message, status: BAD_REQUEST
+            respond ([error: e.message], status: BAD_REQUEST)
         }
     }
 
@@ -133,32 +133,32 @@ class PedidoController {
             Pedido pedido = pedidoService.agregarCupon(pedidoId, codigo)
             respond([pedido: pedido], status: OK)
         } catch (RuntimeException e) {
-            respond e.message, status: BAD_REQUEST
+            respond ([error: e.message], status: BAD_REQUEST)
         }
     }
 
     def dominioException(final PedidoNoTieneItemsException exception) {
         log.error "Exception occurred. ${exception?.message}", exception
-        respond exception.message, status: BAD_REQUEST
+        respond ([error: exception.message], status: BAD_REQUEST)
     }
 
     def handlerException(final ProductoNoPerteneceAlRestauranteException exception) {
         log.error "Exception occurred. ${exception?.message}", exception
-        respond exception.message, status: BAD_REQUEST
+        respond ([error: exception.message], status: BAD_REQUEST)
     }
 
     def handlerException(final NoSePudeRemoverProductoException exception) {
         log.error "Exception occurred. ${exception?.message}", exception
-        respond exception.message, status: BAD_REQUEST
+        respond ([error: exception.message], status: BAD_REQUEST)
     }
 
     def handlerException(final NoSePuedeActualizarProductoException exception) {
         log.error "Exception occurred. ${exception?.message}", exception
-        respond exception.message, status: BAD_REQUEST
+        respond ([error: exception.message], status: BAD_REQUEST)
     }
 
     def handlerException(final CuponInvalidoException exception) {
         log.error "Exception occurred. ${exception?.message}", exception
-        respond exception.message, status: BAD_REQUEST
+        respond ([error: exception.message], status: BAD_REQUEST)
     }
 }

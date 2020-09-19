@@ -15,8 +15,6 @@ class BootStrap {
 
         Ubicacion juanPerezUbicacion = new Ubicacion(calle: "Paunero", altura: 2030, pisoYDepartamento: null)
         Cliente juanPerez = new Cliente(nombre: "Juan", apellido: "Perez", mail: "juanperez@yahoo.com.ar", ubicacion: juanPerezUbicacion, telefono: "1138465977",cupones:null)
-        CuponDescuento cupon = new CuponDescuentoPorcentual(cliente:juanPerez, porcentaje: 10, codigo: 'ABC', fecha: new Date())
-
         Ubicacion pepeArgentoUbicacion = new Ubicacion(calle: "Paseo Colon", altura: 850, pisoYDepartamento: null)
         Cliente pepeArgento = new Cliente(nombre: "Pepe", apellido: "Argento", mail: "pepeargento@fi.uba.com.ar", ubicacion: pepeArgentoUbicacion, telefono: "1125146958")
 
@@ -46,11 +44,10 @@ class BootStrap {
                 .save(failOnError: true)
         ModalidadEntrega modalidadEntrega = new ModalidadParaRetirar()
                 .save(failOnError: true)
-        EstadoPedido estado = new EstadoEnPreparacion().save(failOnError: true)
         Pedido pedido = new Pedido(pepeArgento, modalidadEntrega, restaurante)
         pedido.agregar(plato, 2)
         pedido.save(failOnError: true)
-        CuponDescuento cupon2 = new CuponDescuentoPorcentual(cliente: pepeArgento, pedidoBeneficiado: pedido, porcentaje: 10, codigo: 'ABC', fecha: new Date())
+        CuponDescuento cupon2 = new CuponDescuentoPorcentual(cliente: pepeArgento, porcentaje: 10, codigo: 'ABC', fecha: new Date())
                 .save(failOnError: true)
 
     }

@@ -73,6 +73,12 @@ const editarProducto = async (pedidoId, productoId, cantidad) => {
   }
 }
 
+const aplicarCupon = async (pedidoId, codigo) => {
+  const data = {codigo: codigo}
+  const response = await axios.put(`${SERVER_URL}/pedido/${pedidoId}/cupon`, data)
+  return response.data.pedido
+}
+
 export {
   obtenerPlatos,
   crearPedido,
@@ -80,5 +86,6 @@ export {
   obtenerPedidoActual,
   confirmarPedido,
   removerProducto,
-  editarProducto
+  editarProducto,
+  aplicarCupon
 }
