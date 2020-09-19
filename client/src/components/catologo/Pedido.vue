@@ -74,16 +74,16 @@ export default {
       this.pedido = await AppService.removerProducto(this.pedido.id, productoId)
     },
     async aplicarCupon (codigoCupon) {
-      this.pedido = await AppService.aplicarCupon(this.pedido.id, codigoCupon)
+      try {
+        this.pedido = await AppService.aplicarCupon(this.pedido.id, codigoCupon)
+      } catch (error) {
+        console.log(error.response.data.error)
+      }
     }
   },
   async created () {
-    try {
-      this.pedido = await AppService.obtenerPedidoActual()
-      console.log(this.pedido)
-    } catch (error) {
-      console.log(`error: ${error}`)
-    }
+    this.pedido = await AppService.obtenerPedidoActual()
+    console.log(this.pedido)
   }
 }
 </script>

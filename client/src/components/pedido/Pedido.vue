@@ -29,7 +29,7 @@ export default {
         clean: true
       })
     },
-    cancelarPedido: function(pedido) {
+    cancelarPedido: function (pedido) {
       fetch(`${this.serverURL}/pedido/${pedido.id}/cancelar`, {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'}

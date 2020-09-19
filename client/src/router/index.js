@@ -9,8 +9,8 @@ import { esRol } from '../services/AutenticacionService'
 import Repartidor from '../components/repartidor/Repartidor'
 import Cupon from '../components/cupon/Cupon'
 import Plato from '../components/plato/Plato'
-import Menu from "../components/menu/Menu";
-import ListadoPedido from "../components/pedido/Pedido"
+import Menu from '../components/menu/Menu'
+import ListadoPedido from '../components/pedido/Pedido'
 Vue.use(Router)
 
 const router = new Router({
