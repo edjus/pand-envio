@@ -1,7 +1,7 @@
 <template>
   <div class="row item">
       <div class="d-none d-lg-block col-lg-2 text-center py-2">
-          <img :src="'https://www.hola.com/imagenes/cocina/recetas/2014100174000/albondigas-cordero/0-784-791/albondigas-de-cordero-con-salsa-de-tomate-m.jpg'" width="120" height="80" class="rounded" />
+          <img :src="item.producto_imagen" width="120" height="80" class="rounded" />
       </div>
       <div class="col-12 text-sm-center col-lg-5 text-lg-left">
           <h5><small>{{item.producto}}</small></h5>

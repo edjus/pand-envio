@@ -7,6 +7,7 @@ model {
 json {
 	producto_id item.producto.id
 	producto item.producto.nombre
+	producto_imagen item.producto.imagen
 	precio_unitario item.producto.precio
 	cantidad item.cantidad
 	precio item.calcularPrecio()

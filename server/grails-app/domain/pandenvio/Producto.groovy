@@ -4,6 +4,11 @@ abstract class Producto {
 
     String nombre
     BigDecimal precio
+    String imagen
+
+    static constraints = {
+        imagen nullable: true
+    }
 
     // TODO: fix typo
     static belongsTo = [restaurant: Restaurant]

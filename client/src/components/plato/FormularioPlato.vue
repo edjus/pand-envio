@@ -28,6 +28,10 @@
               <input type='text' class='form-control' id='descripcion' v-model='plato.descripcion'>
             </div>
             <div class='form-group'>
+              <label for='imagen' class='col-form-label'>Imagen:</label>
+              <input type='text' class='form-control' id='imagen' v-model='plato.imagen'>
+            </div>
+            <div class='form-group'>
               <label for='restaurant' class='col-form-label'>Restaurant:</label>
               <campo-select v-model="plato.restaurant" :field="'un restaurant'" :values="restaurantes" id="restaurant" :elegido="plato.restaurant ? plato.restaurant.id : null"></campo-select>
             </div>

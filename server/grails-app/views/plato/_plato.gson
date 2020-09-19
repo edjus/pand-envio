@@ -10,6 +10,8 @@ json {
 
     precio plato.precio
 
+    imagen plato.imagen
+
     descripcion plato.descripcion
 
     categoria plato.categoria;
