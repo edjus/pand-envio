@@ -36,11 +36,9 @@ class Pedido {
         this.modalidadEntrega = modalidadEntrega
         this.items = []
         this.restaurant = restaurant
-<<<<<<< HEAD
         //this.clima = Clima.ConsultarClima()
-=======
         this.setClima(new ClimaNoLluvioso())
->>>>>>> 27dfdd9738c18699e1619cb9209b30c110ab1232
+
     }
 
     void agregar(Producto producto, Integer cantidad) {
