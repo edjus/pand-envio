@@ -68,6 +68,11 @@ class PedidoService {
         !pedidos.empty
     }
 
+    List<Pedido> buscarPedidosPorRestaurante(Long restauranteId) {
+        Restaurant restaurante = restaurantService.obtenerRestaurante(restauranteId)
+        Pedido.findAllWhere(restaurant: restaurante)
+    }
+
     List<Pedido> pedidoActual(Long clienteId) {
         Cliente cliente = clienteService.obtenerCliente(clienteId)
         if (!cliente) {

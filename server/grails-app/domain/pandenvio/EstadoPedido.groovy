@@ -100,6 +100,7 @@ class EstadoEnEntrega extends EstadoPedido {
     @Override
     def iniciarPara(Pedido pedido) {
         AsignadorRepartidor.instance.asignarPara(pedido)
+    //    CreadorDeCupones.instance.CrearPosibleCupon(pedido.cliente);//Verificar si 
         pedido.estado = pedido.tieneRepartidor() ? this : new EstadoEnEspera()
     }
 }

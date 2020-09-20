@@ -11,6 +11,8 @@ class Pedido {
     String nombreEstado
     ModalidadEntrega modalidadEntrega
     Restaurant restaurant
+    //Booleano estoyEnElRadio true false
+  //  String clima
 
     static hasMany = [items: Item]
 
@@ -33,6 +35,7 @@ class Pedido {
         this.modalidadEntrega = modalidadEntrega
         this.items = []
         this.restaurant = restaurant
+        //this.clima = Clima.ConsultarClima()
     }
 
     void agregar(Producto producto, Integer cantidad) {

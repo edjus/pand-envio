@@ -4,6 +4,7 @@ class Repartidor {
     String nombre
     String dni
     boolean disponible
+//    Sueldo sueldo
     Restaurant restaurant
 
     static constraints = {

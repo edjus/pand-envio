@@ -13,9 +13,8 @@ class AdicionalDistancia {
         return precioBase +  adicional
     }
 
-
-    //Api google? Llamar para obtener distancia
     Float calcularAdicional(){
+        //Se fija en la modalidad de Llevar la distancia y en base a eso lo calcula
         distanciaCentroADestino = 5;
         if(radio < distanciaCentroADestino){
             adicional = adicional + adicional * 0.1
