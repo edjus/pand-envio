@@ -23,6 +23,9 @@ class RepartidorService {
 
 
     def liquidarSueldoFinal(Repartidor repartidor) {
+        if (!repartidor) {
+            throw new RuntimeException('El repartidor es inválido')
+        }
         repartidor.liquidarSueldoFinal();
         repartidor.sueldo.save flush:true
         repartidor.save flush:true

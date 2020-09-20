@@ -22,7 +22,7 @@ class PedidoService {
 
         Restaurant restaurant = restaurantService.obtenerRestaurante(restauranteId)
         if (!restaurant) {
-            throw new RuntimeException('El resturante es inválido')
+            throw new RuntimeException('El resturante es invalido')
         }
 
         if (tienePedidoEnArmado(cliente)){

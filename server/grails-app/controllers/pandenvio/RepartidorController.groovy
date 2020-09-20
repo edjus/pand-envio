@@ -46,8 +46,13 @@ class RepartidorController {
     
     @Transactional
     def obtenerSueldoFinal(Long repartidorId) {
+        try {
             Sueldo sueldoDeRepartidor = repartidorService.obtenerSueldoRepartidor(repartidorId)
             respond([sueldo: sueldoDeRepartidor], status: OK)
+            } 
+        catch (RuntimeException e) {
+            respond ([e.message], status: BAD_REQUEST)
+        }
 
     }
 

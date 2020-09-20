@@ -129,6 +129,10 @@ class Pedido {
         return this.nombreEstado == "entregado"
     }
 
+    Boolean esConLlluvia(){
+        return this.nombreClima == "lluvioso"
+    }
+
     // TODO: ver como mejorar ésto y si es necesario, es una asignación manual del estado al cargar el pedido
     def afterLoad() {
         setEstado(FabricaEstados.obtenerEstado(this.nombreEstado))

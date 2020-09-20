@@ -41,16 +41,19 @@ class Repartidor {
     }
 
     int cantidadPedidosConLluvia(){
-        int cantidadPedidosCompletados = 0
+        int cantidadPedidosConLluvia = 0
         for ( pedido in this.listaDePedidos ) {
-            cantidadPedidosCompletados = cantidadPedidosCompletados + 1
+            if(pedido.esConLlluvia()){
+                cantidadPedidosConLluvia = cantidadPedidosConLluvia + 1
+            }
         }        
-        return cantidadPedidosCompletados
+        return cantidadPedidosConLluvia
     }
 
     void liquidarSueldoFinal(){
         int pedidosCompletados = cantidadPedidosCompletados();
-        this.sueldo.calcularAdicionales(pedidosCompletados);
+        int cantidadPedidosConLluvia = cantidadPedidosConLluvia();
+        this.sueldo.calcularAdicionales(pedidosCompletados,cantidadPedidosConLluvia);
     }
 
 }
