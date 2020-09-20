@@ -40,6 +40,14 @@ class Repartidor {
         return cantidadPedidosCompletados
     }
 
+    int cantidadPedidosConLluvia(){
+        int cantidadPedidosCompletados = 0
+        for ( pedido in this.listaDePedidos ) {
+            cantidadPedidosCompletados = cantidadPedidosCompletados + 1
+        }        
+        return cantidadPedidosCompletados
+    }
+
     void liquidarSueldoFinal(){
         int pedidosCompletados = cantidadPedidosCompletados();
         this.sueldo.calcularAdicionales(pedidosCompletados);

@@ -73,7 +73,12 @@ class PedidoController {
     def buscarPedidosPorRestaurante(Long restaurantId) {
         try {
             List<Pedido> pedidos = pedidoService.buscarPedidosPorRestaurante(restaurantId)
-            respond([pedidos], status: OK)
+            if(pedidos.size() == 0){
+                respond([],status: OK)
+            }
+            else{
+                respond(pedidos, status: OK)
+            }
         } catch (RuntimeException e) {
             respond e.message, status: BAD_REQUEST
         }
