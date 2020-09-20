@@ -7,7 +7,7 @@ class ModalidadParaRetirar extends ModalidadEntrega {
     }
 
     @Override
-    BigDecimal aplicarAdicionales(BigDecimal valorBase) {
+    BigDecimal aplicarAdicionales(BigDecimal valorBase, Pedido pedido) {
         valorBase
     }
 

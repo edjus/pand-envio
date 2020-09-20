@@ -3,7 +3,8 @@ package pandenvio
 class ModalidadParaLlevar  extends ModalidadEntrega {
     Puntuacion puntuacion
     Repartidor repartidor
-    //int Distancia 1 km , 5 km, 10 km 
+
+    def adicionales = []
 
     static constraints = {
         puntuacion nullable: true
@@ -12,14 +13,14 @@ class ModalidadParaLlevar  extends ModalidadEntrega {
 
     ModalidadParaLlevar(){
         this.nombre = "para_llevar"
+        this.adicionales << new AdicionalDistancia()
+        this.adicionales << new AdicionalClimatico()
     }
 
     @Override
-    BigDecimal aplicarAdicionales(BigDecimal valorBase) {
-        // TODO: Aplicar adicionales si corresponde
-
-        //Checkear el clima del pedido y el clima le agrega el adicional adicional 
-        valorBase
+    BigDecimal aplicarAdicionales(BigDecimal valorBase, Pedido pedido) {
+        BigDecimal adicional = this.adicionales.sum {a -> a.obtenerAdicional(valorBase, pedido)}
+        valorBase + adicional
     }
 
     @Override

@@ -5,6 +5,8 @@ import grails.testing.mixin.integration.Integration
 import grails.gorm.transactions.Rollback
 import pandenvio.CategoriaPlato
 import pandenvio.Cliente
+import pandenvio.ClimaLluvioso
+import pandenvio.ClimaNoLluvioso
 import pandenvio.CuponDescuento
 import pandenvio.CuponDescuentoPorcentual
 import pandenvio.CuponInvalidoException
@@ -14,6 +16,7 @@ import pandenvio.EstadoEnEspera
 import pandenvio.EstadoEnPreparacion
 import pandenvio.EstadoListo
 import pandenvio.EstadoPedido
+import pandenvio.FabricaClima
 import pandenvio.Menu
 import pandenvio.ModalidadEntrega
 import pandenvio.ModalidadParaLlevar
@@ -302,5 +305,99 @@ class PedidoSpec extends Specification {
         pedido.agregarCupon(cupon)
         then:
         thrown CuponInvalidoException
+    }
+
+    void "test Precio para llevar dentro del rango sin lluvia"() {
+        given:
+        Restaurant restaurante = new Restaurant(nombre: 'La esquina').save(failOnError: true)
+
+        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+                .save(failOnError: true)
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 150, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+                .save(failOnError: true)
+        ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
+        pedido.agregar(plato, 1)
+        pedido.save(failOnError: true)
+        when:
+        def pedidoGuardado = Pedido.findById(pedido.id)
+        def precio = pedidoGuardado.calcularPrecio()
+        then:
+        pedidoGuardado.clima.class == ClimaNoLluvioso
+        pedidoGuardado.enRango
+        precio == 150
+    }
+
+    void "test Precio para llevar fuera del rango sin lluvia"() {
+        given:
+        Restaurant restaurante = new Restaurant(nombre: 'La esquina').save(failOnError: true)
+
+        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+                .save(failOnError: true)
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 150, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+                .save(failOnError: true)
+        ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
+        pedido.enRango = false
+        pedido.agregar(plato, 1)
+        pedido.save(failOnError: true)
+        when:
+        def pedidoGuardado = Pedido.findById(pedido.id)
+        def precio = pedidoGuardado.calcularPrecio()
+        then:
+        pedidoGuardado.clima.class == ClimaNoLluvioso
+        !pedidoGuardado.enRango
+        precio == 165
+    }
+
+    void "test Precio para llevar dentro del rango con lluvia"() {
+        given:
+        Restaurant restaurante = new Restaurant(nombre: 'La esquina').save(failOnError: true)
+
+        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+                .save(failOnError: true)
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 150, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+                .save(failOnError: true)
+        ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante, FabricaClima.crearPara('lluvioso'))
+        pedido.agregar(plato, 1)
+        pedido.save(failOnError: true)
+        when:
+        def pedidoGuardado = Pedido.findById(pedido.id)
+        def precio = pedidoGuardado.calcularPrecio()
+        then:
+        pedidoGuardado.clima.class == ClimaLluvioso
+        pedidoGuardado.enRango
+        precio == 200
+    }
+
+    void "test Precio para llevar fuera del rango con lluvia"() {
+        given:
+        Restaurant restaurante = new Restaurant(nombre: 'La esquina').save(failOnError: true)
+
+        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+                .save(failOnError: true)
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 150, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+                .save(failOnError: true)
+        ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante, FabricaClima.crearPara('lluvioso'))
+        pedido.agregar(plato, 1)
+        pedido.enRango = false
+        pedido.save(failOnError: true)
+        when:
+        def pedidoGuardado = Pedido.findById(pedido.id)
+        def precio = pedidoGuardado.calcularPrecio()
+        then:
+        pedidoGuardado.clima.class == ClimaLluvioso
+        !pedidoGuardado.enRango
+        precio == 215
     }
 }
