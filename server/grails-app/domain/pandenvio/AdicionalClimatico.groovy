@@ -1,12 +1,9 @@
 package pandenvio
 
+// Adicional para el precio del pedido
 class AdicionalClimatico {
 
-    //adicional por pedido entregado en lluvia
-    Float adicional = 100
-
-    Float aplicarAdicional(Float precioBase){
-        return precioBase +  adicional
+    BigDecimal obtenerAdicional(BigDecimal precioBase, Pedido pedido){
+        pedido.clima.adicionalPrecio()
     }
-
 }

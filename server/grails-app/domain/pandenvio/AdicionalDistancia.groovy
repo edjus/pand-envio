@@ -1,25 +1,9 @@
 package pandenvio
 
+// Adicional para el precio del pedido
 class AdicionalDistancia {
 
-    //adicional por pedido entregado en lluvia
-    Ubicacion centro
-    Ubicacion destino
-    int radio
-
-
-    Float aplicarAdicional(Float precioBase){
-        adicional = calcularAdicional()
-        return precioBase +  adicional
+    BigDecimal obtenerAdicional(BigDecimal precioBase, Pedido pedido){
+        pedido.enRango ? 0 : precioBase * 0.1 // Si esta fuera del rango el adicional al precio es 10%
     }
-
-    Float calcularAdicional(){
-        //Se fija en la modalidad de Llevar la distancia y en base a eso lo calcula
-        distanciaCentroADestino = 5;
-        if(radio < distanciaCentroADestino){
-            adicional = adicional + adicional * 0.1
-        }
-        return adicional
-    }
-
 }
