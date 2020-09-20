@@ -11,9 +11,9 @@ class Pedido {
     String nombreEstado
     ModalidadEntrega modalidadEntrega
     Restaurant restaurant
-    //Booleano estoyEnElRadio true false
     Clima clima
     String nombreClima
+    Boolean enRango
 
     static hasMany = [items: Item]
 
@@ -21,6 +21,7 @@ class Pedido {
         cliente nullable: false
         modalidadEntrega nullable: false
         restaurant nullable: false
+        enRango nullable: false
     }
 
     static mapping = {
@@ -37,6 +38,7 @@ class Pedido {
         this.items = []
         this.restaurant = restaurant
         this.setClima(clima)
+        this.enRango = true
     }
 
     void agregar(Producto producto, Integer cantidad) {

@@ -14,6 +14,7 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
             pedido.cuponDeDescuento.class == CuponDescuentoNulo
             pedido.estado.class == EstadoEnArmado
             pedido.clima.class == ClimaNoLluvioso
+            pedido.enRango
     }
 
     void "test cliente de un Pedido no puede ser null"() {
