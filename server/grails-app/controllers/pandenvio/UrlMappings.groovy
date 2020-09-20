@@ -31,6 +31,8 @@ class UrlMappings {
 
         delete "/pedido/$pedidoId/producto/$productoId"(controller: 'pedido', action: 'removerProducto')
         put "/pedido/$pedidoId/producto/$productoId"(controller: 'pedido', action: 'actualizarProducto')
+        put "/pedido/$pedidoId/cambiarRango"(controller: 'pedido', action: 'cambiarRango')
+
         put "/pedido/$pedidoId/cambiarModalidad"(controller: 'pedido', action: 'cambiarModalidad')
 
         post "/clima"(controller: 'clima', action: 'actualizarClima')

@@ -53,6 +53,11 @@ class Pedido {
         }
     }
 
+
+    void setenRango(Boolean rango){
+        this.enRango = rango
+    }
+
     BigDecimal calcularPrecio() {
         return this.modalidadEntrega.calcularPrecioCon(this, cuponDeDescuento)
     }

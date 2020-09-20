@@ -10,6 +10,7 @@ json {
 	cliente id: pedido.cliente.id,
 			nombre: pedido.cliente.nombreCompleto()
 	estado pedido.estado.nombre
+	enRango pedido.enRango
 	modalidad pedido.modalidadEntrega.nombre
 	clima pedido.clima.nombre
 	precio pedido.calcularPrecio()

@@ -138,6 +138,12 @@ class PedidoService {
         pedido.save(failOnError: true, flush: true)
     }
 
+    def cambiarRango(Long pedidoId) {
+        Pedido pedido = Pedido.findById(pedidoId)
+        pedido.enRango = !pedido.enRango
+        pedido.save(failOnError: true, flush: true)
+    }
+
     def agregarCupon(Long pedidoId, String codigoCupon) {
         Pedido pedido = Pedido.findById(pedidoId)
         if (!pedido){

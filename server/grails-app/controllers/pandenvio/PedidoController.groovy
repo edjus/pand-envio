@@ -111,6 +111,18 @@ class PedidoController {
     }
 
     @Transactional
+    def cambiarRango(Long pedidoId) {
+        try {
+            Pedido pedido = pedidoService.cambiarRango(pedidoId)
+
+            respond([pedido: pedido], status: OK)
+        } catch (RuntimeException e) {
+            respond ([e.message], status: BAD_REQUEST)
+        }
+    }
+
+
+    @Transactional
     def actualizarProducto(Long pedidoId, Long productoId) {
         try {
             Integer cantidad = request.JSON.cantidad
