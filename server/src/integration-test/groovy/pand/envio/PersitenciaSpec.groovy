@@ -5,6 +5,7 @@ import grails.testing.mixin.integration.Integration
 import grails.gorm.transactions.Rollback
 import pandenvio.CategoriaPlato
 import pandenvio.Cliente
+import pandenvio.ClimaNoLluvioso
 import pandenvio.CuponDescuento
 import pandenvio.CuponDescuentoPorcentual
 import pandenvio.EstadoEnPreparacion
@@ -96,6 +97,8 @@ class PersitenciaSpec extends Specification {
             pedidoGuardado.modalidadEntrega == modalidadEntrega
             pedidoGuardado.estado == estado
             pedidoGuardado.items.size() == 1
+            pedidoGuardado.nombreClima == 'no_lluvioso'
+            pedidoGuardado.clima.class == ClimaNoLluvioso
     }
 
     void "Cupon Descuento Porcentual se guarda correctamente"() {
