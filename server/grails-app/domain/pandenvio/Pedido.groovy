@@ -28,7 +28,7 @@ class Pedido {
         items cascade: "all-delete-orphan"
     }
 
-    Pedido(cliente, modalidadEntrega, restaurant) {
+    Pedido(cliente, modalidadEntrega, restaurant, clima = new ClimaNoLluvioso()) {
         this.fecha = new Date()
         this.cliente = cliente
         this.cuponDeDescuento = new CuponDescuentoNulo(fecha: fecha, activo: true, codigo: 'NULO')
@@ -36,9 +36,7 @@ class Pedido {
         this.modalidadEntrega = modalidadEntrega
         this.items = []
         this.restaurant = restaurant
-        //this.clima = Clima.ConsultarClima()
-        this.setClima(new ClimaNoLluvioso())
-
+        this.setClima(clima)
     }
 
     void agregar(Producto producto, Integer cantidad) {

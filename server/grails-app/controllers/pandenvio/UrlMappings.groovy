@@ -17,9 +17,6 @@ class UrlMappings {
         "/repartidor"(resources:"repartidor")
         "/cupones"(resources:"cupones")
 
-
-
-
         // pedido
         "/pedido"(resources:"pedido")
         put "/pedido/$pedidoId/siguienteEstado"(controller: 'pedido', action: 'actualizarEstado')
@@ -32,6 +29,9 @@ class UrlMappings {
         delete "/pedido/$pedidoId/producto/$productoId"(controller: 'pedido', action: 'removerProducto')
         put "/pedido/$pedidoId/producto/$productoId"(controller: 'pedido', action: 'actualizarProducto')
         put "/pedido/$pedidoId/cambiarModalidad"(controller: 'pedido', action: 'cambiarModalidad')
+
+        post "/clima"(controller: 'clima', action: 'actualizarClima')
+        get "/clima"(controller: 'clima', action: 'mostrarClima')
 
         "/"(controller: 'application', action:'index')
         "500"(view: '/error')

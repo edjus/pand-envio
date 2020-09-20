@@ -29,7 +29,8 @@ class PedidoService {
             throw new RuntimeException('No puede agregar otro pedido ya tiene uno en armando')
         }
 
-        new Pedido(cliente, modalidadEntrega, restaurant).save(failOnError: true)
+        Clima clima = ClimaConfigurableService.instance.climaActual
+        new Pedido(cliente, modalidadEntrega, restaurant, clima).save(failOnError: true)
     }
 
     def siguienteEstadoPedido(Long pedidoId) {
