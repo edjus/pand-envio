@@ -3,6 +3,9 @@ package pandenvio
 import grails.gorm.transactions.Transactional
 
 import static org.springframework.http.HttpStatus.CREATED
+import static org.springframework.http.HttpStatus.BAD_REQUEST
+import static org.springframework.http.HttpStatus.NOT_FOUND
+import static org.springframework.http.HttpStatus.OK
 
 @Transactional(readOnly = true)
 class RepartidorController {
@@ -39,4 +42,16 @@ class RepartidorController {
             }
         }
     }
+
+    
+    @Transactional
+    def obtenerSueldoFinal(Long repartidorId) {
+            Sueldo sueldoDeRepartidor = repartidorService.obtenerSueldoRepartidor(repartidorId)
+            respond([sueldo: sueldoDeRepartidor], status: OK)
+
+    }
+
+
+
+
 }

@@ -74,6 +74,15 @@ class PedidoService {
         Pedido.findAllWhere(restaurant: restaurante)
     }
 
+    int buscarPedidosPorRepartidor(Repartidor repartidor) {
+        List<ModalidadParaLlevar> modalidades = ModalidadParaLlevar.findAllWhere(repartidor : repartidor)
+        int cantidadPedidos = 0;
+        modalidades.each { modalidad ->
+            cantidadPedidos = cantidadPedidos + Pedido.findAllWhere(modalidadEntrega: modalidad).size()
+        }
+        return cantidadPedidos;
+    }
+
     List<Pedido> pedidoActual(Long clienteId) {
         Cliente cliente = clienteService.obtenerCliente(clienteId)
         if (!cliente) {
@@ -109,6 +118,8 @@ class PedidoService {
         pedido.actualizarCantidad(producto, cantidad)
         pedido.save(failOnError: true, flush: true)
     }
+
+    
 
     
     def cambiarModalidadDeProducto(Long pedidoId) {

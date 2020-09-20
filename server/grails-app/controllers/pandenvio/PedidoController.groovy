@@ -71,8 +71,12 @@ class PedidoController {
 
     @Transactional
     def buscarPedidosPorRestaurante(Long restaurantId) {
-        List<Pedido> pedidos = pedidoService.buscarPedidosPorRestaurante(restaurantId)
-        respond([pedidos: pedidos], status: OK)
+        try {
+            List<Pedido> pedidos = pedidoService.buscarPedidosPorRestaurante(restaurantId)
+            respond([pedidos: pedidos], status: OK)
+        } catch (RuntimeException e) {
+            respond e.message, status: BAD_REQUEST
+        }
     }
 
 

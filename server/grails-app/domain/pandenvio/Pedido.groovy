@@ -120,6 +120,10 @@ class Pedido {
         setCuponDeDescuento(cupon)
     }
 
+    Boolean estaEntregado(){
+        return this.nombreEstado == "entregado"
+    }
+
     // TODO: ver como mejorar ésto y si es necesario, es una asignación manual del estado al cargar el pedido
     def afterLoad() {
         setEstado(FabricaEstados.obtenerEstado(this.nombreEstado))

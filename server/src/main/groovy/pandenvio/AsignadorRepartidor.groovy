@@ -6,6 +6,7 @@ class AsignadorRepartidor {
     void asignarPara(Pedido pedido){
         Repartidor repartidor = obtenerRepartidor(pedido.restaurant)
         pedido.asignarA(repartidor)
+        repartidor.agregarPedido(pedido)
     }
 
     Repartidor obtenerRepartidor(Restaurant restaurant){

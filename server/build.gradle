@@ -80,6 +80,7 @@ bootRun {
 
 tasks.withType(Test) {
     testLogging {
+        showStandardStreams = true
         events "passed", "skipped", "failed"
         exceptionFormat 'full'
     }
