@@ -11,6 +11,7 @@ class Pedido {
     String nombreEstado
     ModalidadEntrega modalidadEntrega
     Restaurant restaurant
+    //Booleano estoyEnElRadio true false
     Clima clima
     String nombreClima
 
@@ -35,7 +36,9 @@ class Pedido {
         this.modalidadEntrega = modalidadEntrega
         this.items = []
         this.restaurant = restaurant
+        //this.clima = Clima.ConsultarClima()
         this.setClima(new ClimaNoLluvioso())
+
     }
 
     void agregar(Producto producto, Integer cantidad) {

@@ -22,9 +22,13 @@ class PedidoController {
             render status:404
         }
         else {
-            return [pedido: pedido]
+            return [pedido: restaurant]
         }
     }
+
+
+
+
 
     /*
     POST: Crear un pedido
@@ -64,6 +68,13 @@ class PedidoController {
             respond e.message, status: BAD_REQUEST
         }
     }
+
+    @Transactional
+    def buscarPedidosPorRestaurante(Long restaurantId) {
+        List<Pedido> pedidos = pedidoService.buscarPedidosPorRestaurante(restaurantId)
+        respond([pedidos: pedidos], status: OK)
+    }
+
 
     /*
     POST: Agregar item a pedido
