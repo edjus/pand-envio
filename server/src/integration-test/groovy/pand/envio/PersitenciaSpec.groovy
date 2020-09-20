@@ -71,7 +71,7 @@ class PersitenciaSpec extends Specification {
                     .save(failOnError: true)
             Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
                         .save(failOnError: true)
-            CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: cliente, activo: true, porcentaje: 10, codigo: 'ABC', fecha: new Date())
+            CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: cliente, activo: true, porcentaje: 10, codigo: 'ABC', fecha: new Date(), restaurant: restaurante)
                     .save(failOnError: true)
             ModalidadEntrega modalidadEntrega = new ModalidadParaRetirar()
                     .save(failOnError: true)
@@ -109,11 +109,12 @@ class PersitenciaSpec extends Specification {
                 .save(failOnError: true)
         ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar().save(failOnError: true)
         Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
-        def cupon = new CuponDescuentoPorcentual(cliente:cliente, fecha: new Date(), codigo: 'ABC', porcentaje: 10, pedidoBeneficiado: pedido)
+        def cupon = new CuponDescuentoPorcentual(cliente:cliente, fecha: new Date(), codigo: 'ABC', porcentaje: 10, pedidoBeneficiado: pedido, restaurant: restaurante)
         then:
         def cantidadCupones = CuponDescuentoPorcentual.count
         cupon.save(failOnError: true)
         CuponDescuentoPorcentual.count == cantidadCupones + 1
         cupon == CuponDescuentoPorcentual.findById(cupon.id)
+        restaurante == CuponDescuentoPorcentual.findById(cupon.id).restaurant
     }
 }

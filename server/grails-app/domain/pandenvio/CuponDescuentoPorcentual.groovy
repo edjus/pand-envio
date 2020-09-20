@@ -5,10 +5,11 @@ class CuponDescuentoPorcentual extends CuponDescuento {
     static belongsTo = [cliente: Cliente]
 
     BigDecimal porcentaje
-
+    Restaurant restaurant
 
     static constraints = {
         porcentaje(range: 1..99)
+        restaurant nullable: false
     }
 
     boolean esValido() {

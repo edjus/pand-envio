@@ -47,7 +47,7 @@ class BootStrap {
         Pedido pedido = new Pedido(pepeArgento, modalidadEntrega, restaurante)
         pedido.agregar(plato, 2)
         pedido.save(failOnError: true)
-        CuponDescuento cupon2 = new CuponDescuentoPorcentual(cliente: pepeArgento, porcentaje: 10, codigo: 'ABC', fecha: new Date())
+        CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: pepeArgento, porcentaje: 10, codigo: 'ABC', fecha: new Date(), restaurant: restaurante)
                 .save(failOnError: true)
 
     }

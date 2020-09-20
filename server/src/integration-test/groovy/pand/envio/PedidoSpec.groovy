@@ -74,8 +74,8 @@ class PedidoSpec extends Specification {
 
     void "test precio de un pedido sin productos con cupon disponible es 0"() {
         given:
-            Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), new Restaurant())
-            CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: juanPerez, porcentaje: 10)
+            Pedido pedido = new Pedido(juanPerez, new ModalidadParaRetirar(), new Restaurant())
+            CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: juanPerez, porcentaje: 10, restaurant: new Restaurant() )
         when:
             pedido.cuponDeDescuento = cupon
             BigDecimal precio = pedido.calcularPrecio()
@@ -86,9 +86,9 @@ class PedidoSpec extends Specification {
 
     void "test precio de un pedido sin productos con cupon con otro pedido beneficiado lanza error"() {
         given:
-            Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), new Restaurant())
-            Pedido pedido2 = new Pedido(new Cliente(), new ModalidadParaRetirar(), new Restaurant())
-            CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: juanPerez, porcentaje: 10, pedidoBeneficiado: pedido2)
+            Pedido pedido = new Pedido(juanPerez, new ModalidadParaRetirar(), new Restaurant())
+            Pedido pedido2 = new Pedido(juanPerez, new ModalidadParaRetirar(), new Restaurant())
+            CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: juanPerez, porcentaje: 10, pedidoBeneficiado: pedido2, restaurant: new Restaurant())
         when:
             pedido.cuponDeDescuento = cupon
             pedido.calcularPrecio()
@@ -99,8 +99,8 @@ class PedidoSpec extends Specification {
     void "test precio de un pedido con productos con cupon con pedido beneficiado correcto aplica descuento"() {
         given:
             Restaurant restaurant = new Restaurant(nombre:  "Don Juan")
-            Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), restaurant)
-            CuponDescuento cupon = new CuponDescuentoPorcentual(porcentaje: 10, pedidoBeneficiado: pedido)
+            Pedido pedido = new Pedido(juanPerez, new ModalidadParaRetirar(), restaurant)
+            CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: juanPerez, porcentaje: 10, pedidoBeneficiado: pedido, restaurant: restaurant)
             Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurant)
             Producto plato2 = new Plato(nombre: 'Flan', precio: 100, categoria: CategoriaPlato.POSTRE, restaurant: restaurant)
             pedido.agregar(plato, 1)
@@ -113,20 +113,20 @@ class PedidoSpec extends Specification {
     }
 
     void "test precio de un pedido con productos y cupon disponible  no aplica si hay menu"() {
-        given:
+        when:
             Restaurant restaurant = new Restaurant(nombre:  "Don Juan")
-            Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), restaurant)
-            CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: juanPerez, porcentaje: 10)
+            Pedido pedido = new Pedido(juanPerez, new ModalidadParaRetirar(), restaurant)
+            CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: juanPerez, porcentaje: 10, restaurant: restaurant)
             Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurant)
             Producto menu = new Menu(nombre: 'Viernes', precio: 300, restaurant: restaurant)
             pedido.agregar(plato, 2)
             pedido.agregar(menu, 2)
-        when:
-            pedido.cuponDeDescuento = cupon
-            BigDecimal precio = pedido.calcularPrecio()
         then:
-            precio == 1000 // (200*2 + 300*2)
             cupon.estaDisponible()
+            pedido.agregarCupon(cupon)
+            BigDecimal precio = pedido.calcularPrecio()
+            precio == 1000 // (200*2 + 300*2)
+            !cupon.estaDisponible()
     }
 
     void "test pedido actualiza bien el estado"() {
@@ -137,7 +137,7 @@ class PedidoSpec extends Specification {
                 .save()
         Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
                 .save(failOnError: true)
-        CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: cliente, activo: true, porcentaje: 10, codigo: 'ABC', fecha: new Date())
+        CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: cliente, activo: true, porcentaje: 10, codigo: 'ABC', fecha: new Date(), restaurant: restaurante)
                 .save(failOnError: true)
         ModalidadEntrega modalidadEntrega = new ModalidadParaRetirar()
                 .save(failOnError: true)
@@ -145,8 +145,8 @@ class PedidoSpec extends Specification {
         when:
         Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
         pedido.agregar(plato, 2)
+        pedido.agregarCupon(cupon)
         pedido.estado = estado
-        pedido.cuponDeDescuento = cupon
         pedido.save(failOnError: true)
 
         then:
@@ -270,7 +270,7 @@ class PedidoSpec extends Specification {
                 .save(failOnError: true)
         ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
                 .save(failOnError: true)
-        CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: cliente, activo: true, porcentaje: 10, codigo: 'ABC', fecha: new Date())
+        CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: cliente, activo: true, porcentaje: 10, codigo: 'ABC', fecha: new Date(), restaurant: restaurante)
                 .save(failOnError: true)
         Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
         pedido.agregar(plato, 2)
@@ -296,7 +296,7 @@ class PedidoSpec extends Specification {
                 .save(failOnError: true)
         ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
                 .save(failOnError: true)
-        CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: cliente2, activo: true, porcentaje: 10, codigo: 'ABC', fecha: new Date())
+        CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: cliente2, activo: true, porcentaje: 10, codigo: 'ABC', fecha: new Date(), restaurant: restaurante)
                 .save(failOnError: true)
         Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
         pedido.agregar(plato, 2)
