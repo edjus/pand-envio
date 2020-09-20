@@ -6,9 +6,9 @@ class AsignadorRepartidor {
     void asignarPara(Pedido pedido){
         Repartidor repartidor = obtenerRepartidor(pedido.restaurant)
         pedido.asignarA(repartidor)
-        if(pedido != null){
+        if(repartidor != null){
             repartidor.agregarPedido(pedido)
-            }
+        }
     }
 
     Repartidor obtenerRepartidor(Restaurant restaurant){
