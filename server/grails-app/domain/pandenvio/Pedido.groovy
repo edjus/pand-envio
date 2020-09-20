@@ -2,7 +2,7 @@ package pandenvio
 
 class Pedido {
 
-    static transients = [ "estado" ] // No persiste el atributo estado
+    static transients = [ "estado", "clima" ] // No persiste el atributo estado
 
     Date fecha
     CuponDescuento cuponDeDescuento
@@ -11,6 +11,8 @@ class Pedido {
     String nombreEstado
     ModalidadEntrega modalidadEntrega
     Restaurant restaurant
+    Clima clima
+    String nombreClima
 
     static hasMany = [items: Item]
 
@@ -33,6 +35,7 @@ class Pedido {
         this.modalidadEntrega = modalidadEntrega
         this.items = []
         this.restaurant = restaurant
+        this.setClima(new ClimaNoLluvioso())
     }
 
     void agregar(Producto producto, Integer cantidad) {
@@ -54,6 +57,11 @@ class Pedido {
     void setEstado(EstadoPedido nuevoEstado){
         this.estado = nuevoEstado
         setNombreEstado(nuevoEstado.nombre)
+    }
+
+    void setClima(Clima nuevoClima){
+        this.clima = nuevoClima
+        setNombreClima(nuevoClima.nombre)
     }
 
     void siguienteEstado() {
@@ -112,5 +120,6 @@ class Pedido {
     // TODO: ver como mejorar ésto y si es necesario, es una asignación manual del estado al cargar el pedido
     def afterLoad() {
         setEstado(FabricaEstados.obtenerEstado(this.nombreEstado))
+        setClima(FabricaClima.crearPara(this.nombreClima))
     }
 }
