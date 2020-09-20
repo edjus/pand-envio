@@ -17,6 +17,8 @@ abstract class ModalidadEntrega {
 
     abstract EstadoPedido siguienteEstadoListo()
 
+    abstract ModalidadEntrega cambiarModalidad()
+
     abstract boolean hayRepartidor()
 
     abstract void asignarRepartidor(Repartidor repartidor)

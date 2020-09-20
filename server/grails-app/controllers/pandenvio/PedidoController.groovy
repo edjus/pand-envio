@@ -126,6 +126,15 @@ class PedidoController {
         }
     }
 
+    @Transactional
+    def cambiarModalidad(Long pedidoId) {
+
+            Pedido pedido = pedidoService.cambiarModalidad(pedidoId)
+
+            respond([pedido: pedido], status: OK)
+
+    }
+
 
     @Transactional
     def actualizarProducto(Long pedidoId, Long productoId) {

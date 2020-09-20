@@ -26,6 +26,7 @@ class Pedido {
 
     static mapping = {
         cuponDeDescuento lazy: false
+        modalidadEntrega lazy: false
         items cascade: "all-delete-orphan"
     }
 
@@ -66,6 +67,20 @@ class Pedido {
         this.estado = nuevoEstado
         setNombreEstado(nuevoEstado.nombre)
     }
+
+    void setModalidadEntrega(ModalidadEntrega modalidadEntrega){
+        this.modalidadEntrega = modalidadEntrega
+    }
+
+    void cambiarModalidad(){
+        if (!this.estado.puedeActualizarProductos()) {
+            throw  new NoSePuedeActualizarProductoException()
+        } 
+        this.setModalidadEntrega(this.modalidadEntrega.cambiarModalidad())
+
+    }
+
+
 
     void setClima(Clima nuevoClima){
         this.clima = nuevoClima
@@ -124,6 +139,10 @@ class Pedido {
         cupon.pedidoBeneficiado = this
         setCuponDeDescuento(cupon)
     }
+
+
+
+
 
     Boolean estaEntregado(){
         return this.nombreEstado == "entregado"

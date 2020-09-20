@@ -119,28 +119,18 @@ class PedidoService {
         pedido.save(failOnError: true, flush: true)
     }
 
-    
-
-    
-    def cambiarModalidadDeProducto(Long pedidoId) {
+    def cambiarRango(Long pedidoId) {
         Pedido pedido = Pedido.findById(pedidoId)
-        if(pedido.puedeCambiarModalidad()){
-            if (pedido.modalidadEntrega.nombre == "para_retirar"){
-                pedido.modalidadEntrega  = modalidadEntregaService.obtenerModalidadPorNombre("para_llevar")
-            }
-            else{
-                pedido.modalidadEntrega  = modalidadEntregaService.obtenerModalidadPorNombre("para_retirar")
-            }
+        if (!pedido){
+            throw new RuntimeException('El pedido no es válido')
         }
-        else{
-            throw new RuntimeException('El producto no puede cambiar la modalidad en este estado')
-        }
+        pedido.enRango = !pedido.enRango
         pedido.save(failOnError: true, flush: true)
     }
 
-    def cambiarRango(Long pedidoId) {
+    def cambiarModalidad(Long pedidoId) {
         Pedido pedido = Pedido.findById(pedidoId)
-        pedido.enRango = !pedido.enRango
+        pedido.cambiarModalidad()
         pedido.save(failOnError: true, flush: true)
     }
 
