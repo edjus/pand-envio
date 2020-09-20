@@ -92,7 +92,7 @@ class RepartidorSpec extends Specification {
                 pedido.nombreEstado == "entregado"
                 (repartidor.listaDePedidos).size() == 1
                 repartidor.liquidarSueldoFinal()
-                repartidor.sueldo.sueldoFinal = 30050
+                repartidor.sueldo.sueldoFinal == 30050
     }
 
 }
