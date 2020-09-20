@@ -229,7 +229,7 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
         Restaurant restaurant = new Restaurant()
         Cliente cliente = new Cliente()
         Pedido pedido = new Pedido(cliente, new ModalidadParaLlevar(), restaurant)
-        CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: cliente, porcentaje: 10, codigo: "ABC", fecha: new Date())
+        CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: cliente, porcentaje: 10, codigo: "ABC", fecha: new Date(), restaurant: restaurant)
         then:
         cupon.estaDisponible()
         pedido.agregarCupon(cupon)
@@ -250,5 +250,20 @@ class PedidoSpec extends Specification implements DomainUnitTest<Pedido> {
         thrown(CuponInvalidoException)
         !cupon.estaDisponible()
         cupon.pedidoBeneficiado == pedido2
+    }
+
+    void "test Pedido puede no puede agregar cupon si es del cliente y esta disponible y no es de restaurante"() {
+        when:
+        Restaurant restaurant = new Restaurant()
+        Restaurant restaurant2 = new Restaurant()
+        Cliente cliente = new Cliente()
+        Pedido pedido = new Pedido(cliente, new ModalidadParaLlevar(), restaurant)
+        CuponDescuentoPorcentual cupon = new CuponDescuentoPorcentual(cliente: cliente, porcentaje: 10, codigo: "ABC", fecha: new Date(), restaurant: restaurant2)
+        pedido.agregarCupon(cupon)
+        then:
+        thrown(CuponInvalidoException)
+        cupon.estaDisponible()
+        cupon.perteneceA(cliente)
+        !cupon.creadoPor(restaurant)
     }
 }

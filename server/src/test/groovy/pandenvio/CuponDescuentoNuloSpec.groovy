@@ -41,4 +41,11 @@ class CuponDescuentoNuloSpec extends Specification implements DomainUnitTest<Cup
         then:
         cupon.perteneceA(cliente)
     }
+
+    void "Cupon Descuento Nulo es creado por restaurant si no tiene restaurant"() {
+        when:
+        def cupon = new CuponDescuentoNulo(fecha: new Date(), codigo: 'ABC').save(failOnError: true)
+        then:
+        cupon.creadoPor(new Restaurant())
+    }
 }

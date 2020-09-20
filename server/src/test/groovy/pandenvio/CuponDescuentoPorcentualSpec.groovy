@@ -73,7 +73,6 @@ class CuponDescuentoPorcentualSpec extends Specification implements DomainUnitTe
         !cupon.perteneceA(cliente2)
     }
 
-
     void "Cupon Descuento Porcentual es de cliente"() {
         when:
         Cliente cliente = new Cliente()
@@ -82,4 +81,19 @@ class CuponDescuentoPorcentualSpec extends Specification implements DomainUnitTe
         cupon.perteneceA(cliente)
     }
 
+    void "Cupon Descuento Porcentual creado por restaurante cliente"() {
+        when:
+        Cliente cliente = new Cliente()
+        def cupon = new CuponDescuentoPorcentual(cliente: cliente, fecha: new Date(), codigo: 'ABC', porcentaje: 10, restaurant: restaurant)
+        then:
+        cupon.creadoPor(restaurant)
+    }
+
+    void "Cupon Descuento Porcentual no creado por restaurante cliente"() {
+        when:
+        Cliente cliente = new Cliente()
+        def cupon = new CuponDescuentoPorcentual(cliente: cliente, fecha: new Date(), codigo: 'ABC', porcentaje: 10, restaurant: restaurant)
+        then:
+        !cupon.creadoPor(new Restaurant())
+    }
 }

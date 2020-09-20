@@ -28,4 +28,9 @@ class CuponDescuentoPorcentual extends CuponDescuento {
     boolean perteneceA(Cliente cliente){
         this.cliente == cliente
     }
+
+    @Override
+    boolean creadoPor(Restaurant restaurant) {
+        this.restaurant == restaurant
+    }
 }

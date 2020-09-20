@@ -19,7 +19,7 @@ abstract class CuponDescuento {
         !pedidoBeneficiado
     }
 
-    boolean perteneceA(Cliente cliente){
-        true
-    }
+    abstract boolean perteneceA(Cliente cliente)
+
+    abstract boolean creadoPor(Restaurant restaurant)
 }

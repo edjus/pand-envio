@@ -112,7 +112,7 @@ class Pedido {
         if (!this.estado.puedeActualizarProductos()) {
             throw  new NoSePuedeActualizarProductoException()
         }
-        if (!cupon.estaDisponible() || !cupon.perteneceA(this.cliente)) {
+        if (!cupon.estaDisponible() || !cupon.perteneceA(this.cliente) || !cupon.creadoPor(this.restaurant)) {
             throw new CuponInvalidoException("El cupón no puede ser agregado")
         }
 
