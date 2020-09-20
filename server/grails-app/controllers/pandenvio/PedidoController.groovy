@@ -22,7 +22,7 @@ class PedidoController {
             render status:404
         }
         else {
-            return [pedido: restaurant]
+            return [pedido: pedido]
         }
     }
 
@@ -73,7 +73,7 @@ class PedidoController {
     def buscarPedidosPorRestaurante(Long restaurantId) {
         try {
             List<Pedido> pedidos = pedidoService.buscarPedidosPorRestaurante(restaurantId)
-            respond([pedidos: pedidos], status: OK)
+            respond([pedidos], status: OK)
         } catch (RuntimeException e) {
             respond e.message, status: BAD_REQUEST
         }
