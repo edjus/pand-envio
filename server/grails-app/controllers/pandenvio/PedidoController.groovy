@@ -83,6 +83,20 @@ class PedidoController {
         }
     }
 
+    @Transactional
+    def obtenerPedidosAsociadosACliente(Long clienteId) {
+
+            List<Pedido> pedidos = pedidoService.obtenerPedidosAsociadosACliente(clienteId)
+            if(pedidos.size() == 0){
+                respond([],status: OK)
+            }
+            else{
+                respond(pedidos, status: OK)
+            }
+    }
+
+
+
     /*
     POST: Agregar item a pedido
     - producto_id: long con el id de un pruducto existente del mismo restaurant del pedido

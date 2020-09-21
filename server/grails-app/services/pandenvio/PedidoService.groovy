@@ -70,9 +70,15 @@ class PedidoService {
     }
 
     List<Pedido> buscarPedidosPorRestaurante(Long restauranteId) {
-        Restaurant restaurante = restaurantService.obtenerRestaurante(restauranteId)
-        Pedido.findAllWhere(restaurant: restaurante)
+        Restaurant restaurant = restaurantService.obtenerRestaurante(restauranteId)
+        Pedido.findAllWhere(restaurant: restaurant)
     }
+
+    List<Pedido> obtenerPedidosAsociadosACliente(Long clienteId) {
+        Cliente cliente = clienteService.obtenerCliente(clienteId)
+        Pedido.findAllWhere(cliente: cliente)
+    }
+
 
     int buscarPedidosPorRepartidor(Repartidor repartidor) {
         List<ModalidadParaLlevar> modalidades = ModalidadParaLlevar.findAllWhere(repartidor : repartidor)

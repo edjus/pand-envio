@@ -37,6 +37,7 @@ class UrlMappings {
         put "/pedido/$pedidoId/cambiarRango"(controller: 'pedido', action: 'cambiarRango')
         post "/pedido/$pedidoId/calificarPedido"(controller: 'pedido', action: 'calificarPedido')
         get "/pedido/$pedidoId/calificacion"(controller: 'pedido', action: 'obtenerCalificacion')
+        get "/pedido/cliente/$clienteId"(controller: 'pedido', action: 'obtenerPedidosAsociadosACliente')
 
         put "/pedido/$pedidoId/cambiarModalidad"(controller: 'pedido', action: 'cambiarModalidad')
         post "/clima"(controller: 'clima', action: 'actualizarClima')
