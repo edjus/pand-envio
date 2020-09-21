@@ -136,16 +136,23 @@ class PedidoController {
 
     @Transactional
     def calificarPedido(Long pedidoId) {
+        try {
             Integer calificacion = request.JSON.calificacion
             Puntuacion puntuacion = pedidoService.calificarPedido(pedidoId,calificacion)
             respond([puntuacion: puntuacion], status: OK)
+            } catch (RuntimeException e) {
+            respond ([e.message], status: BAD_REQUEST)
+        }
     }
 
     @Transactional
     def obtenerCalificacion(Long pedidoId) {
-            
+        try {
             Puntuacion puntuacion = pedidoService.obtenerPuntuacion(pedidoId)
             respond([puntuacion: puntuacion], status: OK)
+            } catch (RuntimeException e) {
+            respond ([e.message], status: BAD_REQUEST)
+        }
     }
 
     @Transactional

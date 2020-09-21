@@ -63,6 +63,7 @@ class RepartidorSpec extends Specification {
                 pedido.save(failOnError: true)
         then:
                 (repartidor.listaDePedidos).size() == 1
+                //repartidor.disponible == true
     }
 
         void "test repartidor tiene dos pedidos"() {

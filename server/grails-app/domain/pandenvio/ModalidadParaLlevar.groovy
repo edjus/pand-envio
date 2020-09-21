@@ -22,6 +22,10 @@ class ModalidadParaLlevar  extends ModalidadEntrega {
         return this.puntuacion.estrellas
     }
 
+    Boolean tienePuntuacion(){
+        return (this.puntuacion != null)
+    }
+
     Puntuacion getPuntuacion(){
         return this.puntuacion
     }

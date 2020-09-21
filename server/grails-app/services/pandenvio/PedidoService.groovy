@@ -124,20 +124,12 @@ class PedidoService {
         if (!pedido){
             throw new RuntimeException('El pedido no es válido no existe')
         }
-
-        ModalidadParaLlevar modalidad = (ModalidadParaLlevar)pedido.modalidadEntrega
-
-        modalidad.agregarPuntuacion(calificacionAIngresar)
-
-
-        Puntuacion puntuacion = modalidad.puntuacion
-
-
-        puntuacion.estrellas = calificacionAIngresar
-
-        puntuacion.save(failOnError: true, flush: true)
+        if(pedido.modalidadEntrega.nombre == "para_retirar"){
+            throw new RuntimeException('El servicio del pedido no puede puntuarse')
+        }
+        pedido.setPuntuacionAModalidad(calificacionAIngresar);
         pedido.save(failOnError: true, flush: true)
-        return puntuacion
+        return pedido.modalidadEntrega.puntuacion
     }
 
     def obtenerPuntuacion(Long pedidoId) {

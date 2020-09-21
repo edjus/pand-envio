@@ -68,6 +68,13 @@ class Pedido {
         setNombreEstado(nuevoEstado.nombre)
     }
 
+    void setPuntuacionAModalidad(Integer calificacionAIngresar){
+        if (calificacionAIngresar > 5 || calificacionAIngresar < 0) {
+            throw new CalificacionError("La calificacion no puede ser inferior a 0 y superior a 5")
+        } 
+        this.modalidadEntrega.agregarPuntuacion(calificacionAIngresar)
+    }
+
     void setModalidadEntrega(ModalidadEntrega modalidadEntrega){
         this.modalidadEntrega = modalidadEntrega
     }
@@ -98,7 +105,21 @@ class Pedido {
             modalidadLlevar.puntuacion.estrellas = calificacion
             return this.modalidadEntrega.puntuacion
         }  
-    } 
+    }
+
+    Boolean tienePuntuacion(){
+        return this.modalidadEntrega.puntuacion != null
+    }
+
+
+    int obtenerEstrellas(){
+        if(this.modalidadEntrega.nombre == "para_llevar"){
+            if(modalidadEntrega.tienePuntuacion()){
+                return (int) this.modalidadEntrega.cantidadEstrellas()
+            }
+            return 0
+        }   
+    }
 
     void setClima(Clima nuevoClima){
         this.clima = nuevoClima
