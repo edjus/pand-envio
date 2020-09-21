@@ -14,6 +14,29 @@
             <item-pedido v-for='item in pedido.items' :item='item' :key='item.id'
             @sumarUno="sumarUno" @restarUno="restarUno" @removerProducto="removerProducto">
             </item-pedido>
+             <form class="mt-4">
+                <div class="form-group row">
+                  <label for="modalidad" class="col-sm-2 col-form-label">Modalidad de Entrega</label>
+                  <div class="col-sm-2">
+                      <select name="modalidad" id="modalidad" class="form-control" v-model="pedido.modalidad" v-on:change="cambiarModalidadPedido">
+                        <option value="para_llevar">Para LLevar</option>
+                        <option value="para_retirar">Para Retirar</option>
+                      </select>
+                  </div>
+                </div>
+               <div class="form-group row">
+                 <div class="col-sm-2">Distancia</div>
+                 <div class="col-sm-10">
+                   <div class="form-check">
+                     <input class="form-check-input" type="checkbox" v-model="pedido.enRango" v-on:change="cambiarRangoPedido">
+                     <label class="form-check-label">
+                       Estoy dentro del radio de reparto gratuito del restaurante
+                     </label>
+                   </div>
+                 </div>
+               </div>
+              </form>
+
             <div class="row cupon-total">
               <cupon-pedido :cupon="pedido.cupon" @aplicarCupon="aplicarCupon"></cupon-pedido>
               <div class="col-12 col-md-6 offset-md-1 col-lg-4 offset-lg-3 pr-4">
@@ -61,6 +84,14 @@ export default {
       } catch (error) {
         console.log(`Error: ${error}`)
       }
+    },
+    async cambiarModalidadPedido () {
+      await AppService.cambiarModalidadPedido(this.pedido.id)
+      this.pedido = await AppService.obtenerPedidoActual()
+    },
+    async cambiarRangoPedido () {
+      await AppService.cambiarRangoPedido(this.pedido.id)
+      this.pedido = await AppService.obtenerPedidoActual()
     },
     async sumarUno (productoId, cantidad) {
       cantidad++

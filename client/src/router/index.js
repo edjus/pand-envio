@@ -30,7 +30,7 @@ const router = new Router({
       component: Restaurants,
       meta: {
         publico: false,
-        rol: 'admin'
+        rol: ['admin']
       }
     },
     {
@@ -39,7 +39,7 @@ const router = new Router({
       component: Clientes,
       meta: {
         publico: false,
-        rol: 'admin'
+        rol: ['admin']
       }
     },
     {
@@ -48,7 +48,7 @@ const router = new Router({
       component: Catalogo,
       meta: {
         publico: false,
-        rol: 'cliente'
+        rol: ['cliente']
       }
     },
     {
@@ -57,7 +57,7 @@ const router = new Router({
       component: Pedido,
       meta: {
         publico: false,
-        rol: 'cliente'
+        rol: ['cliente']
       }
     },
     {
@@ -66,7 +66,7 @@ const router = new Router({
       component: Repartidor,
       meta: {
         publico: false,
-        rol: 'admin'
+        rol: ['admin']
       }
     },
     {
@@ -75,7 +75,7 @@ const router = new Router({
       component: Cupon,
       meta: {
         publico: false,
-        rol: 'admin'
+        rol: ['admin']
       }
     },
     {
@@ -84,7 +84,7 @@ const router = new Router({
       component: Plato,
       meta: {
         publico: false,
-        rol: 'admin'
+        rol: ['admin']
       }
     },
     {
@@ -93,7 +93,7 @@ const router = new Router({
       component: Menu,
       meta: {
         publico: false,
-        rol: 'admin'
+        rol: ['admin']
       }
     },
     {
@@ -102,7 +102,7 @@ const router = new Router({
       component: ListadoPedido,
       meta: {
         publico: false,
-        rol: 'admin'
+        rol: ['admin','duenio']
       }
     }
   ]

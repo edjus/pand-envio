@@ -9,7 +9,7 @@
 
 <script>
 import TablaPedido from './TablaPedido'
-
+import { getRestauranteIdLogueado } from '../../services/AutenticacionService'
 export default {
   name: 'Pedido',
   components: {TablaPedido},
@@ -20,7 +20,7 @@ export default {
     }
   },
   created () {
-    this.cargarPedidos()
+    this.cargarPedidos(getRestauranteIdLogueado())
   },
   methods: {
     clearNotifications: function () {
@@ -94,9 +94,13 @@ export default {
         this.pedidos.push(pedido)
       }
     },
-    cargarPedidos: async function () {
+    cargarPedidos: async function (restauranteId) {
       this.clearNotifications()
-      fetch(`${this.serverURL}/pedido`)
+      let url = `${this.serverURL}/pedido`
+      if (restauranteId) {
+        url += '/restaurant/' + restauranteId
+      }
+      fetch(url)
         .then(r => r.json())
         .then(json => {
           this.pedidos = json

@@ -22,7 +22,7 @@
             <i class="fas fa-layer-group mr-2"></i> Menues
           </router-link>
         </li>
-        <li class="nav-item" v-if="esRol('admin')">
+        <li class="nav-item" v-if="esRol(['admin','duenio'])">
           <router-link to="/pedidos" class="nav-link" v-bind:class="getClass('/pedidos')">
             <i class="fas fa-shopping-cart"></i> Pedidos
           </router-link>
@@ -42,6 +42,12 @@
             <i class="fas fa-tags"></i> Cupones
           </router-link>
         </li>
+        <li class="nav-item" v-if="esRol('admin')">
+          <a href="#" v-on:click="invocarLLuvia" class="nav-link"><i class="fas fa-cloud-rain"></i> Invocar LLuvia</a>
+        </li>
+        <li class="nav-item" v-if="esRol('admin')">
+          <a href="#" v-on:click="invocarSol" class="nav-link"><i class="fas fa-sun"></i> Llamar al Sol</a>
+        </li>
         <li class="nav-item" v-if="esRol('cliente')">
           <router-link to="/catalogo" class="nav-link" v-bind:class="getClass('/catalogo')">
             <i class="fas fa-book-open"></i> Catálogo
@@ -54,6 +60,7 @@
 
 <script>
 import { esRol } from '../services/AutenticacionService'
+import {cambiarAClimaSoleado, cambiarAClimaLLuvioso} from "../services/AppService";
 
 export default {
   name: 'Botonera',
@@ -64,6 +71,14 @@ export default {
 
     esRol (rol) {
       return esRol(rol)
+    },
+    async invocarLLuvia () {
+      const clima = await cambiarAClimaLLuvioso()
+      this.$root.$emit('nuevoClima',clima);
+    },
+    async invocarSol () {
+      const clima = await cambiarAClimaSoleado()
+      this.$root.$emit('nuevoClima',clima);
     }
   }
 }
