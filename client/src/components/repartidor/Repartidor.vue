@@ -8,7 +8,8 @@
         </button>
       </div>
     </div>
-    <tabla-repartidor :repartidores='repartidores' @edicionRepartidor="editarRepartidor" @eliminarRepartidor="eliminarRepartidor"></tabla-repartidor>
+    <tabla-repartidor :repartidores='repartidores' @edicionRepartidor="editarRepartidor" @eliminarRepartidor="eliminarRepartidor" @verSueldo="verSueldo"></tabla-repartidor>
+    <sueldo-repartidor ref='modalSueldo' :repartidor="repartidorActual" :sueldo="sueldo"></sueldo-repartidor>
     <formulario-repartidor ref='modal' :repartidor="repartidorActual" :restaurantes="restaurantes" @confirmacionRepartidor="guardarRepartidor"></formulario-repartidor>
   </div>
 </template>
@@ -16,21 +17,25 @@
 <script>
 import TablaRepartidor from './TablaRepartidor'
 import FormularioRepartidor from './FormularioRepartidor'
+import {getSueldo} from '../../services/RepartidorService'
+import SueldoRepartidor from './SueldoRepartidor'
+import {getRestauranteIdLogueado} from '../../services/AutenticacionService'
 
 export default {
   name: 'Repartidor',
-  components: {FormularioRepartidor, TablaRepartidor},
+  components: {SueldoRepartidor, FormularioRepartidor, TablaRepartidor},
   data: function () {
     return {
       repartidores: [],
       restaurantes: [],
+      sueldo: {},
       repartidorActual: this.nuevoRepartidor(),
       serverURL: process.env.SERVER_URL
     }
   },
   created () {
-    this.cargarRepartidores()
-    this.cargarRestaurantes()
+    this.cargarRepartidores(getRestauranteIdLogueado())
+    this.cargarRestaurantes(getRestauranteIdLogueado())
   },
   methods: {
     clearNotifications: function () {
@@ -38,6 +43,11 @@ export default {
         group: 'notifications',
         clean: true
       })
+    },
+    verSueldo: async function (repartidor) {
+      this.sueldo = await getSueldo(repartidor)
+      this.repartidorActual = Object.assign({}, repartidor)
+      this.$refs.modalSueldo.show()
     },
     editarRepartidor: function (repartidor) {
       this.repartidorActual = Object.assign({}, repartidor)
@@ -131,9 +141,13 @@ export default {
       this.repartidorActual = this.nuevoRepartidor()
       this.$refs.modal.show()
     },
-    cargarRepartidores: async function () {
+    cargarRepartidores: async function (restauranteId) {
       this.clearNotifications()
-      fetch(`${this.serverURL}/repartidor`)
+      let url = `${this.serverURL}/repartidor`
+      if (restauranteId) {
+        url += '/restaurant/' + restauranteId
+      }
+      fetch(url)
         .then(r => r.json())
         .then(json => {
           this.repartidores = json
@@ -153,11 +167,19 @@ export default {
           })
         })
     },
-    cargarRestaurantes: async function () {
-      fetch(`${this.serverURL}/restaurant`)
+    cargarRestaurantes: async function (restauranteId) {
+      let url = `${this.serverURL}/restaurant`
+      if (restauranteId) {
+        url += '/' + restauranteId
+      }
+      fetch(url)
         .then(r => r.json())
         .then(json => {
-          this.restaurantes = json
+          if (restauranteId) {
+            this.restaurantes = [json]
+          } else {
+            this.restaurantes = json
+          }
         })
         .catch(error => console.error('Error cargando restaurantes: ' + error))
     }

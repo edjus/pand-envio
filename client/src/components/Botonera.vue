@@ -32,9 +32,14 @@
             <i class="fas fa-users"></i> Clientes
           </router-link>
         </li>
-        <li class="nav-item" v-if="esRol('admin')">
+        <li class="nav-item" v-if="esRol(['admin','duenio'])">
           <router-link to="/repartidores" class="nav-link" v-bind:class="getClass('/repartidores')">
             <i class="fas fa-motorcycle"></i> Repartidores
+          </router-link>
+        </li>
+        <li class="nav-item" v-if="esRol(['repartidor'])">
+          <router-link to="/verSueldo" class="nav-link" v-bind:class="getClass('/verSueldo')">
+            <i class="fas fa-money-check-alt"></i> Ver sueldo
           </router-link>
         </li>
         <li class="nav-item" v-if="esRol('admin')">
@@ -60,7 +65,7 @@
 
 <script>
 import { esRol } from '../services/AutenticacionService'
-import {cambiarAClimaSoleado, cambiarAClimaLLuvioso} from "../services/AppService";
+import {cambiarAClimaSoleado, cambiarAClimaLLuvioso} from '../services/AppService'
 
 export default {
   name: 'Botonera',
@@ -74,11 +79,11 @@ export default {
     },
     async invocarLLuvia () {
       const clima = await cambiarAClimaLLuvioso()
-      this.$root.$emit('nuevoClima',clima);
+      this.$root.$emit('nuevoClima', clima)
     },
     async invocarSol () {
       const clima = await cambiarAClimaSoleado()
-      this.$root.$emit('nuevoClima',clima);
+      this.$root.$emit('nuevoClima', clima)
     }
   }
 }

@@ -17,8 +17,7 @@
 <script>
 import { loguear, rolActual, esRol } from '../services/AutenticacionService'
 import $$ from 'jquery'
-import * as AppService from "../services/AppService";
-import {getClima} from "../services/AppService";
+import {getClima} from '../services/AppService'
 
 export default {
   name: 'Cabecera',
@@ -26,7 +25,7 @@ export default {
   data () {
     return {
       esCliente: true,
-      clima: '',
+      clima: ''
     }
   },
   methods: {
@@ -37,16 +36,16 @@ export default {
       return esRol(rol)
     }
   },
-  mounted: function() {
+  mounted: function () {
     const rol = rolActual()
     $$(`#btn${rol}`).addClass('active')
     const self = this
-    getClima().then(function(clima) {
+    getClima().then(function (clima) {
       self.clima = clima
     })
-    this.$root.$on('nuevoClima',  function (nuevoClima) {
+    this.$root.$on('nuevoClima', function (nuevoClima) {
       self.clima = nuevoClima
-    });
+    })
   }
 }
 </script>

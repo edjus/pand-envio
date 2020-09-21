@@ -7,7 +7,8 @@
     <td>{{ item.restaurant.nombre }}</td>
     <td>
       <button class='btn btn-primary' v-on:click="editar"><i class='fas fa-edit'></i> Editar</button>
-      <button class='btn btn-danger disabled' disabled="true" v-on:click="eliminar"><i class='fas fa-trash-alt'></i> Eliminar</button>
+      <button class="btn btn-success" v-on:click="verSueldo"><i class="fas fa-money-check-alt"></i> Sueldo</button>
+      <!--<button class='btn btn-danger disabled' disabled="true" v-on:click="eliminar"><i class='fas fa-trash-alt'></i> Eliminar</button>-->
     </td>
   </tr>
 </template>
@@ -19,6 +20,9 @@ export default {
   methods: {
     editar: function () {
       this.$emit('edicionRepartidor', this.item)
+    },
+    verSueldo: function () {
+      this.$emit('verSueldo', this.item)
     },
     eliminar: function () {
       this.$emit('eliminarRepartidor', this.item)

@@ -12,7 +12,7 @@
       </tr>
       </thead>
       <tbody>
-      <fila-repartidor v-for='repartidor in repartidores' @edicionRepartidor="editarRepartidor" @eliminarRepartidor="eliminarRepartidor"
+      <fila-repartidor v-for='repartidor in repartidores' @edicionRepartidor="editarRepartidor" @eliminarRepartidor="eliminarRepartidor" @verSueldo="verSueldo"
                     :item='repartidor' :key='repartidor.id'></fila-repartidor>
       </tbody>
     </table>
@@ -31,6 +31,9 @@ export default {
     },
     eliminarRepartidor: function (item) {
       this.$emit('eliminarRepartidor', item)
+    },
+    verSueldo: function (item) {
+      this.$emit('verSueldo', item)
     }
   }
 }
