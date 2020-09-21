@@ -4,7 +4,7 @@ import grails.testing.gorm.DomainUnitTest
 import pandenvio.Puntuacion
 import spock.lang.Specification
 
-class PuntuacionSpec extends Specification implements <Puntuacion> {
+class PuntuacionSpec extends Specification implements DomainUnitTest<Puntuacion> {
 
     void "test puntuacion no puede ser mayor a 5"() {
         when:
