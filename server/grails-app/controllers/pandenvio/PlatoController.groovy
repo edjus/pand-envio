@@ -3,6 +3,9 @@ package pandenvio
 import grails.gorm.transactions.Transactional
 
 import static org.springframework.http.HttpStatus.CREATED
+import static org.springframework.http.HttpStatus.BAD_REQUEST
+import static org.springframework.http.HttpStatus.NOT_FOUND
+import static org.springframework.http.HttpStatus.OK
 
 @Transactional(readOnly = true)
 class PlatoController {
@@ -37,4 +40,21 @@ class PlatoController {
             }
         }
     }
+
+    
+    @Transactional
+    def obtenerPlatoAsociadosARestaurant(Long restaurantId) {
+        try {
+            List<Plato> platos = platoService.obtenerPlatoAsociadosARestaurant(restaurantId)
+            if(platos.size() == 0){
+                respond([],status: OK)
+            }
+            else{
+                respond(platos, status: OK)
+            }
+        } catch (RuntimeException e) {
+            respond e.message, status: BAD_REQUEST
+        }
+    }
+
 }

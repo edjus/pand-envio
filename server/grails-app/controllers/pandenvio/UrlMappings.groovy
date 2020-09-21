@@ -21,6 +21,9 @@ class UrlMappings {
         get "/repartidor/restaurant/$restaurantId"(controller: 'repartidor', action: 'obtenerRepartidoresAsociadosARestaurant')
 
 
+        get "/plato/restaurant/$restaurantId"(controller: 'plato', action: 'obtenerPlatoAsociadosARestaurant')
+
+
         // pedido
         "/pedido"(resources:"pedido")
         put "/pedido/$pedidoId/siguienteEstado"(controller: 'pedido', action: 'actualizarEstado')
