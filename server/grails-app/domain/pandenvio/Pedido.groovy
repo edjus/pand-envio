@@ -80,7 +80,25 @@ class Pedido {
 
     }
 
+    Puntuacion obtenerPuntuacion(){
+        if(this.modalidadEntrega.nombre == "para_llevar"){
+            ModalidadParaLlevar modalidadLlevar = (ModalidadParaLlevar)this.modalidadEntrega;
+            print(" ")
+            print("La puntuacion es")
+            print(modalidadLlevar.puntuacion.estrellas)
+            return modalidadLlevar.puntuacion
+        }
+        
+    } 
 
+    Puntuacion setPuntuacion(Integer calificacion){
+        if(this.modalidadEntrega.nombre == "para_llevar"){
+            print(calificacion)
+            ModalidadParaLlevar modalidadLlevar = this.modalidadEntrega;
+            modalidadLlevar.puntuacion.estrellas = calificacion
+            return this.modalidadEntrega.puntuacion
+        }  
+    } 
 
     void setClima(Clima nuevoClima){
         this.clima = nuevoClima

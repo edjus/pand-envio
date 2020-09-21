@@ -119,6 +119,34 @@ class PedidoService {
         pedido.save(failOnError: true, flush: true)
     }
 
+    def calificarPedido(Long pedidoId, Integer calificacionAIngresar) {
+        Pedido pedido = Pedido.findById(pedidoId)
+        if (!pedido){
+            throw new RuntimeException('El pedido no es válido no existe')
+        }
+
+        ModalidadParaLlevar modalidad = (ModalidadParaLlevar)pedido.modalidadEntrega
+
+        modalidad.agregarPuntuacion(calificacionAIngresar)
+
+
+        Puntuacion puntuacion = modalidad.puntuacion
+
+
+        puntuacion.estrellas = calificacionAIngresar
+
+        puntuacion.save(failOnError: true, flush: true)
+        pedido.save(failOnError: true, flush: true)
+        return puntuacion
+    }
+
+    def obtenerPuntuacion(Long pedidoId) {
+        Pedido pedido = Pedido.findById(pedidoId)
+        Puntuacion puntuacion = Puntuacion.findById(pedidoId)
+        return puntuacion
+
+    }
+
     def cambiarRango(Long pedidoId) {
         Pedido pedido = Pedido.findById(pedidoId)
         if (!pedido){
@@ -130,7 +158,9 @@ class PedidoService {
 
     def cambiarModalidad(Long pedidoId) {
         Pedido pedido = Pedido.findById(pedidoId)
+        ModalidadEntrega modalidad = pedido.modalidadEntrega
         pedido.cambiarModalidad()
+        modalidad.save(failOnError: true, flush: true)
         pedido.save(failOnError: true, flush: true)
     }
 

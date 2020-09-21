@@ -29,7 +29,6 @@ class PedidoController {
 
 
 
-
     /*
     POST: Crear un pedido
     - cliente_id: long con el id de un cliente existente
@@ -84,7 +83,6 @@ class PedidoController {
         }
     }
 
-
     /*
     POST: Agregar item a pedido
     - producto_id: long con el id de un pruducto existente del mismo restaurant del pedido
@@ -115,6 +113,7 @@ class PedidoController {
         }
     }
 
+
     @Transactional
     def cambiarRango(Long pedidoId) {
         try {
@@ -124,7 +123,6 @@ class PedidoController {
         } catch (RuntimeException e) {
             respond ([e.message], status: BAD_REQUEST)
         }
-    }
 
     @Transactional
     def cambiarModalidad(Long pedidoId) {
@@ -135,6 +133,19 @@ class PedidoController {
 
     }
 
+    @Transactional
+    def calificarPedido(Long pedidoId) {
+            Integer calificacion = request.JSON.calificacion
+            Puntuacion puntuacion = pedidoService.calificarPedido(pedidoId,calificacion)
+            respond([puntuacion: puntuacion], status: OK)
+    }
+
+    @Transactional
+    def obtenerCalificacion(Long pedidoId) {
+            
+            Puntuacion puntuacion = pedidoService.obtenerPuntuacion(pedidoId)
+            respond([puntuacion: puntuacion], status: OK)
+    }
 
     @Transactional
     def actualizarProducto(Long pedidoId, Long productoId) {

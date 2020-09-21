@@ -1,0 +1,7 @@
+import pandenvio.Puntuacion
+
+model {
+	Puntuacion puntuacion
+}
+
+json tmpl.puntuacion(puntuacion)

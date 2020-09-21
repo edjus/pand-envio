@@ -1,0 +1,8 @@
+import pandenvio.Puntuacion
+
+model {
+	Iterable<Puntuacion> puntuacionList
+}
+
+json tmpl.puntuacion(puntuacionList ?: [])
+

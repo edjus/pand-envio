@@ -1,0 +1,7 @@
+import pandenvio.Puntuacion
+
+model {
+	Puntuacion puntuacion
+}
+
+json g.render(puntuacion, [resolveTemplate: false])

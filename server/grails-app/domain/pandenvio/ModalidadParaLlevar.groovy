@@ -2,6 +2,7 @@ package pandenvio
 
 class ModalidadParaLlevar  extends ModalidadEntrega {
     Puntuacion puntuacion
+
     Repartidor repartidor
 
     def adicionales = []
@@ -15,6 +16,18 @@ class ModalidadParaLlevar  extends ModalidadEntrega {
         this.nombre = "para_llevar"
         this.adicionales << new AdicionalDistancia()
         this.adicionales << new AdicionalClimatico()
+    }
+
+    int cantidadEstrellas(){
+        return this.puntuacion.estrellas
+    }
+
+    Puntuacion getPuntuacion(){
+        return this.puntuacion
+    }
+
+    void agregarPuntuacion(Integer calificacion){
+        this.puntuacion = new Puntuacion(calificacion)
     }
 
     @Override

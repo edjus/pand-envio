@@ -28,13 +28,13 @@ class UrlMappings {
         post "/pedido/$pedidoId/producto"(controller: 'pedido', action: 'agregarProducto')
         get "/pedido/actual/$clienteId"(controller: 'pedido', action: 'pedidoActual')
         get "/pedido/restaurant/$restaurantId"(controller: 'pedido', action: 'buscarPedidosPorRestaurante')
-
         delete "/pedido/$pedidoId/producto/$productoId"(controller: 'pedido', action: 'removerProducto')
         put "/pedido/$pedidoId/producto/$productoId"(controller: 'pedido', action: 'actualizarProducto')
         put "/pedido/$pedidoId/cambiarRango"(controller: 'pedido', action: 'cambiarRango')
+        post "/pedido/$pedidoId/calificarPedido"(controller: 'pedido', action: 'calificarPedido')
+        get "/pedido/$pedidoId/calificacion"(controller: 'pedido', action: 'obtenerCalificacion')
 
         put "/pedido/$pedidoId/cambiarModalidad"(controller: 'pedido', action: 'cambiarModalidad')
-
         post "/clima"(controller: 'clima', action: 'actualizarClima')
         get "/clima"(controller: 'clima', action: 'mostrarClima')
 

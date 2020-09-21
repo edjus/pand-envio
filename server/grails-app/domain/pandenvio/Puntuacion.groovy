@@ -12,4 +12,8 @@ class Puntuacion {
     Puntuacion(Integer estrellas) {
         this.estrellas = estrellas
     }
+
+    void setEstrellas(Integer estrellas){
+        this.estrellas = estrellas
+    }
 }
