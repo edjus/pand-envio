@@ -12,7 +12,7 @@
             <i class="fas fa-utensils mr-2"></i> Restaurants
           </router-link>
         </li>
-        <li class="nav-item" v-if="esRol('admin')">
+        <li class="nav-item" v-if="esRol(['admin','duenio'])">
           <router-link to="/platos" class="nav-link" v-bind:class="getClass('/platos')">
             <i class="fas fa-hamburger mr-2"></i> Platos
           </router-link>

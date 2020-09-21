@@ -20,6 +20,7 @@ import FormularioRepartidor from './FormularioRepartidor'
 import {getSueldo} from '../../services/RepartidorService'
 import SueldoRepartidor from './SueldoRepartidor'
 import {getRestauranteIdLogueado} from '../../services/AutenticacionService'
+import {cargarRestaurantes} from '../../services/RestaurantService'
 
 export default {
   name: 'Repartidor',
@@ -33,9 +34,9 @@ export default {
       serverURL: process.env.SERVER_URL
     }
   },
-  created () {
-    this.cargarRepartidores(getRestauranteIdLogueado())
-    this.cargarRestaurantes(getRestauranteIdLogueado())
+  async created () {
+    await this.cargarRepartidores(getRestauranteIdLogueado())
+    this.restaurantes = await cargarRestaurantes(getRestauranteIdLogueado())
   },
   methods: {
     clearNotifications: function () {
@@ -166,22 +167,6 @@ export default {
             text: error
           })
         })
-    },
-    cargarRestaurantes: async function (restauranteId) {
-      let url = `${this.serverURL}/restaurant`
-      if (restauranteId) {
-        url += '/' + restauranteId
-      }
-      fetch(url)
-        .then(r => r.json())
-        .then(json => {
-          if (restauranteId) {
-            this.restaurantes = [json]
-          } else {
-            this.restaurantes = json
-          }
-        })
-        .catch(error => console.error('Error cargando restaurantes: ' + error))
     }
   }
 }

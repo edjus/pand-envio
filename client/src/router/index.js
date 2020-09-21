@@ -85,7 +85,7 @@ const router = new Router({
       component: Plato,
       meta: {
         publico: false,
-        rol: ['admin']
+        rol: ['admin', 'duenio']
       }
     },
     {

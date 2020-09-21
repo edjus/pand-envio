@@ -17,6 +17,8 @@
 import TablaPlato from './TablaPlato'
 import FormularioPlato from './FormularioPlato'
 import {getCategoriaDesde} from '../../services/PlatoService'
+import {getRestauranteIdLogueado} from '../../services/AutenticacionService'
+import {cargarRestaurantes} from '../../services/RestaurantService'
 
 export default {
   name: 'Plato',
@@ -29,9 +31,9 @@ export default {
       serverURL: process.env.SERVER_URL
     }
   },
-  created () {
-    this.cargarPlatos()
-    this.cargarRestaurantes()
+  async created () {
+    await this.cargarPlatos(getRestauranteIdLogueado())
+    this.restaurantes = await cargarRestaurantes(getRestauranteIdLogueado())
   },
   methods: {
     clearNotifications: function () {
@@ -102,9 +104,13 @@ export default {
       this.platoActual = this.nuevoPlato()
       this.$refs.modal.show()
     },
-    cargarPlatos: async function () {
+    cargarPlatos: async function (restauranteId) {
       this.clearNotifications()
-      fetch(`${this.serverURL}/plato`)
+      let url = `${this.serverURL}/plato`
+      if (restauranteId) {
+        url += '/restaurant/' + restauranteId
+      }
+      fetch(url)
         .then(r => r.json())
         .then(json => {
           this.platos = json
@@ -123,14 +129,6 @@ export default {
             text: error
           })
         })
-    },
-    cargarRestaurantes: async function () {
-      fetch(`${this.serverURL}/restaurant`)
-        .then(r => r.json())
-        .then(json => {
-          this.restaurantes = json
-        })
-        .catch(error => console.error('Error cargando restaurantes: ' + error))
     }
   }
 }
