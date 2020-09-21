@@ -16,7 +16,8 @@ export default {
   name: 'App',
   data () {
     return {
-      cantidadItems: 0
+      cantidadItems: 0,
+      clima: ''
     }
   },
   components: {Aplicacion, Cabecera},
@@ -25,7 +26,7 @@ export default {
       this.cantidadItems = localStorage.getItem('cantidadItems')
     }
   },
-  mounted () {
+  async mounted () {
     if (esRol('cliente')) {
       AppService.obtenerPedidoActual()
       this.cantidadItems = localStorage.getItem('cantidadItems')

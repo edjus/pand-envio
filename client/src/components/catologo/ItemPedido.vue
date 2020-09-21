@@ -56,7 +56,7 @@ export default {
 <style scoped>
 .item {
   border-bottom: 2px solid #ccc1c0;
-  padding-bottom: 2px;
+  padding-bottom: 5px;
   padding-top: 5px;
 }
 </style>

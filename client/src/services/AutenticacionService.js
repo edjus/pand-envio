@@ -4,9 +4,9 @@ const loguear = (nuevoRol) => {
   location.reload()
 }
 
-const esRol = (rol) => {
+const esRol = (roles) => {
   const curRol = localStorage.getItem('login')
-  return curRol === rol
+  return roles.includes(curRol)
 }
 
 const rolActual = () => {
@@ -17,4 +17,10 @@ const idUsuarioActual = () => {
   return 1 // TODO se permite cambiar o todos los roles van a ser con el usuario id 1 ?
 }
 
-export { loguear, esRol, rolActual, idUsuarioActual }
+const getRestauranteIdLogueado = () => {
+  if (esRol('duenio')) {
+    return 1 // Soy el duenio del restaurante 1
+  }
+}
+
+export { loguear, esRol, rolActual, idUsuarioActual, getRestauranteIdLogueado }

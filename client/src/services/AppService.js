@@ -50,6 +50,14 @@ const obtenerPedidoActual = async () => {
   }
 }
 
+const cambiarModalidadPedido = async (pedidoId) => {
+  await axios.put(`${SERVER_URL}/pedido/${pedidoId}/cambiarModalidad`)
+}
+
+const cambiarRangoPedido = async (pedidoId) => {
+  await axios.put(`${SERVER_URL}/pedido/${pedidoId}/cambiarRango`)
+}
+
 const confirmarPedido = async (pedidoId) => {
   await axios.put(`${SERVER_URL}/pedido/${pedidoId}/siguienteEstado`)
 }
@@ -79,6 +87,22 @@ const aplicarCupon = async (pedidoId, codigo) => {
   return response.data.pedido
 }
 
+const getClima = async () => {
+  const response = await axios.get(`${SERVER_URL}/clima`)
+  return response.data.clima
+}
+
+const cambiarAClimaSoleado = async () => {
+  const response = await axios.post(`${SERVER_URL}/clima`, {})
+  return response.data.clima
+}
+
+const cambiarAClimaLLuvioso = async () => {
+  const data = {lluvia: true}
+  const response = await axios.post(`${SERVER_URL}/clima`, data)
+  return response.data.clima
+}
+
 export {
   obtenerPlatos,
   crearPedido,
@@ -87,5 +111,10 @@ export {
   confirmarPedido,
   removerProducto,
   editarProducto,
-  aplicarCupon
+  aplicarCupon,
+  cambiarModalidadPedido,
+  cambiarRangoPedido,
+  getClima,
+  cambiarAClimaSoleado,
+  cambiarAClimaLLuvioso
 }
