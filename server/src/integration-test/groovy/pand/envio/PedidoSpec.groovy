@@ -14,6 +14,7 @@ import pandenvio.CuponYaUtilizadoException
 import pandenvio.EstadoEnEntrega
 import pandenvio.EstadoEnEspera
 import pandenvio.EstadoEnPreparacion
+import pandenvio.EstadoEnArmado
 import pandenvio.EstadoListo
 import pandenvio.EstadoPedido
 import pandenvio.FabricaClima
@@ -157,6 +158,72 @@ class PedidoSpec extends Specification {
         pedidoGuardado.save(failOnError: true)
         def pedidoGuardado2 = Pedido.findById(pedido.id)
         pedidoGuardado2.nombreEstado == 'listo'
+    }
+
+    void "test pedido esta en modalidad para llevar y NO puedo cambiar a modalidad para entregar porque el pedido ya esta listo"() {
+        given:
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+                .save()
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+                .save(failOnError: true)
+        ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        EstadoPedido estado = new EstadoListo().save(failOnError: true)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
+        pedido.agregar(plato, 2)
+        pedido.estado = estado
+        pedido.save(failOnError: true)
+        when:
+        pedido.cambiarModalidad()
+        then:
+        thrown pandenvio.NoSePuedeActualizarProductoException
+    }
+
+    void "test pedido esta en modalidad para llevar cambia modalidad a retirar"() {
+        given:
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+                .save()
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+                .save(failOnError: true)
+        ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        EstadoEnArmado estado = new EstadoEnArmado()
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
+        pedido.agregar(plato, 2)
+        pedido.estado = estado
+        pedido.estado.siguienteEstado(modalidadEntrega)
+
+        pedido.save(failOnError: true)
+        when:
+        pedido.cambiarModalidad()
+        then:
+        pedido.modalidadEntrega.class == ModalidadParaRetirar
+    }
+
+    void "test pedido esta en modalidad para retirar y cambia a modalidad para llevar"() {
+        given:
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+                .save()
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+                .save(failOnError: true)
+        ModalidadEntrega modalidadEntrega = new ModalidadParaRetirar().save(failOnError: true)
+        EstadoEnArmado estado = new EstadoEnArmado()
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
+        pedido.agregar(plato, 2)
+        pedido.estado = estado
+        pedido.estado.siguienteEstado(modalidadEntrega)
+
+        pedido.save(failOnError: true)
+        when:
+        pedido.cambiarModalidad()
+        then:
+        pedido.modalidadEntrega.class == ModalidadParaLlevar
     }
 
     void "test pedido estado siguiente a listo con modalidad para llevar y no hay repartidores es 'en espera'"() {
