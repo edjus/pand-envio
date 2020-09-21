@@ -123,6 +123,7 @@ class PedidoController {
         } catch (RuntimeException e) {
             respond ([e.message], status: BAD_REQUEST)
         }
+    }
 
     @Transactional
     def cambiarModalidad(Long pedidoId) {
