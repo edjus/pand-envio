@@ -53,7 +53,22 @@ class RepartidorController {
         catch (RuntimeException e) {
             respond ([e.message], status: BAD_REQUEST)
         }
+    }
 
+
+    @Transactional
+    def obtenerRepartidoresAsociadosARestaurant(Long restaurantId) {
+        try {
+            List<Repartidor> repartidores = repartidorService.obtenerRepartidoresAsociadosARestaurant(restaurantId)
+            if(repartidores.size() == 0){
+                respond([],status: OK)
+            }
+            else{
+                respond(repartidores, status: OK)
+            }
+        } catch (RuntimeException e) {
+            respond e.message, status: BAD_REQUEST
+        }
     }
 
 
