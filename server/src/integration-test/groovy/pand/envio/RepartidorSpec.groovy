@@ -42,7 +42,7 @@ class RepartidorSpec extends Specification {
 
     void "test repartidor tiene un pedido"() {
         when:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
@@ -68,7 +68,7 @@ class RepartidorSpec extends Specification {
 
         void "test repartidor tiene dos pedidos"() {
         when:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
@@ -109,7 +109,7 @@ class RepartidorSpec extends Specification {
 
     void "test repartidor tiene un pedido entregado  NO LLUVIOSO y su sueldo es su sueldo base mas adicional'"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
@@ -140,7 +140,7 @@ class RepartidorSpec extends Specification {
     
         void "test repartidor tiene DOS pedidos entregados  NO LLUVIOSO y su sueldo es su sueldo base mas adicional"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
@@ -183,7 +183,7 @@ class RepartidorSpec extends Specification {
 
         void "test repartidor tiene un pedido entregado  LLUVIOSO y su sueldo es su sueldo base mas adicional'"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
@@ -215,7 +215,7 @@ class RepartidorSpec extends Specification {
 
         void "test repartidor tiene DOS pedidos entregados uno NO LLUVIOSO y otro LLUVIOSO y su sueldo es su sueldo base mas adicional"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
@@ -260,7 +260,7 @@ class RepartidorSpec extends Specification {
 
         void "test repartidor tiene DOS pedidos entregados LLUVIOSOS y su sueldo es su sueldo base mas adicional"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
@@ -306,7 +306,7 @@ class RepartidorSpec extends Specification {
 
         void "test repartidor tiene tres pedidos entregados y todos con menos de 3 estrellas entonces cobra 50 pesos menos del adicional"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
@@ -373,7 +373,7 @@ class RepartidorSpec extends Specification {
         
         void "test repartidor tiene un pedido no entregado, se lo penaliza con 50 pesos en el adicional pero como no tiene, no se le resta nada"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
@@ -404,7 +404,7 @@ class RepartidorSpec extends Specification {
 
         void "test repartidor tiene un pedido no entregado, se lo penaliza con 50 pesos en el adicional"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
@@ -469,7 +469,7 @@ class RepartidorSpec extends Specification {
 
         void "test repartidor tiene mas de 3 entregas no entregadas, su sueldo baja un 20%"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
@@ -539,7 +539,7 @@ class RepartidorSpec extends Specification {
 
         void "test repartidor tiene mas de 4 entregas perfectas entonces recibe el bono por pedidos perfectos"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
@@ -601,7 +601,7 @@ class RepartidorSpec extends Specification {
 
         void "test repartidor tiene mas de 4 entregas perfectas entonces recibe el bono por pedidos perfectos pero tiene 4 pedidos sin entregar y es penalizado"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')

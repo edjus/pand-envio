@@ -33,17 +33,18 @@ class PersitenciaSpec extends Specification {
 
     void "Repartidor se guarda correctamente"() {
         when:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Repartidor repartidor = new Repartidor('Lucas', '989764699', restaurante)
+        def cantidadRepartidores = Repartidor.count()
         repartidor.save()
         then:
-        Repartidor.count == 1
+        Repartidor.count == ++cantidadRepartidores
         repartidor == Repartidor.findById(repartidor.id)
     }
 
     void "test Item se guarda bien"() {
         when:
-            Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+            Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
             Menu menuConPLatos = new Menu(nombre: 'Viernes', precio: 400, restaurant: restaurante)
                     .addToPlatos(new Plato(nombre:'Milanesa con pure', precio: 350, categoria: CategoriaPlato.PLATO, restaurant:  restaurante))
                     .save(failOnError: true)
@@ -62,7 +63,7 @@ class PersitenciaSpec extends Specification {
 
     void "test pedido se guarda bien"() {
         given:
-            Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+            Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
             Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
             Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433', cupones: null)
                     .save()
@@ -103,7 +104,7 @@ class PersitenciaSpec extends Specification {
 
     void "Cupon Descuento Porcentual se guarda correctamente"() {
         when:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433', cupones: null)
                 .save(failOnError: true)

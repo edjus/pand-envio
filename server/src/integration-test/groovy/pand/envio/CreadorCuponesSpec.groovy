@@ -26,7 +26,7 @@ class CreadorCuponesSpec extends Specification {
 
     void "test no crea cupones si no tiene pedidos"() {
         given:
-        Restaurant restaurant = new Restaurant(nombre: "Don Pepe").save(failOnError: true)
+        Restaurant restaurant = new Restaurant(nombre: "Don Pepe", direccion: "Av 123").save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
                 .save()
@@ -41,7 +41,7 @@ class CreadorCuponesSpec extends Specification {
 
     void "test no crea cupones si tiene cupones disponibles para el restaurante"() {
         given:
-        Restaurant restaurant = new Restaurant(nombre: "Don Pepe").save(failOnError: true)
+        Restaurant restaurant = new Restaurant(nombre: "Don Pepe", direccion: "Av 123").save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
                 .save(failOnError: true)
@@ -59,7 +59,7 @@ class CreadorCuponesSpec extends Specification {
 
     void "test no crea cupones si no tiene cupones disponibles y tiene un pedido en el restaurante"() {
         given:
-        Restaurant restaurant = new Restaurant(nombre: "Don Pepe").save(failOnError: true)
+        Restaurant restaurant = new Restaurant(nombre: "Don Pepe", direccion: "Av 123").save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
                 .save(failOnError: true)
@@ -84,7 +84,7 @@ class CreadorCuponesSpec extends Specification {
 
     void "test no crea cupones si no tiene cupones disponibles y tiene dos pedidos en el restaurante"() {
         given:
-        Restaurant restaurant = new Restaurant(nombre: "Don Pepe").save(failOnError: true)
+        Restaurant restaurant = new Restaurant(nombre: "Don Pepe", direccion: "Av 123").save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
                 .save(failOnError: true)
@@ -118,7 +118,7 @@ class CreadorCuponesSpec extends Specification {
 
     void "test crea cupones si no tiene cupones disponibles y tiene tres pedidos en el restaurante"() {
         given:
-        Restaurant restaurant = new Restaurant(nombre: "Don Pepe").save(failOnError: true)
+        Restaurant restaurant = new Restaurant(nombre: "Don Pepe", direccion: "Av 123").save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
                 .save(failOnError: true)
@@ -157,8 +157,8 @@ class CreadorCuponesSpec extends Specification {
 
     void "test no crea cupones si no tiene cupones disponibles y tiene dos pedidos en el restaurante y uno en otro"() {
         given:
-        Restaurant restaurant = new Restaurant(nombre: "Don Pepe").save(failOnError: true)
-        Restaurant restaurant2 = new Restaurant(nombre: "Don Pepe").save(failOnError: true)
+        Restaurant restaurant = new Restaurant(nombre: "Don Pepe", direccion: "Av 123").save(failOnError: true)
+        Restaurant restaurant2 = new Restaurant(nombre: "Don Pepe", direccion: "Av 123").save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
                 .save(failOnError: true)
@@ -200,7 +200,7 @@ class CreadorCuponesSpec extends Specification {
 
     void "test crea cupones si no tiene un cupón no disponible y tiene tres pedidos nuevos en el restaurante"() {
         given:
-        Restaurant restaurant = new Restaurant(nombre: "Don Pepe").save(failOnError: true)
+        Restaurant restaurant = new Restaurant(nombre: "Don Pepe", direccion: "Av 123").save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
                 .save(failOnError: true)

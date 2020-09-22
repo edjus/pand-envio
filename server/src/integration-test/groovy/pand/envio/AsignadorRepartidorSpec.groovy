@@ -13,7 +13,7 @@ class AsignadorRepartidorSpec extends Specification {
 
     void "test obtener repartidor devuelve null si no hay repartidores"() {
         when:
-        Restaurant restaurant = new Restaurant(nombre: "Don Pepe").save(failOnError: true)
+        Restaurant restaurant = new Restaurant(nombre: "Don Pepe", direccion: "Av 123").save(failOnError: true)
         def repartidor = AsignadorRepartidor.instance.obtenerRepartidor(restaurant)
         then:
         repartidor == null
@@ -21,7 +21,7 @@ class AsignadorRepartidorSpec extends Specification {
 
     void "test obtener repartidor devuelve el que está disponible del restaurante"() {
         when:
-        Restaurant restaurant = new Restaurant(nombre: "Don Pepe").save(failOnError: true)
+        Restaurant restaurant = new Restaurant(nombre: "Don Pepe", direccion: "Av 123").save(failOnError: true)
         Repartidor repartidor = new Repartidor("Juan", "98978654", restaurant).save(failOnError: true)
         def repartidorEncontrado = AsignadorRepartidor.instance.obtenerRepartidor(restaurant)
         then:
@@ -32,7 +32,7 @@ class AsignadorRepartidorSpec extends Specification {
 
     void "test obtener repartidor devuelve null si  el repartidor del restaurante no está disponible"() {
         when:
-        Restaurant restaurant = new Restaurant(nombre: "Don Pepe").save(failOnError: true)
+        Restaurant restaurant = new Restaurant(nombre: "Don Pepe", direccion: "Av 123").save(failOnError: true)
         Repartidor repartidor = new Repartidor("Juan", "98978654", restaurant)
         repartidor.disponible = false
         repartidor.save(failOnError: true)
@@ -44,8 +44,8 @@ class AsignadorRepartidorSpec extends Specification {
 
     void "test obtener repartidor devuelve null si no hay repartidor disponible para ese restaurante pero si para otros"() {
         when:
-        Restaurant restaurant = new Restaurant(nombre: "Don Pepe").save(failOnError: true)
-        Restaurant restaurant2 = new Restaurant(nombre: "Don Juan").save(failOnError: true)
+        Restaurant restaurant = new Restaurant(nombre: "Don Pepe", direccion: "Av 123").save(failOnError: true)
+        Restaurant restaurant2 = new Restaurant(nombre: "Don Juan", direccion: "Av 123").save(failOnError: true)
         // El repartidor pertenece al restaurante 1
         Repartidor repartidor = new Repartidor("Juan", "98978654", restaurant).save(failOnError: true)
         // El repartidor2 pertenece al restaurante 2
@@ -62,7 +62,7 @@ class AsignadorRepartidorSpec extends Specification {
 
     void "test obtener repartidor es null si el repartidor está ocupado y hay otro de otro repartidor disponible"() {
         when:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante)
         repartidor.disponible = false
         repartidor.save(failOnError: true)

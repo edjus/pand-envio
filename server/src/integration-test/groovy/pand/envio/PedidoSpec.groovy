@@ -55,7 +55,7 @@ class PedidoSpec extends Specification {
 
     void "test precio de un pedido con productos del mismo restaurante"() {
         given:
-        Restaurant restaurant = new Restaurant(nombre:  "Don Juan")
+        Restaurant restaurant = new Restaurant(nombre:  "Don Juan", direccion: "Av 123")
         Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), restaurant)
             Producto plato = new Plato(nombre: 'Alto Guiso', precio: 15, categoria: CategoriaPlato.PLATO, restaurant: restaurant)
             Integer cantidad = 2
@@ -68,8 +68,8 @@ class PedidoSpec extends Specification {
 
     void "test no se puede agregar productos a pedido de un restaurante diferente"() {
         given:
-        Restaurant restaurant = new Restaurant(nombre:  "Don Juan")
-        Restaurant restaurant2 = new Restaurant(nombre:  "Don José")
+        Restaurant restaurant = new Restaurant(nombre:  "Don Juan", direccion: "Av 123")
+        Restaurant restaurant2 = new Restaurant(nombre:  "Don José", direccion: "Av 123")
         Pedido pedido = new Pedido(new Cliente(), new ModalidadParaRetirar(), restaurant)
         Producto plato = new Plato(nombre: 'Alto Guiso', precio: 15, categoria: CategoriaPlato.PLATO, restaurant: restaurant2)
         when:
@@ -104,7 +104,7 @@ class PedidoSpec extends Specification {
 
     void "test precio de un pedido con productos con cupon con pedido beneficiado correcto aplica descuento"() {
         given:
-            Restaurant restaurant = new Restaurant(nombre:  "Don Juan")
+            Restaurant restaurant = new Restaurant(nombre:  "Don Juan", direccion: "Av 123")
             Pedido pedido = new Pedido(juanPerez, new ModalidadParaRetirar(), restaurant)
             CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: juanPerez, porcentaje: 10, pedidoBeneficiado: pedido, restaurant: restaurant)
             Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurant)
@@ -120,7 +120,7 @@ class PedidoSpec extends Specification {
 
     void "test precio de un pedido con productos y cupon disponible  no aplica si hay menu"() {
         when:
-            Restaurant restaurant = new Restaurant(nombre:  "Don Juan")
+            Restaurant restaurant = new Restaurant(nombre:  "Don Juan", direccion: "Av 123")
             Pedido pedido = new Pedido(juanPerez, new ModalidadParaRetirar(), restaurant)
             CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: juanPerez, porcentaje: 10, restaurant: restaurant)
             Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurant)
@@ -137,7 +137,7 @@ class PedidoSpec extends Specification {
 
     void "test pedido actualiza bien el estado"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433', cupones: null)
                 .save()
@@ -167,7 +167,7 @@ class PedidoSpec extends Specification {
 
     void "test Pedido para llevar asignado a repartidor"() {
         when:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433', cupones: null)
                 .save()
@@ -183,7 +183,7 @@ class PedidoSpec extends Specification {
 
     void "test pedido esta en modalidad para llevar y NO puedo cambiar a modalidad para entregar porque el pedido ya esta listo"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
                 .save()
@@ -204,7 +204,7 @@ class PedidoSpec extends Specification {
 
     void "test pedido esta en modalidad para llevar cambia modalidad a retirar"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
                 .save()
@@ -227,7 +227,7 @@ class PedidoSpec extends Specification {
 
     void "test pedido esta en modalidad para retirar y cambia a modalidad para llevar"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
                 .save()
@@ -249,7 +249,7 @@ class PedidoSpec extends Specification {
 
     void "test pedido estado siguiente a listo con modalidad para llevar y no hay repartidores es 'en espera'"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
                 .save()
@@ -271,7 +271,7 @@ class PedidoSpec extends Specification {
 
     void "test pedido estado siguiente a listo con modalidad para llevar y hay repartidores es 'en entrega'"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
@@ -295,7 +295,7 @@ class PedidoSpec extends Specification {
 
     void "test pedido estado siguiente a listo con modalidad para llevar y no hay repartidores disponibles es 'en espera'"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante)
         repartidor.disponible = false
         repartidor.save(failOnError: true)
@@ -323,8 +323,8 @@ class PedidoSpec extends Specification {
 
     void "test pedido estado siguiente a listo con modalidad para llevar y hay repartidores en otro restaurante es 'en espera'"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La esquina').save(failOnError: true)
-        Restaurant restaurante2 = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La esquina', direccion: "Av 123").save(failOnError: true)
+        Restaurant restaurante2 = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
 
         Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante2).save(failOnError: true)
 
@@ -350,7 +350,7 @@ class PedidoSpec extends Specification {
 
     void "test pedido acepta cupón del mismo cliente"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La esquina', direccion: "Av 123").save(failOnError: true)
 
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
@@ -374,7 +374,7 @@ class PedidoSpec extends Specification {
 
     void "test pedido no acepta cupón de otro  cliente"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La esquina', direccion: "Av 123").save(failOnError: true)
 
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
@@ -398,7 +398,7 @@ class PedidoSpec extends Specification {
 
     void "test Precio para llevar dentro del rango sin lluvia"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La esquina', direccion: "Av 123").save(failOnError: true)
 
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
@@ -421,7 +421,7 @@ class PedidoSpec extends Specification {
 
     void "test Precio para llevar fuera del rango sin lluvia"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La esquina', direccion: "Av 123").save(failOnError: true)
 
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
@@ -445,7 +445,7 @@ class PedidoSpec extends Specification {
 
     void "test Precio para llevar dentro del rango con lluvia"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La esquina', direccion: "Av 123").save(failOnError: true)
 
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
@@ -468,7 +468,7 @@ class PedidoSpec extends Specification {
 
     void "test Precio para llevar fuera del rango con lluvia"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La esquina', direccion: "Av 123").save(failOnError: true)
 
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
@@ -492,7 +492,7 @@ class PedidoSpec extends Specification {
 
         void "test pedido para retirar no puede calificarse"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
                 .save()
@@ -514,7 +514,7 @@ class PedidoSpec extends Specification {
 
         void "test pedido para llevar no puede calificarse antes de estar entregado"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
@@ -540,7 +540,7 @@ class PedidoSpec extends Specification {
 
     void "test pedido para llevar puede calificarse al estar entregado"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Repartidor repartidor = new Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle: 'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento', mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
@@ -565,7 +565,7 @@ class PedidoSpec extends Specification {
 
         void "test pedido para llevar no puede calificarse al estar calificado"() {
         given:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Repartidor repartidor = new Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle: 'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento', mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
@@ -591,7 +591,7 @@ class PedidoSpec extends Specification {
 
  void "test pedido queda en espera si el repartidor está ocupado"() {
         when:
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: "Av 123").save(failOnError: true)
         Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
         Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
