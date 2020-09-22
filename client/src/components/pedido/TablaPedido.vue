@@ -10,11 +10,12 @@
         <th>Modalidad</th>
         <th>Precio</th>
         <th>Restaurant</th>
+        <th>Puntaje</th>
         <th>Acciones</th>
       </tr>
       </thead>
       <tbody>
-      <fila-pedido v-for='pedido in pedidos' @avanzarPedido="avanzarPedido" @cancelarPedido="cancelarPedido"
+      <fila-pedido v-for='pedido in pedidos' @avanzarPedido="avanzarPedido" @cancelarPedido="cancelarPedido" @actualizarPuntuacion="actualizarPuntuacion"
                   :item='pedido' :key='pedido.id'></fila-pedido>
       </tbody>
     </table>
@@ -28,6 +29,9 @@ export default {
   components: {FilaPedido},
   props: ['pedidos'],
   methods: {
+    actualizarPuntuacion: function (data) {
+      this.$emit('actualizarPuntuacion', data)
+    },
     avanzarPedido: function (item) {
       this.$emit('avanzarPedido', item)
     },

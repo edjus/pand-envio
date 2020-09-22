@@ -13,6 +13,8 @@ import { library, dom } from '@fortawesome/fontawesome-svg-core'
 import { faSpinner, fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Multiselect from 'vue-multiselect'
+import VueStarRating from 'vue-star-rating'
+Vue.component('star-rating', VueStarRating.default)
 library.add(fas)
 library.add(faSpinner)
 dom.watch()

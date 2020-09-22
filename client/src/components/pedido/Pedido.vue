@@ -3,13 +3,14 @@
     <div class='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom'>
       <h1 class='h2'>Pedidos</h1>
     </div>
-    <tabla-pedido :pedidos='pedidos' @avanzarPedido="avanzarPedido" @cancelarPedido="cancelarPedido"></tabla-pedido>
+    <tabla-pedido :pedidos='pedidos' @avanzarPedido="avanzarPedido" @cancelarPedido="cancelarPedido" @actualizarPuntuacion="actualizarPuntuacion"></tabla-pedido>
   </div>
 </template>
 
 <script>
 import TablaPedido from './TablaPedido'
 import { getRestauranteIdLogueado } from '../../services/AutenticacionService'
+import {actualizarPuntuacionPedido} from '../../services/PedidoService'
 export default {
   name: 'Pedido',
   components: {TablaPedido},
@@ -27,6 +28,14 @@ export default {
       this.$notify({
         group: 'notifications',
         clean: true
+      })
+    },
+    actualizarPuntuacion: async function (data) {
+      await actualizarPuntuacionPedido(data)
+      this.$notify({
+        group: 'notifications',
+        type: 'success',
+        title: 'El pedido se puntuó exitosamente con ' + data.puntuacion
       })
     },
     cancelarPedido: function (pedido) {
