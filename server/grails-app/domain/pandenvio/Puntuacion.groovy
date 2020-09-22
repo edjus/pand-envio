@@ -5,7 +5,7 @@ class Puntuacion {
     String comentario
 
     static constraints = {
-        estrellas(range: 1..5)
+        estrellas nullable: true
         comentario nullable: true
     }
 

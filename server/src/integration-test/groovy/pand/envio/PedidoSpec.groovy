@@ -541,4 +541,30 @@ class PedidoSpec extends Specification {
         then:
         pedido.obtenerEstrellas() == 5
     }
+
+        void "test pedido para llevar no puede calificarse al estar calificado"() {
+        given:
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
+        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+                .save()
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+                .save(failOnError: true)
+        ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        EstadoPedido estado = new EstadoListo().save(failOnError: true)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
+        pedido.agregar(plato, 2)
+        pedido.estado = estado
+        pedido.save(failOnError: true)
+        pedido.siguienteEstado()
+        pedido.siguienteEstado()
+        pedido.setPuntuacionAModalidad(5)
+
+        when:
+        pedido.setPuntuacionAModalidad(5)
+        then:
+        thrown CalificacionException
+    }
 }

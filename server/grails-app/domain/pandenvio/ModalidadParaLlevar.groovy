@@ -1,7 +1,7 @@
 package pandenvio
 
 class ModalidadParaLlevar  extends ModalidadEntrega {
-    Puntuacion puntuacion
+    Puntuacion puntuacion = new Puntuacion()
 
     Repartidor repartidor
 
@@ -14,6 +14,7 @@ class ModalidadParaLlevar  extends ModalidadEntrega {
 
     ModalidadParaLlevar(){
         this.nombre = "para_llevar"
+        this.puntuacion = new Puntuacion()
         this.adicionales << new AdicionalDistancia()
         this.adicionales << new AdicionalClimatico()
     }
@@ -23,7 +24,7 @@ class ModalidadParaLlevar  extends ModalidadEntrega {
     }
 
     Boolean tienePuntuacion(){
-        return (this.puntuacion != null)
+        return (this.puntuacion != null && this.puntuacion.estrellas != null)
     }
 
     Puntuacion getPuntuacion(){
@@ -31,7 +32,9 @@ class ModalidadParaLlevar  extends ModalidadEntrega {
     }
 
     void agregarPuntuacion(Integer calificacion){
-        this.puntuacion = new Puntuacion(calificacion)
+        //this.puntuacion = new Puntuacion(calificacion)
+
+        this.puntuacion.estrellas = calificacion
     }
 
     @Override
