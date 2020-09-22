@@ -22,7 +22,7 @@ class UrlMappings {
 
 
         get "/plato/restaurant/$restaurantId"(controller: 'plato', action: 'obtenerPlatoAsociadosARestaurant')
-
+        
 
         // pedido
         "/pedido"(resources:"pedido")
