@@ -3,14 +3,19 @@
     <div class='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom'>
       <h1 class='h2'>Pedidos</h1>
     </div>
-    <tabla-pedido :pedidos='pedidos' @avanzarPedido="avanzarPedido" @cancelarPedido="cancelarPedido" @actualizarPuntuacion="actualizarPuntuacion"></tabla-pedido>
+    <tabla-pedido :pedidos='pedidos' @avanzarPedido="avanzarPedido" @cancelarPedido="cancelarPedido" @actualizarPuntuacion="actualizarPuntuacion" @noEntregado="noEntregado"></tabla-pedido>
   </div>
 </template>
 
 <script>
 import TablaPedido from './TablaPedido'
 import {getRestauranteIdLogueado, idUsuarioActual} from '../../services/AutenticacionService'
-import {actualizarPuntuacionPedido, cargarPedidos, cargarPedidosRestaurant} from '../../services/PedidoService'
+import {
+  actualizarPuntuacionPedido,
+  cargarPedidos,
+  cargarPedidosRestaurant,
+  denunciarPedidoNoEntregado
+} from '../../services/PedidoService'
 export default {
   name: 'Pedido',
   components: {TablaPedido},
@@ -44,6 +49,24 @@ export default {
           type: 'error',
           duration: 5000,
           title: 'No se pudo puntuar el pedido',
+          text: error
+        })
+      }
+    },
+    noEntregado: async function (pedido) {
+      try {
+        await denunciarPedidoNoEntregado(pedido.id)
+        this.$notify({
+          group: 'notifications',
+          type: 'success',
+          title: 'El pedido se denunció como no entregado exitosamente'
+        })
+      } catch (error) {
+        this.$notify({
+          group: 'notifications',
+          type: 'error',
+          duration: 5000,
+          title: 'No se puede denunciar el pedido como no entregado',
           text: error
         })
       }
