@@ -444,7 +444,10 @@ class RepartidorSpec extends Specification {
         modalidadEntrega.save(failOnError: true)
         pedido.save(failOnError: true)
         
-        Pedido pedido3 = new Pedido(cliente, modalidadEntrega2, restaurante)
+        ModalidadEntrega modalidadEntrega3 = new ModalidadParaLlevar()
+                .save(failOnError: true)
+
+        Pedido pedido3 = new Pedido(cliente, modalidadEntrega3, restaurante)
 
         pedido3.agregar(plato, 2)
         pedido3.estado = estado
