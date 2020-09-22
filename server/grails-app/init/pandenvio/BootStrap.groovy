@@ -40,7 +40,9 @@ class BootStrap {
 
         Plato plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, descripcion: '15 te hago alto guiso', restaurant: restaurante)
                 .save(failOnError: true)
-
+        Producto menu = new Menu(nombre: 'Viernes', precio: 400, restaurant: restaurante)
+                .addToPlatos(plato)
+                .save(failOnError: true)
         ModalidadEntrega modalidadEntrega = new ModalidadParaRetirar()
                 .save(failOnError: true)
         Pedido pedido = new Pedido(pepeArgento, modalidadEntrega, restaurante)
@@ -60,6 +62,9 @@ class BootStrap {
             menu2.platos << sanguche
             return null
         }
+        pepeArgento.addToCupones(cupon)
+        pepeArgento.save(failOnError: true)
+        assert  pepeArgento.cupones.size() == 1
     }
     def destroy = {
     }

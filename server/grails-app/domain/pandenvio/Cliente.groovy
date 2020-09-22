@@ -9,6 +9,10 @@ class Cliente {
     Ubicacion ubicacion;
     String telefono;
     static hasMany = [cupones: CuponDescuentoPorcentual]
+
+    Cliente () {
+        this.cupones = []
+    }
     
     String nombreCompleto() {
         nombre + " " + apellido
