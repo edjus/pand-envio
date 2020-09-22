@@ -130,9 +130,7 @@ class PedidoService {
         if (!pedido){
             throw new RuntimeException('El pedido no es válido no existe')
         }
-        if(pedido.modalidadEntrega.nombre == "para_retirar"){
-            throw new RuntimeException('El servicio del pedido no puede puntuarse')
-        }
+        
         pedido.setPuntuacionAModalidad(calificacionAIngresar);
         pedido.save(failOnError: true, flush: true)
         return pedido.modalidadEntrega.puntuacion

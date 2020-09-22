@@ -69,8 +69,14 @@ class Pedido {
     }
 
     void setPuntuacionAModalidad(Integer calificacionAIngresar){
+        if(this.nombreEstado != "entregado"){
+            throw new CalificacionException('El servicio del pedido no puede puntuarse, todavia no fue entregado')
+        }
+        if(this.modalidadEntrega.nombre == "para_retirar"){
+            throw new CalificacionException('El servicio del pedido no puede puntuarse por tener una modalidad de retiro')
+        }
         if (calificacionAIngresar > 5 || calificacionAIngresar < 0) {
-            throw new CalificacionError("La calificacion no puede ser inferior a 0 y superior a 5")
+            throw new CalificacionException("La calificacion no puede ser inferior a 0 y superior a 5")
         } 
         this.modalidadEntrega.agregarPuntuacion(calificacionAIngresar)
     }
@@ -90,9 +96,6 @@ class Pedido {
     Puntuacion obtenerPuntuacion(){
         if(this.modalidadEntrega.nombre == "para_llevar"){
             ModalidadParaLlevar modalidadLlevar = (ModalidadParaLlevar)this.modalidadEntrega;
-            print(" ")
-            print("La puntuacion es")
-            print(modalidadLlevar.puntuacion.estrellas)
             return modalidadLlevar.puntuacion
         }
         
@@ -100,7 +103,6 @@ class Pedido {
 
     Puntuacion setPuntuacion(Integer calificacion){
         if(this.modalidadEntrega.nombre == "para_llevar"){
-            print(calificacion)
             ModalidadParaLlevar modalidadLlevar = this.modalidadEntrega;
             modalidadLlevar.puntuacion.estrellas = calificacion
             return this.modalidadEntrega.puntuacion

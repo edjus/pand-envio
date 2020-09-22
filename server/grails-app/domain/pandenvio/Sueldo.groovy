@@ -42,22 +42,27 @@ class Sueldo {
     }
 
     void calcularBonoPorPedidosPerfectos(int cantidadPedidosConPuntuacionPerfecta){
-        if(cantidadPedidosConPuntuacionPerfecta > 4){
-            this.bonoPedidosPerfectos = 50
+        if(cantidadPedidosConPuntuacionPerfecta >= 4){
+            this.bonoPedidosPerfectos = 75
         }
     }
 
     void checkearPenalidadPorPedidosIncompletos(int cantidadPedidosIncompletos){
         this.penalidadesAcumuladas = 0
-        this.penalidadesAcumuladas += cantidadPedidosIncompletos * penalidadPorPedidoIncompleto
+        if(adicionalPorPedidos > cantidadPedidosIncompletos * penalidadPorPedidoIncompleto){
+            this.adicionalPorPedidos -= cantidadPedidosIncompletos * penalidadPorPedidoIncompleto
+        }
+        else{
+            adicionalPorPedidos = 0
+        }
         if(cantidadPedidosIncompletos > 3){
              this.penalidadesAcumuladas += sueldoBase * 0.2
         }
     }
 
     void checkearPenalidadPorPedidosMalCalificados(int cantidadPedidosConPuntuacionMala){
-        if(cantidadPedidosConPuntuacionMala > 3){
-            this.penalidadesAcumuladas += 50
+        if(cantidadPedidosConPuntuacionMala >= 3 & this.adicionalPorPedidos > 50){
+            this.adicionalPorPedidos -= 50
         }
     }
 

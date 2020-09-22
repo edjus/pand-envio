@@ -11,6 +11,7 @@ import pandenvio.CuponDescuento
 import pandenvio.CuponDescuentoPorcentual
 import pandenvio.CuponInvalidoException
 import pandenvio.CuponYaUtilizadoException
+import pandenvio.CalificacionException
 import pandenvio.EstadoEnEntrega
 import pandenvio.EstadoEnEspera
 import pandenvio.EstadoEnPreparacion
@@ -466,5 +467,78 @@ class PedidoSpec extends Specification {
         pedidoGuardado.clima.class == ClimaLluvioso
         !pedidoGuardado.enRango
         precio == 215
+    }
+
+        void "test pedido para retirar no puede calificarse"() {
+        given:
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+                .save()
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+                .save(failOnError: true)
+        ModalidadEntrega modalidadEntrega = new ModalidadParaRetirar()
+                .save(failOnError: true)
+        EstadoPedido estado = new EstadoListo().save(failOnError: true)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
+        pedido.agregar(plato, 2)
+        pedido.estado = estado
+        pedido.save(failOnError: true)
+        pedido.siguienteEstado()
+        when:
+        pedido.setPuntuacionAModalidad(5)
+        then:
+        thrown CalificacionException
+    }
+
+        void "test pedido para llevar no puede calificarse antes de estar entregado"() {
+        given:
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
+        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+                .save()
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+                .save(failOnError: true)
+        ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        EstadoPedido estado = new EstadoListo().save(failOnError: true)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
+        pedido.agregar(plato, 2)
+        pedido.estado = estado
+        pedido.save(failOnError: true)
+        pedido.siguienteEstado()
+        pedido.save(failOnError: true)
+        when:
+        pedido.setPuntuacionAModalidad(5)
+        then:
+        pedido.estado.class == EstadoEnEntrega
+        pedido.nombreEstado == 'en_entrega'
+        thrown CalificacionException
+    }
+
+        void "test pedido para llevar puede calificarse al estar entregado"() {
+        given:
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
+        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+                .save()
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+                .save(failOnError: true)
+        ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        EstadoPedido estado = new EstadoListo().save(failOnError: true)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
+        pedido.agregar(plato, 2)
+        pedido.estado = estado
+        pedido.save(failOnError: true)
+        pedido.siguienteEstado()
+        pedido.siguienteEstado()
+
+        when:
+        pedido.setPuntuacionAModalidad(5)
+        then:
+        pedido.obtenerEstrellas() == 5
     }
 }

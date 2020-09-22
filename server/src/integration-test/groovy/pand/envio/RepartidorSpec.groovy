@@ -13,6 +13,7 @@ import pandenvio.CuponInvalidoException
 import pandenvio.CuponYaUtilizadoException
 import pandenvio.EstadoEnEntrega
 import pandenvio.EstadoEnEspera
+import pandenvio.EstadoNoEntregado
 import pandenvio.EstadoEnPreparacion
 import pandenvio.EstadoListo
 import pandenvio.EstadoPedido
@@ -304,7 +305,380 @@ class RepartidorSpec extends Specification {
                 repartidor.sueldo.sueldoFinal == 30200
         }
 
+        void "test repartidor tiene tres pedidos entregados y todos con menos de 3 estrellas entonces cobra 50 pesos menos del adicional"() {
+        given:
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
+        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+                .save()
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+                .save(failOnError: true)
+        ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        EstadoPedido estado = new EstadoListo().save(failOnError: true)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
+
+        pedido.agregar(plato, 2)
+        pedido.estado = estado
+        pedido.save(failOnError: true)
+        pedido.siguienteEstado()
+        pedido.siguienteEstado()
+        pedido.save(failOnError: true)
+        modalidadEntrega.save(failOnError: true)
+        pedido.save(failOnError: true)
+        pedido.setPuntuacionAModalidad(2)
+
+        ModalidadEntrega modalidadEntrega2 = new ModalidadParaLlevar()
+                .save(failOnError: true)
+
+        Pedido pedido2 = new Pedido(cliente, modalidadEntrega2, restaurante)
+
+        pedido2.agregar(plato, 2)
+        pedido2.estado = estado
+        pedido2.save(failOnError: true)
+        pedido2.siguienteEstado()
+        pedido2.siguienteEstado()
+        pedido2.save(failOnError: true)
+        pedido2.setPuntuacionAModalidad(2)
+
+        modalidadEntrega.save(failOnError: true)
+        pedido.save(failOnError: true)
+        
+        Pedido pedido3 = new Pedido(cliente, modalidadEntrega2, restaurante)
+
+        pedido3.agregar(plato, 2)
+        pedido3.estado = estado
+        pedido3.save(failOnError: true)
+        pedido3.siguienteEstado()
+        pedido3.siguienteEstado()
+        pedido3.setPuntuacionAModalidad(2)
+
+        pedido3.save(failOnError: true)
+
+        modalidadEntrega.save(failOnError: true)
+
+        when:
+                pedido.save(failOnError: true)
+        then:
+                repartidor.liquidarSueldoFinal()
+                repartidor.sueldo.sueldoFinal == 30100 //30000 sueldo base + 150 por 3 pedidos entregados - 50 por mala puntuacion en 3 pedidos
+        }
+
+
+        
+        void "test repartidor tiene un pedido no entregado, se lo penaliza con 50 pesos en el adicional pero como no tiene, no se le resta nada"() {
+        given:
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
+        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+                .save()
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+                .save(failOnError: true)
+        ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        EstadoPedido estado = new EstadoListo().save(failOnError: true)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
+
+        pedido.agregar(plato, 2)
+        pedido.estado = estado
+        pedido.save(failOnError: true)
+        pedido.siguienteEstado()
+        pedido.siguienteEstado()
+        pedido.save(failOnError: true)
+        modalidadEntrega.save(failOnError: true)
+        pedido.save(failOnError: true)
+        pedido.setEstado(new EstadoNoEntregado())
+
+        when:
+                pedido.save(failOnError: true)
+        then:
+                repartidor.liquidarSueldoFinal()
+                repartidor.sueldo.sueldoFinal == 30000 
+        }
+
+        void "test repartidor tiene un pedido no entregado, se lo penaliza con 50 pesos en el adicional"() {
+        given:
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
+        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+                .save()
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+                .save(failOnError: true)
+        ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        EstadoPedido estado = new EstadoListo().save(failOnError: true)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
+
+        pedido.agregar(plato, 2)
+        pedido.estado = estado
+        pedido.save(failOnError: true)
+        pedido.siguienteEstado()
+        pedido.siguienteEstado()
+        pedido.save(failOnError: true)
+        modalidadEntrega.save(failOnError: true)
+        pedido.save(failOnError: true)
+        pedido.setEstado(new EstadoNoEntregado())
 
         
 
+        ModalidadEntrega modalidadEntrega2 = new ModalidadParaLlevar()
+                .save(failOnError: true)
+
+        Pedido pedido2 = new Pedido(cliente, modalidadEntrega2, restaurante)
+
+        pedido2.agregar(plato, 2)
+        pedido2.estado = estado
+        pedido2.save(failOnError: true)
+        pedido2.siguienteEstado()
+        pedido2.siguienteEstado()
+        pedido2.save(failOnError: true)
+        pedido2.setPuntuacionAModalidad(2)
+
+        modalidadEntrega.save(failOnError: true)
+        pedido.save(failOnError: true)
+        
+        Pedido pedido3 = new Pedido(cliente, modalidadEntrega2, restaurante)
+
+        pedido3.agregar(plato, 2)
+        pedido3.estado = estado
+        pedido3.save(failOnError: true)
+        pedido3.siguienteEstado()
+        pedido3.siguienteEstado()
+        pedido3.setPuntuacionAModalidad(2)
+
+        pedido3.save(failOnError: true)
+
+        modalidadEntrega.save(failOnError: true)
+
+        when:
+                pedido.save(failOnError: true)
+        then:
+                repartidor.liquidarSueldoFinal()
+                repartidor.sueldo.sueldoFinal == 30050 //30000 sueldo base + 50*2 de pedido entregado - 50 del adicional por pedido NO entregado 
+        }
+
+        void "test repartidor tiene mas de 3 entregas no entregadas, su sueldo baja un 20%"() {
+        given:
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
+        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+                .save()
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+                .save(failOnError: true)
+        ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        EstadoPedido estado = new EstadoListo().save(failOnError: true)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
+
+        pedido.agregar(plato, 2)
+        pedido.estado = estado
+        pedido.save(failOnError: true)
+        pedido.siguienteEstado()
+        pedido.siguienteEstado()
+        pedido.save(failOnError: true)
+        modalidadEntrega.save(failOnError: true)
+        pedido.save(failOnError: true)
+        pedido.setEstado(new EstadoNoEntregado())
+
+        
+
+        ModalidadEntrega modalidadEntrega2 = new ModalidadParaLlevar()
+                .save(failOnError: true)
+
+        Pedido pedido2 = new Pedido(cliente, modalidadEntrega2, restaurante)
+
+        pedido2.agregar(plato, 2)
+        pedido2.estado = estado
+        pedido2.save(failOnError: true)
+        pedido2.siguienteEstado()
+        pedido2.siguienteEstado()
+        pedido2.save(failOnError: true)
+        pedido2.setEstado(new EstadoNoEntregado())
+
+        modalidadEntrega.save(failOnError: true)
+        pedido.save(failOnError: true)
+        
+        Pedido pedido3 = new Pedido(cliente, modalidadEntrega2, restaurante)
+
+        pedido3.agregar(plato, 2)
+        pedido3.estado = estado
+        pedido3.save(failOnError: true)
+        pedido3.siguienteEstado()
+        pedido3.siguienteEstado()
+        pedido3.setEstado(new EstadoNoEntregado())
+        pedido3.save(failOnError: true)
+
+        Pedido pedido4 = new Pedido(cliente, modalidadEntrega2, restaurante)
+
+        pedido4.agregar(plato, 2)
+        pedido4.estado = estado
+        pedido4.save(failOnError: true)
+        pedido4.siguienteEstado()
+        pedido4.siguienteEstado()
+        pedido4.setEstado(new EstadoNoEntregado())
+        pedido4.save(failOnError: true)
+
+
+        when:
+                pedido.save(failOnError: true)
+        then:
+                repartidor.liquidarSueldoFinal()
+                repartidor.sueldo.sueldoFinal == 24000 //30000 sueldo base - 30000*0.2 
+        }
+
+        void "test repartidor tiene mas de 4 entregas perfectas entonces recibe el bono por pedidos perfectos"() {
+        given:
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
+        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+                .save()
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+                .save(failOnError: true)
+        ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        EstadoPedido estado = new EstadoListo().save(failOnError: true)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
+        pedido.agregar(plato, 2)
+        pedido.estado = estado
+        pedido.save(failOnError: true)
+        pedido.siguienteEstado()
+        pedido.siguienteEstado()
+        pedido.save(failOnError: true)
+        modalidadEntrega.save(failOnError: true)
+        pedido.save(failOnError: true)
+        pedido.setPuntuacionAModalidad(5)
+        ModalidadEntrega modalidadEntrega2 = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        Pedido pedido2 = new Pedido(cliente, modalidadEntrega2, restaurante)
+        pedido2.agregar(plato, 2)
+        pedido2.estado = estado
+        pedido2.save(failOnError: true)
+        pedido2.siguienteEstado()
+        pedido2.siguienteEstado()
+        pedido2.save(failOnError: true)
+        pedido2.setPuntuacionAModalidad(5)
+        modalidadEntrega.save(failOnError: true)
+        pedido2.save(failOnError: true)
+        Pedido pedido3 = new Pedido(cliente, modalidadEntrega2, restaurante)
+        pedido3.agregar(plato, 2)
+        pedido3.estado = estado
+        pedido3.save(failOnError: true)
+        pedido3.siguienteEstado()
+        pedido3.siguienteEstado()
+        pedido3.save(failOnError: true)
+        pedido3.setPuntuacionAModalidad(5)
+        Pedido pedido4 = new Pedido(cliente, modalidadEntrega2, restaurante)
+        pedido4.agregar(plato, 2)
+        pedido4.estado = estado
+        pedido4.save(failOnError: true)
+        pedido4.siguienteEstado()
+        pedido4.siguienteEstado()
+        pedido4.save(failOnError: true)
+        pedido4.setPuntuacionAModalidad(5)
+        when:
+                pedido.save(failOnError: true)
+        then:
+                repartidor.liquidarSueldoFinal()
+                repartidor.sueldo.sueldoFinal == 30275 //30000 sueldo base + 200 de adicional por pedido entregado + 75 bono calificacion perfecta
+        }
+
+
+        void "test repartidor tiene mas de 4 entregas perfectas entonces recibe el bono por pedidos perfectos pero tiene 4 pedidos sin entregar y es penalizado"() {
+        given:
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
+        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+                .save()
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+                .save(failOnError: true)
+        ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        EstadoPedido estado = new EstadoListo().save(failOnError: true)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
+        pedido.agregar(plato, 2)
+        pedido.estado = estado
+        pedido.save(failOnError: true)
+        pedido.siguienteEstado()
+        pedido.siguienteEstado()
+        pedido.save(failOnError: true)
+        modalidadEntrega.save(failOnError: true)
+        pedido.save(failOnError: true)
+        pedido.setPuntuacionAModalidad(5)
+        ModalidadEntrega modalidadEntrega2 = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        Pedido pedido2 = new Pedido(cliente, modalidadEntrega2, restaurante)
+        pedido2.agregar(plato, 2)
+        pedido2.estado = estado
+        pedido2.save(failOnError: true)
+        pedido2.siguienteEstado()
+        pedido2.siguienteEstado()
+        pedido2.save(failOnError: true)
+        pedido2.setPuntuacionAModalidad(5)
+        modalidadEntrega.save(failOnError: true)
+        pedido2.save(failOnError: true)
+        Pedido pedido3 = new Pedido(cliente, modalidadEntrega2, restaurante)
+        pedido3.agregar(plato, 2)
+        pedido3.estado = estado
+        pedido3.save(failOnError: true)
+        pedido3.siguienteEstado()
+        pedido3.siguienteEstado()
+        pedido3.save(failOnError: true)
+        pedido3.setPuntuacionAModalidad(5)
+        Pedido pedido4 = new Pedido(cliente, modalidadEntrega2, restaurante)
+        pedido4.agregar(plato, 2)
+        pedido4.estado = estado
+        pedido4.save(failOnError: true)
+        pedido4.siguienteEstado()
+        pedido4.siguienteEstado()
+        pedido4.save(failOnError: true)
+        pedido4.setPuntuacionAModalidad(5)
+        Pedido pedido5 = new Pedido(cliente, modalidadEntrega2, restaurante)
+        pedido5.agregar(plato, 2)
+        pedido5.estado = estado
+        pedido5.save(failOnError: true)
+        pedido5.siguienteEstado()
+        pedido5.siguienteEstado()
+        pedido5.save(failOnError: true)
+        pedido5.setPuntuacionAModalidad(5)
+        pedido5.setEstado(new EstadoNoEntregado())
+        Pedido pedido6 = new Pedido(cliente, modalidadEntrega2, restaurante)
+        pedido6.agregar(plato, 2)
+        pedido6.estado = estado
+        pedido6.save(failOnError: true)
+        pedido6.siguienteEstado()
+        pedido6.siguienteEstado()
+        pedido6.save(failOnError: true)
+        pedido6.setPuntuacionAModalidad(5)
+        pedido6.setEstado(new EstadoNoEntregado())
+        Pedido pedido7 = new Pedido(cliente, modalidadEntrega2, restaurante)
+        pedido7.agregar(plato, 2)
+        pedido7.estado = estado
+        pedido7.save(failOnError: true)
+        pedido7.siguienteEstado()
+        pedido7.siguienteEstado()
+        pedido7.save(failOnError: true)
+        pedido7.setPuntuacionAModalidad(5)
+        pedido7.setEstado(new EstadoNoEntregado())
+        Pedido pedido8 = new Pedido(cliente, modalidadEntrega2, restaurante)
+        pedido8.agregar(plato, 2)
+        pedido8.estado = estado
+        pedido8.save(failOnError: true)
+        pedido8.siguienteEstado()
+        pedido8.siguienteEstado()
+        pedido8.save(failOnError: true)
+        pedido8.setPuntuacionAModalidad(5)
+        pedido8.setEstado(new EstadoNoEntregado())
+
+        when:
+                pedido.save(failOnError: true)
+        then:
+                repartidor.liquidarSueldoFinal()
+                repartidor.sueldo.sueldoFinal == 24075 //30000 sueldo base + 200 de adicional por pedido entregado + 75 bono calificacion perfecta - sueldo base * 0.2 - 200 de adicional
+        }
 }

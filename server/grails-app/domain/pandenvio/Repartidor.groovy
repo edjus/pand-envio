@@ -45,25 +45,20 @@ class Repartidor {
     void calcularInformeDeSueldo(){
         //int cantidadPedidosCompletados = 0
         for ( pedido in this.listaDePedidos ) {
-            print(pedido.nombreEstado)
             if(pedido.nombreEstado == "no_entregado"){
                 this.informacionDelMes["cantidadPedidosIncompletos"]+= 1;
-                print(this.informacionDelMes)
             }
             if(pedido.nombreEstado == "entregado"){
                 informacionDelMes["cantidadPedidosCompletados"]+= 1;
                 if(pedido.esConLlluvia()){
                     this.informacionDelMes["cantidadPedidosConLluvia"]+=1;
-                    print(this.informacionDelMes)
                 }
                 if(pedido.tienePuntuacion()){
                     if(pedido.obtenerEstrellas() < 3){
                         this.informacionDelMes["cantidadPedidosConPuntuacionMala"]+=1;
-                        print(this.informacionDelMes)
                     }
                     if(pedido.obtenerEstrellas() == 5){
                         this.informacionDelMes["cantidadPedidosConPuntuacionPerfecta"]+=1;
-                        print(this.informacionDelMes)
                     }
                 }
             }
