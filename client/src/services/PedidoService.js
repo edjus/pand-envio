@@ -3,11 +3,7 @@ import axios from 'axios'
 const SERVER_URL = process.env.SERVER_URL
 
 const actualizarPuntuacionPedido = async (data) => {
-  try {
-    await axios.post(`${SERVER_URL}/pedido/${data.pedido.id}/calificarPedido`, {calificacion: data.puntuacion})
-  } catch (error) {
-    console.error('Error puntuando pedido: ' + error)
-  }
+  await axios.post(`${SERVER_URL}/pedido/${data.pedido.id}/calificarPedido`, {calificacion: data.puntuacion})
 }
 
 const obtenerPuntuacionPedido = async (pedidoId) => {
@@ -19,6 +15,21 @@ const obtenerPuntuacionPedido = async (pedidoId) => {
   }
 }
 
+const cargarPedidosRestaurant = async (restaurantId) => {
+  const response = await axios.get(`${SERVER_URL}/pedido/restaurant/${restaurantId}`)
+  return response.data
+}
+
+const cargarPedidosCliente = async (clienteId) => {
+  const response = await axios.get(`${SERVER_URL}/pedido/cliente/${clienteId}`)
+  return response.data
+}
+
+const cargarPedidos = async () => {
+  const response = await axios.get(`${SERVER_URL}/pedido`)
+  return response.data
+}
+
 export {
-  actualizarPuntuacionPedido, obtenerPuntuacionPedido
+  actualizarPuntuacionPedido, obtenerPuntuacionPedido, cargarPedidosRestaurant, cargarPedidosCliente, cargarPedidos
 }

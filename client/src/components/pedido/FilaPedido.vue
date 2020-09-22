@@ -19,7 +19,7 @@
 
 import StarRating from 'vue-star-rating'
 import {obtenerPuntuacionPedido} from '../../services/PedidoService'
-import {esRol} from "../../services/AutenticacionService";
+import {esRol} from '../../services/AutenticacionService'
 
 export default {
   components: {StarRating},
@@ -28,7 +28,7 @@ export default {
   data: function () {
     return {
       rating: null,
-      soloLectura: !esRol(['admin','cliente'])
+      soloLectura: !esRol(['admin', 'cliente'])
     }
   },
   async created () {
