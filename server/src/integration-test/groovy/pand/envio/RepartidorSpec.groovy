@@ -15,6 +15,7 @@ import pandenvio.EstadoEnEntrega
 import pandenvio.EstadoEnEspera
 import pandenvio.EstadoNoEntregado
 import pandenvio.EstadoEnPreparacion
+import pandenvio.EstadoEntregado
 import pandenvio.EstadoListo
 import pandenvio.EstadoPedido
 import pandenvio.FabricaClima
@@ -40,7 +41,7 @@ class RepartidorSpec extends Specification {
 
 
     void "test repartidor tiene un pedido"() {
-        given:
+        when:
         Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
         Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
@@ -55,20 +56,18 @@ class RepartidorSpec extends Specification {
         pedido.agregar(plato, 2)
         pedido.estado = estado
         pedido.save(failOnError: true)
-        pedido.siguienteEstado()
-        pedido.siguienteEstado()
-        pedido.save(failOnError: true)
-        modalidadEntrega.save(failOnError: true)
-        
-        when:
-                pedido.save(failOnError: true)
+        pedido.siguienteEstado() // EstadoEnEntrega
         then:
-                (repartidor.listaDePedidos).size() == 1
-                //repartidor.disponible == true
+            !repartidor.disponible
+            pedido.siguienteEstado() // EstadoEntregado
+            pedido.save(failOnError: true)
+            pedido.estado.class == EstadoEntregado
+            repartidor.disponible
+            (repartidor.listaDePedidos).size() == 1
     }
 
         void "test repartidor tiene dos pedidos"() {
-        given:
+        when:
         Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
         Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
@@ -76,36 +75,36 @@ class RepartidorSpec extends Specification {
                 .save()
         Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
                 .save(failOnError: true)
-        ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
-                .save(failOnError: true)
-        EstadoPedido estado = new EstadoListo().save(failOnError: true)
+
+        ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar().save(failOnError: true)
+        EstadoPedido estado1 = new EstadoListo().save(failOnError: true)
         Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
         pedido.agregar(plato, 2)
-        pedido.estado = estado
-        pedido.save(failOnError: true)
-        pedido.siguienteEstado()
-        pedido.siguienteEstado()
-        pedido.save(failOnError: true)
-        modalidadEntrega.save(failOnError: true)
+        pedido.estado = estado1
         pedido.save(failOnError: true)
 
-        ModalidadEntrega modalidadEntrega2 = new ModalidadParaLlevar()
-                .save(failOnError: true)
-
+        EstadoPedido estado2 = new EstadoListo().save(failOnError: true)
+        ModalidadEntrega modalidadEntrega2 = new ModalidadParaLlevar().save(failOnError: true)
         Pedido pedido2 = new Pedido(cliente, modalidadEntrega2, restaurante)
         pedido2.agregar(plato, 2)
-        pedido2.estado = estado
-        pedido2.save(failOnError: true)
-        pedido2.siguienteEstado()
-        pedido2.siguienteEstado()
+        pedido2.estado = estado2
         pedido2.save(failOnError: true)
 
-        modalidadEntrega.save(failOnError: true)
-        
-        when:
-                pedido.save(failOnError: true)
         then:
-                (repartidor.listaDePedidos).size() == 2
+            repartidor.disponible
+            pedido.siguienteEstado() // EnEntrega
+            !repartidor.disponible
+            pedido.siguienteEstado() // Entregado
+            pedido.save(failOnError: true)
+            repartidor.disponible
+            repartidor.listaDePedidos.size() == 1
+
+            pedido2.siguienteEstado() // En Entrega
+            !repartidor.disponible
+            pedido2.siguienteEstado() // Entregado
+            pedido.save(failOnError: true)
+            repartidor.disponible
+            (repartidor.listaDePedidos).size() == 2
     }
 
     void "test repartidor tiene un pedido entregado  NO LLUVIOSO y su sueldo es su sueldo base mas adicional'"() {

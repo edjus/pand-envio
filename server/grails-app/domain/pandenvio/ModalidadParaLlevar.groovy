@@ -47,7 +47,7 @@ class ModalidadParaLlevar  extends ModalidadEntrega {
 
     @Override
     boolean hayRepartidor() {
-        repartidor
+        repartidor != null
     }
 
     @Override
@@ -59,5 +59,11 @@ class ModalidadParaLlevar  extends ModalidadEntrega {
     void asignarRepartidor(Repartidor repartidor) {
         this.repartidor = repartidor
         this.repartidor?.disponible = false
+    }
+
+    @Override
+    void entregarPedido() {
+        this.repartidor?.disponible = true
+        this.repartidor.save(failOnError: true)
     }
 }
