@@ -103,7 +103,7 @@ const router = new Router({
       component: ListadoPedido,
       meta: {
         publico: false,
-        rol: ['admin', 'duenio']
+        rol: ['admin', 'duenio', 'cliente']
       }
     },
     {

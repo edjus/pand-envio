@@ -9,8 +9,8 @@
 
 <script>
 import TablaPedido from './TablaPedido'
-import { getRestauranteIdLogueado } from '../../services/AutenticacionService'
-import {actualizarPuntuacionPedido} from '../../services/PedidoService'
+import {getRestauranteIdLogueado, idUsuarioActual} from '../../services/AutenticacionService'
+import {actualizarPuntuacionPedido, cargarPedidos, cargarPedidosRestaurant} from '../../services/PedidoService'
 export default {
   name: 'Pedido',
   components: {TablaPedido},
@@ -21,7 +21,7 @@ export default {
     }
   },
   created () {
-    this.cargarPedidos(getRestauranteIdLogueado())
+    this.cargarPedidos()
   },
   methods: {
     clearNotifications: function () {
@@ -31,12 +31,22 @@ export default {
       })
     },
     actualizarPuntuacion: async function (data) {
-      await actualizarPuntuacionPedido(data)
-      this.$notify({
-        group: 'notifications',
-        type: 'success',
-        title: 'El pedido se puntuó exitosamente con ' + data.puntuacion
-      })
+      try {
+        await actualizarPuntuacionPedido(data)
+        this.$notify({
+          group: 'notifications',
+          type: 'success',
+          title: 'El pedido se puntuó exitosamente con ' + data.puntuacion
+        })
+      } catch (error) {
+        this.$notify({
+          group: 'notifications',
+          type: 'error',
+          duration: 5000,
+          title: 'No se pudo puntuar el pedido',
+          text: error
+        })
+      }
     },
     cancelarPedido: function (pedido) {
       fetch(`${this.serverURL}/pedido/${pedido.id}/cancelar`, {
@@ -103,31 +113,32 @@ export default {
         this.pedidos.push(pedido)
       }
     },
-    cargarPedidos: async function (restauranteId) {
+    cargarPedidos: async function () {
       this.clearNotifications()
-      let url = `${this.serverURL}/pedido`
-      if (restauranteId) {
-        url += '/restaurant/' + restauranteId
+      const restauranteId = getRestauranteIdLogueado()
+      const clienteId = idUsuarioActual()
+      try {
+        if (restauranteId) {
+          this.pedidos = await cargarPedidosRestaurant(restauranteId)
+        } else if (clienteId) {
+          this.pedidos = await cargarPedidosRestaurant(clienteId)
+        } else {
+          this.pedidos = await cargarPedidos()
+        }
+        this.$notify({
+          group: 'notifications',
+          type: 'success',
+          title: 'Carga de pedidos exitosa'
+        })
+      } catch (error) {
+        console.error('Error cargando pedidos: ' + error)
+        this.$notify({
+          group: 'notifications',
+          type: 'error',
+          title: 'No se pueden cargar pedidos',
+          text: error
+        })
       }
-      fetch(url)
-        .then(r => r.json())
-        .then(json => {
-          this.pedidos = json
-          this.$notify({
-            group: 'notifications',
-            type: 'success',
-            title: 'Carga de pedidos exitosa'
-          })
-        })
-        .catch(error => {
-          console.error('Error cargando pedidos: ' + error)
-          this.$notify({
-            group: 'notifications',
-            type: 'error',
-            title: 'No se pueden cargar pedidos',
-            text: error
-          })
-        })
     }
   }
 }

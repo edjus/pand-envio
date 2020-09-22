@@ -14,11 +14,15 @@ const rolActual = () => {
 }
 
 const idUsuarioActual = () => {
-  return 1 // TODO se permite cambiar o todos los roles van a ser con el usuario id 1 ?
+  if (esRol('cliente')) {
+    return 1
+  }
 }
 
 const idRepartidorActual = () => {
-  return 1
+  if (esRol('repartidor')) {
+    return 1
+  }
 }
 
 const getRestauranteIdLogueado = () => {
