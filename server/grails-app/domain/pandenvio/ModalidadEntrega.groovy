@@ -22,4 +22,6 @@ abstract class ModalidadEntrega {
     abstract boolean hayRepartidor()
 
     abstract void asignarRepartidor(Repartidor repartidor)
+
+    abstract void entregarPedido()
 }

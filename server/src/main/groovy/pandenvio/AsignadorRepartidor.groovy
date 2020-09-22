@@ -12,7 +12,7 @@ class AsignadorRepartidor {
     }
 
     Repartidor obtenerRepartidor(Restaurant restaurant){
-        def repartidores = Repartidor.findAllWhere(disponible: true, restaurant: restaurant)
+        def repartidores = Repartidor.list().findAll {item -> item.disponible && item.restaurant == restaurant}
         if (repartidores.empty){
             return null
         }

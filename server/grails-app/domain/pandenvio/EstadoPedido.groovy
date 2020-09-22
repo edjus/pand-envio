@@ -100,7 +100,6 @@ class EstadoEnEntrega extends EstadoPedido {
     @Override
     def iniciarPara(Pedido pedido) {
         AsignadorRepartidor.instance.asignarPara(pedido)
-    //    CreadorDeCupones.instance.CrearPosibleCupon(pedido.cliente);//Verificar si 
         pedido.estado = pedido.tieneRepartidor() ? this : new EstadoEnEspera()
     }
 }
@@ -135,6 +134,12 @@ class EstadoEntregado extends EstadoPedido {
     EstadoPedido cancelar() {
         throw new PedidoNoSePuedeCancelarException("El pedido tiene estado ${this.nombre}, no se puede cancelar")
     }
+
+    @Override
+    def iniciarPara(Pedido pedido) {
+        pedido.modalidadEntrega.entregarPedido()
+    }
+
 }
 
 class EstadoNoEntregado extends EstadoPedido {

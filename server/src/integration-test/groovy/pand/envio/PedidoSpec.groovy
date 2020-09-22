@@ -19,6 +19,7 @@ import pandenvio.EstadoEnArmado
 import pandenvio.EstadoListo
 import pandenvio.EstadoPedido
 import pandenvio.FabricaClima
+import pandenvio.Item
 import pandenvio.Menu
 import pandenvio.ModalidadEntrega
 import pandenvio.ModalidadParaLlevar
@@ -39,6 +40,9 @@ class PedidoSpec extends Specification {
     Ubicacion juanPerezUbicacion = new Ubicacion(calle: "Paunero", altura: 2030, pisoYDepartamento: null)
     Cliente juanPerez = new Cliente(nombre: "Juan", apellido: "Perez", mail: "juanperez@yahoo.com.ar", ubicacion: juanPerezUbicacion, telefono: "1138465977",cupones:null)
 
+    def setup() {
+        Repartidor.executeUpdate('delete from Repartidor')
+    }
 
     void "test precio de un pedido sin productos es 0"() {
         given:
@@ -159,6 +163,22 @@ class PedidoSpec extends Specification {
         pedidoGuardado.save(failOnError: true)
         def pedidoGuardado2 = Pedido.findById(pedido.id)
         pedidoGuardado2.nombreEstado == 'listo'
+    }
+
+    void "test Pedido para llevar asignado a repartidor"() {
+        when:
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433', cupones: null)
+                .save()
+        ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante).save(failOnError: true)
+        Repartidor repartidor = new Repartidor("Juan", "9897954", restaurante).save(failOnError: true)
+        pedido.asignarA(repartidor)
+        then:
+        !repartidor.disponible
+        pedido.tieneRepartidor()
     }
 
     void "test pedido esta en modalidad para llevar y NO puedo cambiar a modalidad para entregar porque el pedido ya esta listo"() {
@@ -298,6 +318,7 @@ class PedidoSpec extends Specification {
         pedido.estado.class == EstadoEnEspera
         pedido.nombreEstado == 'en_espera'
         !repartidor.disponible
+        repartidor.listaDePedidos.empty
     }
 
     void "test pedido estado siguiente a listo con modalidad para llevar y hay repartidores en otro restaurante es 'en espera'"() {
@@ -517,12 +538,12 @@ class PedidoSpec extends Specification {
         thrown CalificacionException
     }
 
-        void "test pedido para llevar puede calificarse al estar entregado"() {
+    void "test pedido para llevar puede calificarse al estar entregado"() {
         given:
         Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
-        Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
-        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
-        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+        Repartidor repartidor = new Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
+        Ubicacion unaCasa = new Ubicacion(calle: 'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento', mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
                 .save()
         Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
                 .save(failOnError: true)
@@ -545,9 +566,9 @@ class PedidoSpec extends Specification {
         void "test pedido para llevar no puede calificarse al estar calificado"() {
         given:
         Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
-        Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
-        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
-        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+        Repartidor repartidor = new Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
+        Ubicacion unaCasa = new Ubicacion(calle: 'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento', mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
                 .save()
         Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
                 .save(failOnError: true)
@@ -566,5 +587,46 @@ class PedidoSpec extends Specification {
         pedido.setPuntuacionAModalidad(5)
         then:
         thrown CalificacionException
+    }
+
+ void "test pedido queda en espera si el repartidor está ocupado"() {
+        when:
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Repartidor repartidor = new  Repartidor("Juan", "9798797", restaurante).save(failOnError: true)
+        Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
+        Cliente cliente = new Cliente(nombre: 'Moni', apellido: 'Argento',  mail: 'moni.argento@gmail.com', ubicacion: unaCasa, telefono: '11-5555-4433')
+                .save()
+        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, restaurant: restaurante)
+                .save(failOnError: true)
+        ModalidadEntrega modalidadEntrega = new ModalidadParaLlevar().save(failOnError: true)
+        EstadoPedido estado1 = new EstadoListo().save(failOnError: true)
+        Pedido pedido = new Pedido(cliente, modalidadEntrega, restaurante)
+        pedido.agregar(plato, 2)
+        pedido.estado = estado1
+        pedido.save(failOnError: true)
+
+        EstadoPedido estado2 = new EstadoListo().save(failOnError: true)
+        ModalidadEntrega modalidadEntrega2 = new ModalidadParaLlevar().save(failOnError: true)
+        Pedido pedido2 = new Pedido(cliente, modalidadEntrega2, restaurante)
+        pedido2.agregar(plato, 2)
+        pedido2.estado = estado2
+        pedido2.save(failOnError: true)
+
+        then:
+        repartidor.disponible
+        pedido.siguienteEstado() // EnEntrega
+        Repartidor.count == 1
+        !repartidor.disponible
+        pedido.tieneRepartidor()
+        pedido.save(failOnError: true)
+        !repartidor.disponible
+        repartidor.listaDePedidos.size() == 1
+        repartidor.dirty
+        pedido2.siguienteEstado() // En Espera
+        Repartidor.count == 1
+        pedido2.estado.class == EstadoEnEspera
+        !pedido2.modalidadEntrega.hayRepartidor()
+        !pedido2.tieneRepartidor()
+        repartidor.listaDePedidos.size() == 1
     }
 }
