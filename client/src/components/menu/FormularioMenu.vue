@@ -85,8 +85,9 @@ export default {
   methods: {
     inicializarPlatos () {
       if (this.menu.restaurant) {
-        this.filtrarPlatosPorRestaurante(this.menu.restaurant.id)
-      }else {
+        const restauranteId = this.menu.restaurant.id ? this.menu.restaurant.id : this.menu.restaurant
+        this.filtrarPlatosPorRestaurante(restauranteId)
+      } else {
         this.platosDelRestaurante = []
       }
     },

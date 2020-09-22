@@ -16,6 +16,9 @@
 <script>
 import TablaMenu from './TablaMenu'
 import FormularioMenu from './FormularioMenu'
+import {getRestauranteIdLogueado} from '../../services/AutenticacionService'
+import {cargarMenu, cargarMenuRestaurant} from '../../services/MenuService'
+import {cargarRestaurantes} from '../../services/RestaurantService'
 
 export default {
   name: 'Menu',
@@ -29,10 +32,10 @@ export default {
       serverURL: process.env.SERVER_URL
     }
   },
-  created () {
+  async created () {
     this.cargarPlatos()
     this.cargarMenues()
-    this.cargarRestaurantes()
+    this.restaurantes = await cargarRestaurantes(getRestauranteIdLogueado())
   },
   methods: {
     clearNotifications: function () {
@@ -104,41 +107,40 @@ export default {
     },
     cargarMenues: async function () {
       this.clearNotifications()
-      fetch(`${this.serverURL}/menu`)
-        .then(r => r.json())
-        .then(json => {
-          this.menues = json
-          this.$notify({
-            group: 'notifications',
-            type: 'success',
-            title: 'Carga de menues exitosa'
-          })
+      const restauranteId = getRestauranteIdLogueado()
+      try {
+        if (restauranteId) {
+          this.menues = await cargarMenuRestaurant(restauranteId)
+        } else {
+          this.menues = await cargarMenu()
+        }
+        this.$notify({
+          group: 'notifications',
+          type: 'success',
+          title: 'Carga de menues exitosa'
         })
-        .catch(error => {
-          console.error('Error cargando menues: ' + error)
-          this.$notify({
-            group: 'notifications',
-            type: 'error',
-            title: 'No se pueden cargar menues',
-            text: error
-          })
+      } catch (error) {
+        console.error('Error cargando menues: ' + error)
+        this.$notify({
+          group: 'notifications',
+          type: 'error',
+          title: 'No se pueden cargar menues',
+          text: error
         })
+      }
     },
     cargarPlatos: async function () {
-      fetch(`${this.serverURL}/plato`)
+      const restauranteId = getRestauranteIdLogueado()
+      let url = `${this.serverURL}/plato`
+      if (restauranteId) {
+        url += '/restaurant/' + restauranteId
+      }
+      fetch(url)
         .then(r => r.json())
         .then(json => {
           this.platos = json
         })
         .catch(error => console.error('Error cargando platos: ' + error))
-    },
-    cargarRestaurantes: async function () {
-      fetch(`${this.serverURL}/restaurant`)
-        .then(r => r.json())
-        .then(json => {
-          this.restaurantes = json
-        })
-        .catch(error => console.error('Error cargando restaurantes: ' + error))
     }
   }
 }

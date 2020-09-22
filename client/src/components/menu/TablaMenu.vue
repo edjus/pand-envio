@@ -7,6 +7,7 @@
         <th>Nombre</th>
         <th>Precio</th>
         <th>Restaurant</th>
+        <th>Platos</th>
         <th>Acciones</th>
       </tr>
       </thead>

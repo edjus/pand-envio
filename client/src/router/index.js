@@ -94,7 +94,7 @@ const router = new Router({
       component: Menu,
       meta: {
         publico: false,
-        rol: ['admin']
+        rol: ['admin', 'duenio']
       }
     },
     {

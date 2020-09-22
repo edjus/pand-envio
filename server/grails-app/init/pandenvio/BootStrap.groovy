@@ -22,7 +22,7 @@ class BootStrap {
         clienteService.agregarCliente(pepeArgento)
 
 
-        Restaurant restaurante1 = new Restaurant(nombre: "La esquina", productos: null)
+        Restaurant restaurante1 = new Restaurant(nombre: "La esquina", productos: null, direccion: 'Av. San Martin 456')
         Repartidor repartidor = new Repartidor(nombre: 'Carlitos', dni:123456,restaurant: restaurante1)
         repartidor.save()
 
@@ -35,7 +35,7 @@ class BootStrap {
         Plato acelga = new Plato(nombre: "Buñuelos de acelga", precio: 225.75, categoria: CategoriaPlato.ENTRADA, descripcion: "6 buñuelos de acelga fritos", restaurant:restaurante1)
         platoService.agregarPlato(acelga)
 
-        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
+        Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: 'Av. siempre viva 123').save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
 
         Plato plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, descripcion: '15 te hago alto guiso', restaurant: restaurante)

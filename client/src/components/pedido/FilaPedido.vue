@@ -31,7 +31,7 @@ export default {
     return {
       rating: null,
       mostrarAvanzarEstado: esRol(['admin', 'duenio']),
-      mostrarRecibido: esRol(['cliente']),
+      mostrarRecibido: esRol(['cliente']) && this.item.estado === 'en_entrega',
       mostrarNoEntregado: esRol(['admin', 'cliente']),
       puntuacionSoloLectura: !esRol(['admin', 'cliente'])
     }

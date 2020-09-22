@@ -39,4 +39,19 @@ class MenuController {
             }
         }
     }
+
+    @Transactional
+    def obtenerMenuAsociadosARestaurant(Long restaurantId) {
+        try {
+            List<Menu> menus = menuService.obtenerMenuAsociadosARestaurant(restaurantId)
+            if(menus.size() == 0){
+                respond([],status: OK)
+            }
+            else{
+                respond(menus, status: OK)
+            }
+        } catch (RuntimeException e) {
+            respond e.message, status: BAD_REQUEST
+        }
+    }
 }

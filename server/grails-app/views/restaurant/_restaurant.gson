@@ -7,4 +7,5 @@ model {
 json {
 	id restaurant.id
 	nombre restaurant.nombre
+	direccion restaurant.direccion
 }
