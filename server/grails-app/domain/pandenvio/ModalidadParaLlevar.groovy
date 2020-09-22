@@ -67,6 +67,6 @@ class ModalidadParaLlevar  extends ModalidadEntrega {
     @Override
     void entregarPedido() {
         this.repartidor?.disponible = true
-        this.repartidor.save(failOnError: true)
+        this.repartidor?.save(failOnError: true)
     }
 }

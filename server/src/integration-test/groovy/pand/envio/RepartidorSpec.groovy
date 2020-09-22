@@ -344,7 +344,12 @@ class RepartidorSpec extends Specification {
         modalidadEntrega.save(failOnError: true)
         pedido.save(failOnError: true)
         
-        Pedido pedido3 = new Pedido(cliente, modalidadEntrega2, restaurante)
+
+        
+        ModalidadEntrega modalidadEntrega3 = new ModalidadParaLlevar()
+                .save(failOnError: true)
+
+        Pedido pedido3 = new Pedido(cliente, modalidadEntrega3, restaurante)
 
         pedido3.agregar(plato, 2)
         pedido3.estado = estado
@@ -563,7 +568,9 @@ class RepartidorSpec extends Specification {
         pedido2.setPuntuacionAModalidad(5)
         modalidadEntrega.save(failOnError: true)
         pedido2.save(failOnError: true)
-        Pedido pedido3 = new Pedido(cliente, modalidadEntrega2, restaurante)
+        ModalidadEntrega modalidadEntrega3 = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        Pedido pedido3 = new Pedido(cliente, modalidadEntrega3, restaurante)
         pedido3.agregar(plato, 2)
         pedido3.estado = estado
         pedido3.save(failOnError: true)
@@ -571,7 +578,9 @@ class RepartidorSpec extends Specification {
         pedido3.siguienteEstado()
         pedido3.save(failOnError: true)
         pedido3.setPuntuacionAModalidad(5)
-        Pedido pedido4 = new Pedido(cliente, modalidadEntrega2, restaurante)
+         ModalidadEntrega modalidadEntrega4 = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        Pedido pedido4 = new Pedido(cliente, modalidadEntrega4, restaurante)
         pedido4.agregar(plato, 2)
         pedido4.estado = estado
         pedido4.save(failOnError: true)
@@ -621,7 +630,9 @@ class RepartidorSpec extends Specification {
         pedido2.setPuntuacionAModalidad(5)
         modalidadEntrega.save(failOnError: true)
         pedido2.save(failOnError: true)
-        Pedido pedido3 = new Pedido(cliente, modalidadEntrega2, restaurante)
+        ModalidadEntrega modalidadEntrega3 = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        Pedido pedido3 = new Pedido(cliente, modalidadEntrega3, restaurante)
         pedido3.agregar(plato, 2)
         pedido3.estado = estado
         pedido3.save(failOnError: true)
@@ -629,7 +640,9 @@ class RepartidorSpec extends Specification {
         pedido3.siguienteEstado()
         pedido3.save(failOnError: true)
         pedido3.setPuntuacionAModalidad(5)
-        Pedido pedido4 = new Pedido(cliente, modalidadEntrega2, restaurante)
+        ModalidadEntrega modalidadEntrega4 = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        Pedido pedido4 = new Pedido(cliente, modalidadEntrega4, restaurante)
         pedido4.agregar(plato, 2)
         pedido4.estado = estado
         pedido4.save(failOnError: true)
@@ -637,7 +650,9 @@ class RepartidorSpec extends Specification {
         pedido4.siguienteEstado()
         pedido4.save(failOnError: true)
         pedido4.setPuntuacionAModalidad(5)
-        Pedido pedido5 = new Pedido(cliente, modalidadEntrega2, restaurante)
+        ModalidadEntrega modalidadEntrega5 = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        Pedido pedido5 = new Pedido(cliente, modalidadEntrega5, restaurante)
         pedido5.agregar(plato, 2)
         pedido5.estado = estado
         pedido5.save(failOnError: true)
@@ -646,7 +661,9 @@ class RepartidorSpec extends Specification {
         pedido5.save(failOnError: true)
         pedido5.setPuntuacionAModalidad(5)
         pedido5.setEstado(new EstadoNoEntregado())
-        Pedido pedido6 = new Pedido(cliente, modalidadEntrega2, restaurante)
+        ModalidadEntrega modalidadEntrega6 = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        Pedido pedido6 = new Pedido(cliente, modalidadEntrega6, restaurante)
         pedido6.agregar(plato, 2)
         pedido6.estado = estado
         pedido6.save(failOnError: true)
@@ -655,7 +672,9 @@ class RepartidorSpec extends Specification {
         pedido6.save(failOnError: true)
         pedido6.setPuntuacionAModalidad(5)
         pedido6.setEstado(new EstadoNoEntregado())
-        Pedido pedido7 = new Pedido(cliente, modalidadEntrega2, restaurante)
+        ModalidadEntrega modalidadEntrega7 = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        Pedido pedido7 = new Pedido(cliente, modalidadEntrega7, restaurante)
         pedido7.agregar(plato, 2)
         pedido7.estado = estado
         pedido7.save(failOnError: true)
@@ -664,7 +683,9 @@ class RepartidorSpec extends Specification {
         pedido7.save(failOnError: true)
         pedido7.setPuntuacionAModalidad(5)
         pedido7.setEstado(new EstadoNoEntregado())
-        Pedido pedido8 = new Pedido(cliente, modalidadEntrega2, restaurante)
+        ModalidadEntrega modalidadEntrega8 = new ModalidadParaLlevar()
+                .save(failOnError: true)
+        Pedido pedido8 = new Pedido(cliente, modalidadEntrega8, restaurante)
         pedido8.agregar(plato, 2)
         pedido8.estado = estado
         pedido8.save(failOnError: true)

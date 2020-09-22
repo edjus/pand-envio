@@ -51,6 +51,15 @@ class PedidoService {
         pedido.save(failOnError: true, flush: true)
     }
 
+    def pedidoNoEntregado(Long pedidoId) {
+        Pedido pedido = Pedido.findById(pedidoId)
+        if (!pedido){
+            throw new RuntimeException('El pedido no es válido')
+        }
+        pedido.noEntregado()
+        pedido.save(failOnError: true, flush: true)
+    }
+
     def agregarProducto(Long pedidoId, Long productoId, Integer cantidad) {
         Pedido pedido = Pedido.findById(pedidoId)
         if (!pedido){

@@ -145,6 +145,17 @@ class Pedido {
         setEstado(this.estado.cancelar())
     }
 
+    void noEntregado() {
+        if(this.modalidadEntrega.nombre == "para_retirar") {
+            throw new NoSePuedeMarcarComoNoEntregadoException("El pedido no puede marcarse como no entregado si es para retirar")
+        }
+        
+        if (this.estado.nombre != "en_entrega") {
+            throw new NoSePuedeMarcarComoNoEntregadoException("El pedido no tiene items no se puede cambiar estado")
+        }
+        setEstado(new EstadoNoEntregado())
+    }
+
     Boolean tieneRepartidor(){
         modalidadEntrega.hayRepartidor()
     }

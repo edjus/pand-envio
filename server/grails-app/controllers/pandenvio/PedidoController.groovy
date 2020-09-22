@@ -26,9 +26,6 @@ class PedidoController {
         }
     }
 
-
-
-
     /*
     POST: Crear un pedido
     - cliente_id: long con el id de un cliente existente
@@ -44,18 +41,14 @@ class PedidoController {
             Pedido pedido = pedidoService.crearPedido(clienteId, modalidad, resturanteId)
             respond([pedido: pedido], status: OK)
         } catch (RuntimeException e) {
-            respond e.message, status: BAD_REQUEST
+            respond ([e.message], status: BAD_REQUEST)
         }
     }
 
     @Transactional
     def actualizarEstado(Long pedidoId) {
-        try {
             Pedido pedido = pedidoService.siguienteEstadoPedido(pedidoId)
             respond([pedido: pedido], status: OK)
-        } catch (RuntimeException e) {
-            respond e.message, status: BAD_REQUEST
-        }
     }
 
     @Transactional
@@ -64,7 +57,17 @@ class PedidoController {
             Pedido pedido = pedidoService.cancelar(pedidoId)
             respond([pedido: pedido], status: OK)
         } catch (RuntimeException e) {
-            respond e.message, status: BAD_REQUEST
+            respond ([e.message], status: BAD_REQUEST)
+        }
+    }
+
+    @Transactional
+    def pedidoNoEntregado(Long pedidoId) {
+        try {
+            Pedido pedido = pedidoService.pedidoNoEntregado(pedidoId)
+            respond([pedido: pedido], status: OK)
+        } catch (RuntimeException e) {
+            respond ([e.message], status: BAD_REQUEST)
         }
     }
 
@@ -79,20 +82,23 @@ class PedidoController {
                 respond(pedidos, status: OK)
             }
         } catch (RuntimeException e) {
-            respond e.message, status: BAD_REQUEST
+            respond ([e.message], status: BAD_REQUEST)
         }
     }
 
     @Transactional
     def obtenerPedidosAsociadosACliente(Long clienteId) {
-
+        try{
             List<Pedido> pedidos = pedidoService.obtenerPedidosAsociadosACliente(clienteId)
             if(pedidos.size() == 0){
                 respond([],status: OK)
             }
             else{
                 respond(pedidos, status: OK)
-            }
+                }
+            }  catch (RuntimeException e) {
+            respond ([e.message], status: BAD_REQUEST)
+        }
     }
 
 
@@ -110,7 +116,7 @@ class PedidoController {
             Pedido pedido = pedidoService.agregarProducto(pedidoId, productoId, cantidad)
             respond([pedido: pedido], status: OK)
         } catch (RuntimeException e) {
-            respond e.message, status: BAD_REQUEST
+            respond ([e.message], status: BAD_REQUEST)
         }
     }
 
@@ -123,7 +129,7 @@ class PedidoController {
                 respond([pedido: pedidos.first()], status: OK)
             }
         } catch (RuntimeException e) {
-            respond e.message, status: BAD_REQUEST
+            respond ([e.message], status: BAD_REQUEST)
         }
     }
 
@@ -132,7 +138,6 @@ class PedidoController {
     def cambiarRango(Long pedidoId) {
         try {
             Pedido pedido = pedidoService.cambiarRango(pedidoId)
-
             respond([pedido: pedido], status: OK)
         } catch (RuntimeException e) {
             respond ([e.message], status: BAD_REQUEST)
@@ -141,11 +146,12 @@ class PedidoController {
 
     @Transactional
     def cambiarModalidad(Long pedidoId) {
-
+       try {
             Pedido pedido = pedidoService.cambiarModalidad(pedidoId)
-
             respond([pedido: pedido], status: OK)
-
+        } catch (RuntimeException e) {
+            respond ([e.message], status: BAD_REQUEST)
+        }
     }
 
     @Transactional
@@ -176,7 +182,7 @@ class PedidoController {
             Pedido pedido = pedidoService.actualizarProducto(pedidoId, productoId, cantidad)
             respond([pedido:  pedido], status: OK)
         } catch (RuntimeException e) {
-            respond e.message, status: BAD_REQUEST
+            respond ([e.message], status: BAD_REQUEST)
         }
     }
 
@@ -186,7 +192,7 @@ class PedidoController {
             Pedido pedido = pedidoService.removerProducto(pedidoId, productoId)
             respond([pedido: pedido], status: OK)
         } catch (RuntimeException e) {
-            respond e.message, status: BAD_REQUEST
+            respond ([e.message], status: BAD_REQUEST)
         }
     }
 
@@ -197,7 +203,7 @@ class PedidoController {
             Pedido pedido = pedidoService.agregarCupon(pedidoId, codigo)
             respond([pedido: pedido], status: OK)
         } catch (RuntimeException e) {
-            respond e.message, status: BAD_REQUEST
+            respond ([e.message], status: BAD_REQUEST)
         }
     }
 
