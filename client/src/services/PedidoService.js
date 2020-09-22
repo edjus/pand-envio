@@ -30,6 +30,11 @@ const cargarPedidos = async () => {
   return response.data
 }
 
+const denunciarPedidoNoEntregado = async (pedidoId) => {
+  const response = await axios.get(`${SERVER_URL}/pedido/${pedidoId}/noEntregado`)
+  return response.data
+}
+
 export {
-  actualizarPuntuacionPedido, obtenerPuntuacionPedido, cargarPedidosRestaurant, cargarPedidosCliente, cargarPedidos
+  actualizarPuntuacionPedido, obtenerPuntuacionPedido, cargarPedidosRestaurant, cargarPedidosCliente, cargarPedidos, denunciarPedidoNoEntregado
 }

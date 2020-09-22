@@ -16,7 +16,7 @@
       </thead>
       <tbody>
       <fila-pedido v-for='pedido in pedidos' @avanzarPedido="avanzarPedido" @cancelarPedido="cancelarPedido" @actualizarPuntuacion="actualizarPuntuacion"
-                  :item='pedido' :key='pedido.id'></fila-pedido>
+               @noEntregado="noEntregado"   :item='pedido' :key='pedido.id'></fila-pedido>
       </tbody>
     </table>
   </div>
@@ -37,6 +37,9 @@ export default {
     },
     cancelarPedido: function (item) {
       this.$emit('cancelarPedido', item)
+    },
+    noEntregado: function (item) {
+      this.$emit('noEntregado', item)
     }
   }
 }

@@ -11,6 +11,7 @@
     <td>
       <button class='btn btn-primary' v-on:click="avanzar"><i class='fas fa-arrow-circle-right'></i> Avanzar estado</button>
       <button class='btn btn-danger' v-on:click="cancelar"><i class='fas fa-window-close'></i> Cancelar</button>
+      <button class="btn btn-warning" v-on:click="noEntregado" :disabled="soloLectura"><i class="fas fa-ghost"></i> No entregado</button>
     </td>
   </tr>
 </template>
@@ -44,6 +45,9 @@ export default {
     },
     cancelar: function () {
       this.$emit('cancelarPedido', this.item)
+    },
+    noEntregado: function () {
+      this.$emit('noEntregado', this.item)
     }
   }
 
