@@ -2,8 +2,10 @@ package pandenvio
 
 class Menu extends Producto {
 
-    // TODO: Ver por qué no se guarda la relación en la base de datos
-    static hasMany = [platos: Plato]
+    static hasMany = [platos: Plato,]
+
+    Set<Plato> platos = []
+
 
     boolean admiteA(CuponDescuento descuento) {
         descuento.permitirEn(this)

@@ -30,7 +30,7 @@ export default {
     }
   },
   created () {
-    this.cargarMenus()
+    this.cargarPlatos()
     this.cargarMenues()
     this.cargarRestaurantes()
   },
@@ -124,7 +124,7 @@ export default {
           })
         })
     },
-    cargarMenus: async function () {
+    cargarPlatos: async function () {
       fetch(`${this.serverURL}/plato`)
         .then(r => r.json())
         .then(json => {

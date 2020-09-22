@@ -10,6 +10,11 @@ class Plato extends Producto {
     CategoriaPlato categoria;
     String descripcion;
 
+    static belongsTo = Menu
+    static hasMany = [menues: Menu,]
+
+    Set<Menu> menues = []
+
     static constraints = {
         descripcion nullable: true
     }

@@ -9,4 +9,5 @@ json {
 	nombre menu.nombre
 	precio menu.precio
 	restaurant tmpl.'/restaurant/restaurant'(menu.restaurant)
+	platos tmpl.'/plato/plato'(menu.platos)
 }

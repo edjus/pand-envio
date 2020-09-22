@@ -23,7 +23,8 @@ class BootStrap {
 
 
         Restaurant restaurante1 = new Restaurant(nombre: "La esquina", productos: null)
-
+        Repartidor repartidor = new Repartidor(nombre: 'Carlitos', dni:123456,restaurant: restaurante1)
+        repartidor.save()
 
         restaurantService.agregarRestaurant(restaurante1)
 
@@ -37,11 +38,9 @@ class BootStrap {
         Restaurant restaurante = new Restaurant(nombre: 'La otra esquina').save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
 
-        Producto plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, descripcion: '15 te hago alto guiso', restaurant: restaurante)
+        Plato plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, descripcion: '15 te hago alto guiso', restaurant: restaurante)
                 .save(failOnError: true)
-        Producto menu = new Menu(nombre: 'Viernes', precio: 400, restaurant: restaurante)
-                .addToPlatos(plato)
-                .save(failOnError: true)
+
         ModalidadEntrega modalidadEntrega = new ModalidadParaRetirar()
                 .save(failOnError: true)
         Pedido pedido = new Pedido(pepeArgento, modalidadEntrega, restaurante)
@@ -50,6 +49,17 @@ class BootStrap {
         CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: pepeArgento, porcentaje: 10, codigo: 'ABC', fecha: new Date(), restaurant: restaurante)
                 .save(failOnError: true)
 
+        Plato.withTransaction {
+            Producto menu = new Menu(nombre: 'Viernes', precio: 400, restaurant: restaurante).save()
+            plato.menues << menu
+            menu.platos << plato
+            Producto menu2 = new Menu(nombre:'Ejecutivo', precio: 500, restaurant: restaurante1).save()
+            tortilla.menues << menu2
+            menu2.platos << tortilla
+            sanguche.menues << menu2
+            menu2.platos << sanguche
+            return null
+        }
     }
     def destroy = {
     }

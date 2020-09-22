@@ -21,11 +21,20 @@
             </div>
             <div class='form-group'>
               <label for='restaurant' class='col-form-label'>Restaurant:</label>
-              <campo-select v-model="menu.restaurant" :field="'un restaurant'" :values="restaurantes" id="restaurant" :elegido="menu.restaurant ? menu.restaurant.id : null"></campo-select>
+              <campo-select v-model="menu.restaurant" :field="'un restaurant'" @input="filtrarPlatosPorRestaurante" :values="restaurantes" id="restaurant" :elegido="menu.restaurant ? menu.restaurant.id : null"></campo-select>
             </div>
             <div class='form-group'>
               <label for='platos' class='col-form-label'>Platos:</label>
-              <multiselect id="platos" v-model="value" tag-placeholder="Agregar plato" placeholder="Buscar or agregar un plato" label="name" track-by="code" :options="options" :multiple="true" :taggable="true" @tag="agregarPlato"></multiselect>
+              <multiselect id="platos"
+                           v-model="menu.platos"
+                           tag-placeholder="Agregar plato"
+                           placeholder="Buscar or agregar un plato"
+                           label="nombre"
+                           track-by="id"
+                           :options="platosDelRestaurante"
+                           :multiple="true"
+                           :taggable="true"
+                           @tag="agregarPlato"></multiselect>
             </div>
           </form>
         </div>
@@ -49,14 +58,8 @@ export default {
   components: {CampoSelect, Multiselect},
   data: function () {
     return {
-      value: [
-        { name: 'Javascript', code: 'js' }
-      ],
-      options: [
-        { name: 'Vue.js', code: 'vu' },
-        { name: 'Javascript', code: 'js' },
-        { name: 'Open Source', code: 'os' }
-      ] }
+      platosDelRestaurante: []
+    }
   },
   props: [
     'menu',
@@ -71,7 +74,25 @@ export default {
       return 'Nuevo Menu'
     }
   },
+  created () {
+    this.inicializarPlatos()
+  },
+  watch: {
+    menu: function (val) {
+      this.inicializarPlatos()
+    }
+  },
   methods: {
+    inicializarPlatos () {
+      if (this.menu.restaurant) {
+        this.filtrarPlatosPorRestaurante(this.menu.restaurant.id)
+      }else {
+        this.platosDelRestaurante = []
+      }
+    },
+    filtrarPlatosPorRestaurante (restauranteId) {
+      this.platosDelRestaurante = this.platos.filter(plato => plato.restaurant.id === restauranteId)
+    },
     agregarPlato (newTag) {
       const tag = {
         name: newTag,

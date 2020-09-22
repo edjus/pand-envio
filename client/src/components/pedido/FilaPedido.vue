@@ -7,11 +7,12 @@
     <td>{{ item.modalidad}}</td>
     <td>{{ '$' + item.precio}}</td>
     <td>{{ item.restaurant.nombre }}</td>
-    <td><star-rating :star-size="20" v-model="rating" @rating-selected="setRating" :read-only="soloLectura"></star-rating></td>
+    <td><star-rating :star-size="20" v-model="rating" @rating-selected="setRating" :read-only="puntuacionSoloLectura"></star-rating></td>
     <td>
-      <button class='btn btn-primary' v-on:click="avanzar"><i class='fas fa-arrow-circle-right'></i> Avanzar estado</button>
+      <button class='btn btn-primary' v-on:click="avanzar" v-if="mostrarAvanzarEstado"><i class='fas fa-arrow-circle-right'></i> Avanzar estado</button>
       <button class='btn btn-danger' v-on:click="cancelar"><i class='fas fa-window-close'></i> Cancelar</button>
-      <button class="btn btn-warning" v-on:click="noEntregado" :disabled="soloLectura"><i class="fas fa-ghost"></i> No entregado</button>
+      <button class="btn btn-success" v-on:click="recibido"  v-if="mostrarRecibido"><i class="fas fa-user-check"></i> Recibido</button>
+      <button class="btn btn-warning" v-on:click="noEntregado" v-if="mostrarNoEntregado"><i class="fas fa-ghost"></i> No entregado</button>
     </td>
   </tr>
 </template>
@@ -29,7 +30,10 @@ export default {
   data: function () {
     return {
       rating: null,
-      soloLectura: !esRol(['admin', 'cliente'])
+      mostrarAvanzarEstado: esRol(['admin', 'duenio']),
+      mostrarRecibido: esRol(['cliente']),
+      mostrarNoEntregado: esRol(['admin', 'cliente']),
+      puntuacionSoloLectura: !esRol(['admin', 'cliente'])
     }
   },
   async created () {
@@ -48,6 +52,9 @@ export default {
     },
     noEntregado: function () {
       this.$emit('noEntregado', this.item)
+    },
+    recibido: function () {
+      this.$emit('avanzarPedido', this.item)
     }
   }
 
