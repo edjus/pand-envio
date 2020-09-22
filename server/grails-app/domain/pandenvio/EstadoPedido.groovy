@@ -138,6 +138,7 @@ class EstadoEntregado extends EstadoPedido {
     @Override
     def iniciarPara(Pedido pedido) {
         pedido.modalidadEntrega.entregarPedido()
+        CreadorDeCupones.instance.crearPosibleCupon(pedido.cliente, pedido.restaurant)
     }
 
 }

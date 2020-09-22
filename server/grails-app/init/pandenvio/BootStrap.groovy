@@ -50,6 +50,9 @@ class BootStrap {
         CuponDescuento cupon = new CuponDescuentoPorcentual(cliente: pepeArgento, porcentaje: 10, codigo: 'ABC', fecha: new Date(), restaurant: restaurante)
                 .save(failOnError: true)
 
+        pepeArgento.addToCupones(cupon)
+        pepeArgento.save(failOnError: true)
+        assert  pepeArgento.cupones.size() == 1
     }
     def destroy = {
     }

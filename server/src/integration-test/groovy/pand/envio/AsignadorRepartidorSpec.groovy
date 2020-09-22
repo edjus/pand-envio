@@ -3,20 +3,8 @@ package pand.envio
 import grails.gorm.transactions.Rollback
 import grails.testing.mixin.integration.Integration
 import pandenvio.AsignadorRepartidor
-import pandenvio.CategoriaPlato
-import pandenvio.Cliente
-import pandenvio.ClimaNoLluvioso
-import pandenvio.EstadoEnEspera
-import pandenvio.EstadoListo
-import pandenvio.EstadoPedido
-import pandenvio.ModalidadEntrega
-import pandenvio.ModalidadParaLlevar
-import pandenvio.Pedido
-import pandenvio.Plato
-import pandenvio.Producto
 import pandenvio.Repartidor
 import pandenvio.Restaurant
-import pandenvio.Ubicacion
 import spock.lang.Specification
 
 @Integration
