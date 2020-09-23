@@ -35,7 +35,7 @@ class MenuController {
                 menuService.agregarMenu(menu)
                 respond([menu:menu], status: CREATED)
             } catch (DatosNoPuedenSerNulosException error) {
-                render status:BAD_REQUEST, message: error.message
+                render(text: error.message, status: BAD_REQUEST)
             }
         }
     }
@@ -51,7 +51,7 @@ class MenuController {
                 respond(menus, status: OK)
             }
         } catch (RuntimeException e) {
-            respond e.message, status: BAD_REQUEST
+            render(text: e.message, status: BAD_REQUEST)
         }
     }
 }

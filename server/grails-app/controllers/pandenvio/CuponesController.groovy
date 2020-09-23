@@ -33,7 +33,7 @@ class CuponesController {
                 cuponesService.agregarCupon(cupon)
                 respond([cupon:cupon], status: CREATED)
             } catch (DatosNoPuedenSerNulosException error) {
-                render status:BAD_REQUEST, message: error.message
+                render(text: error.message, status: BAD_REQUEST)
             }
         }
     }

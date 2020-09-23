@@ -40,7 +40,7 @@ class RestaurantController {
                 restaurantService.agregarRestaurant(restaurant)
                 respond([restaurant:restaurant], status: CREATED)
             } catch (DatosNoPuedenSerNulosException error) {
-                render status:BAD_REQUEST, message: error.message
+                render(text: error.message, status: BAD_REQUEST)
             }
         }
     }

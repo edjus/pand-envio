@@ -33,7 +33,7 @@ class ClienteController {
                 clienteService.agregarCliente(cliente)
                 respond([cliente:cliente], status: CREATED)
             } catch (DatosNoPuedenSerNulosException error) {
-                render status:BAD_REQUEST, message: error.message
+                render(text: error.message, status: BAD_REQUEST)
             }
         }
     }

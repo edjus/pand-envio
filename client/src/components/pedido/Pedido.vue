@@ -49,7 +49,7 @@ export default {
           type: 'error',
           duration: 5000,
           title: 'No se pudo puntuar el pedido',
-          text: error
+          text: error.response.data
         })
       }
     },
@@ -67,7 +67,7 @@ export default {
           type: 'error',
           duration: 5000,
           title: 'No se puede denunciar el pedido como no entregado',
-          text: error
+          text: error.response.data
         })
       }
     },

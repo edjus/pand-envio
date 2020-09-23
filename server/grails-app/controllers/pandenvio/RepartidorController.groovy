@@ -38,7 +38,7 @@ class RepartidorController {
                 repartidorService.agregarRepartidor(repartidor)
                 respond([repartidor:repartidor], status: CREATED)
             } catch (DatosNoPuedenSerNulosException error) {
-                render status:BAD_REQUEST, message: error.message
+                render(text: error.message, status: BAD_REQUEST)
             }
         }
     }
@@ -51,7 +51,7 @@ class RepartidorController {
             respond([sueldo: sueldoDeRepartidor], status: OK)
             } 
         catch (RuntimeException e) {
-            respond ([e.message], status: BAD_REQUEST)
+            render(text: e.message, status: BAD_REQUEST)
         }
     }
 
@@ -66,7 +66,7 @@ class RepartidorController {
                 respond(listaDePedidos, status: OK)
              }
         } catch (RuntimeException e) {
-            respond ([e.message], status: BAD_REQUEST)
+            render(text: e.message, status: BAD_REQUEST)
         }
     }
 
@@ -81,7 +81,7 @@ class RepartidorController {
                 respond(repartidores, status: OK)
             }
         } catch (RuntimeException e) {
-            respond ([e.message], status: BAD_REQUEST)
+            render(text: e.message, status: BAD_REQUEST)
         }
     }
 

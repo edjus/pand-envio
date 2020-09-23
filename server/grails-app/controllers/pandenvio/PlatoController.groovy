@@ -36,7 +36,7 @@ class PlatoController {
                 platoService.agregarPlato(plato)
                 respond([plato:plato], status: CREATED)
             } catch (DatosNoPuedenSerNulosException error) {
-                render status:BAD_REQUEST, message: error.message
+                render(text: error.message, status: BAD_REQUEST)
             }
         }
     }
@@ -53,7 +53,7 @@ class PlatoController {
                 respond(platos, status: OK)
             }
         } catch (RuntimeException e) {
-            respond e.message, status: BAD_REQUEST
+            render(text: e.message, status: BAD_REQUEST)
         }
     }
 

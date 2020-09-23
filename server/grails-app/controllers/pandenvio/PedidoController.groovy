@@ -41,7 +41,7 @@ class PedidoController {
             Pedido pedido = pedidoService.crearPedido(clienteId, modalidad, resturanteId)
             respond([pedido: pedido], status: OK)
         } catch (RuntimeException e) {
-            respond ([e.message], status: BAD_REQUEST)
+            render(text: e.message, status: BAD_REQUEST)
         }
     }
 
@@ -67,7 +67,7 @@ class PedidoController {
             Pedido pedido = pedidoService.pedidoNoEntregado(pedidoId)
             respond([pedido: pedido], status: OK)
         } catch (RuntimeException e) {
-            respond ([e.message], status: BAD_REQUEST)
+            render(text: e.message, status: BAD_REQUEST)
         }
     }
 
@@ -82,7 +82,7 @@ class PedidoController {
                 respond(pedidos, status: OK)
             }
         } catch (RuntimeException e) {
-            respond ([e.message], status: BAD_REQUEST)
+            render(text: e.message, status: BAD_REQUEST)
         }
     }
 
@@ -97,7 +97,7 @@ class PedidoController {
                 respond(pedidos, status: OK)
                 }
             }  catch (RuntimeException e) {
-            respond ([e.message], status: BAD_REQUEST)
+            render(text: e.message, status: BAD_REQUEST)
         }
     }
 
@@ -116,7 +116,7 @@ class PedidoController {
             Pedido pedido = pedidoService.agregarProducto(pedidoId, productoId, cantidad)
             respond([pedido: pedido], status: OK)
         } catch (RuntimeException e) {
-            respond ([e.message], status: BAD_REQUEST)
+            render(text: e.message, status: BAD_REQUEST)
         }
     }
 
@@ -129,7 +129,7 @@ class PedidoController {
                 respond([pedido: pedidos.first()], status: OK)
             }
         } catch (RuntimeException e) {
-            respond ([e.message], status: BAD_REQUEST)
+            render(text: e.message, status: BAD_REQUEST)
         }
     }
 
@@ -140,7 +140,7 @@ class PedidoController {
             Pedido pedido = pedidoService.cambiarRango(pedidoId)
             respond([pedido: pedido], status: OK)
         } catch (RuntimeException e) {
-            respond ([e.message], status: BAD_REQUEST)
+            render(text: e.message, status: BAD_REQUEST)
         }
     }
 
@@ -150,7 +150,7 @@ class PedidoController {
             Pedido pedido = pedidoService.cambiarModalidad(pedidoId)
             respond([pedido: pedido], status: OK)
         } catch (RuntimeException e) {
-            respond ([e.message], status: BAD_REQUEST)
+           render(text: e.message, status: BAD_REQUEST)
         }
     }
 
@@ -161,7 +161,7 @@ class PedidoController {
             Puntuacion puntuacion = pedidoService.calificarPedido(pedidoId,calificacion)
             respond([puntuacion: puntuacion], status: OK)
             } catch (RuntimeException e) {
-            respond ([e.message], status: BAD_REQUEST)
+            render(status: BAD_REQUEST, text: e.message)
         }
     }
 
@@ -171,7 +171,7 @@ class PedidoController {
             Puntuacion puntuacion = pedidoService.obtenerPuntuacion(pedidoId)
             respond([puntuacion: puntuacion], status: OK)
             } catch (RuntimeException e) {
-            respond ([e.message], status: BAD_REQUEST)
+            render(text: e.message, status: BAD_REQUEST)
         }
     }
 
@@ -182,7 +182,7 @@ class PedidoController {
             Pedido pedido = pedidoService.actualizarProducto(pedidoId, productoId, cantidad)
             respond([pedido:  pedido], status: OK)
         } catch (RuntimeException e) {
-            respond ([e.message], status: BAD_REQUEST)
+            render(text: e.message, status: BAD_REQUEST)
         }
     }
 
@@ -192,7 +192,7 @@ class PedidoController {
             Pedido pedido = pedidoService.removerProducto(pedidoId, productoId)
             respond([pedido: pedido], status: OK)
         } catch (RuntimeException e) {
-            respond ([e.message], status: BAD_REQUEST)
+            render(text: e.message, status: BAD_REQUEST)
         }
     }
 
@@ -203,7 +203,7 @@ class PedidoController {
             Pedido pedido = pedidoService.agregarCupon(pedidoId, codigo)
             respond([pedido: pedido], status: OK)
         } catch (RuntimeException e) {
-            respond ([e.message], status: BAD_REQUEST)
+            render(text: e.message, status: BAD_REQUEST)
         }
     }
 
