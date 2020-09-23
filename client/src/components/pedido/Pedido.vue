@@ -11,7 +11,7 @@
 import TablaPedido from './TablaPedido'
 import {getRestauranteIdLogueado, idRepartidorActual, idUsuarioActual} from '../../services/AutenticacionService'
 import {
-  actualizarPuntuacionPedido,
+  actualizarPuntuacionPedido, avanzarPedido,
   cargarPedidos, cargarPedidosRepartidor,
   cargarPedidosRestaurant,
   denunciarPedidoNoEntregado
@@ -99,33 +99,24 @@ export default {
           console.error(error)
         })
     },
-    avanzarPedido: function (pedido) {
-      fetch(`${this.serverURL}/pedido/${pedido.id}/siguienteEstado`, {
-        method: 'PUT',
-        headers: {'Content-Type': 'application/json'}
-      }).then(r => r.json())
-        .then(json => {
-          if (!(json._embedded && json._embedded.errors)) {
-            this.$notify({
-              group: 'notifications',
-              type: 'success',
-              title: 'El pedido avanzó de estado exitosamente'
-            })
-            this.actualizarListadoPedidos(json.pedido)
-          } else {
-            console.error('Error avanzando pedido: ' + json._embedded.errors[0])
-            this.$notify({
-              group: 'notifications',
-              type: 'error',
-              duration: 5000,
-              title: 'No se puede avanzar el pedido',
-              text: json._embedded.errors[0]
-            })
-          }
+    avanzarPedido: async function (pedido) {
+      try {
+        const response = await avanzarPedido(pedido.id)
+        this.$notify({
+          group: 'notifications',
+          type: 'success',
+          title: 'El pedido avanzó de estado exitosamente'
         })
-        .catch(error => {
-          console.error(error)
+        this.actualizarListadoPedidos(response.pedido)
+      } catch (error) {
+        this.$notify({
+          group: 'notifications',
+          type: 'error',
+          duration: 5000,
+          title: 'No se pudo avanzar el pedido',
+          text: error.response.data
         })
+      }
     },
     actualizarListadoPedidos: function (pedido) {
       const index = this.pedidos.findIndex(x => x.id === pedido.id)

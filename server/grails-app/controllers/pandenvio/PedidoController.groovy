@@ -47,8 +47,12 @@ class PedidoController {
 
     @Transactional
     def actualizarEstado(Long pedidoId) {
+        try {
             Pedido pedido = pedidoService.siguienteEstadoPedido(pedidoId)
             respond([pedido: pedido], status: OK)
+        } catch (RuntimeException e) {
+            render(text: e.message, status: BAD_REQUEST)
+        }
     }
 
     @Transactional
@@ -57,7 +61,7 @@ class PedidoController {
             Pedido pedido = pedidoService.cancelar(pedidoId)
             respond([pedido: pedido], status: OK)
         } catch (RuntimeException e) {
-            respond ([e.message], status: BAD_REQUEST)
+            render(text: e.message, status: BAD_REQUEST)
         }
     }
 
