@@ -14,6 +14,10 @@ abstract class EstadoPedido {
     def iniciarPara(Pedido pedido) {}
 
     boolean puedeActualizarProductos() { false }
+
+    EstadoPedido noEntregar() {
+        throw new NoSePuedeMarcarComoNoEntregadoException("El pedido esta siendo procesado, todavia no fue marcado como entregado para marcar esta accion")
+    }
 }
 class EstadoEnArmado extends EstadoPedido {
     EstadoEnArmado() {
@@ -141,6 +145,10 @@ class EstadoEntregado extends EstadoPedido {
         CreadorDeCupones.instance.crearPosibleCupon(pedido.cliente, pedido.restaurant)
     }
 
+    @Override
+    EstadoPedido noEntregar() {
+        new EstadoNoEntregado()
+    }
 }
 
 class EstadoNoEntregado extends EstadoPedido {

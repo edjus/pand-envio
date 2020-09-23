@@ -39,4 +39,12 @@ class ModalidadParaRetirarSpec extends Specification implements DomainUnitTest<M
         !modalidad.hayRepartidor()
         repartidor.disponible
     }
+
+    void "test no entregar lanza excepción"() {
+        when:
+        def modalidad = new ModalidadParaRetirar()
+        modalidad.noEntregar(new EstadoEntregado())
+        then:
+        thrown(NoSePuedeMarcarComoNoEntregadoException)
+    }
 }

@@ -63,4 +63,9 @@ class ModalidadParaLlevar  extends ModalidadEntrega {
         this.repartidor?.disponible = true
         this.repartidor?.save(failOnError: true)
     }
+
+    @Override
+    EstadoPedido noEntregar(EstadoPedido estadoPedido) {
+        estadoPedido.noEntregar()
+    }
 }

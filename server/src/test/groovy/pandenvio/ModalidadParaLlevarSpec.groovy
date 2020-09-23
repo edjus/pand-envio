@@ -52,4 +52,20 @@ class ModalidadParaLlevarSpec extends Specification implements DomainUnitTest<Mo
         modalidad.hayRepartidor()
         !repartidor.disponible
     }
+
+    void "test no entregar correcto si el estado es entregado"() {
+        when:
+        def modalidad = new ModalidadParaLlevar()
+        def estado = modalidad.noEntregar(new EstadoEntregado())
+        then:
+        estado.class == EstadoNoEntregado
+    }
+
+    void "test no entregar lanza excepción si el estado no es entregado"() {
+        when:
+        def modalidad = new ModalidadParaLlevar()
+        modalidad.noEntregar(new EstadoEnPreparacion())
+        then:
+        thrown(NoSePuedeMarcarComoNoEntregadoException)
+    }
 }

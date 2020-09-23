@@ -35,6 +35,14 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         estadoPedido.puedeActualizarProductos()
     }
 
+    void "test no entregar lanza excepción en estado 'en_armado'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoEnArmado()
+        estadoPedido.noEntregar()
+        then:
+        thrown(NoSePuedeMarcarComoNoEntregadoException)
+    }
+
     void "test estado recibido es correcto"() {
         when:
             EstadoPedido estadoPedido = new EstadoRecibido()
@@ -62,6 +70,14 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         EstadoPedido estadoPedido = new EstadoRecibido()
         then:
         !estadoPedido.puedeActualizarProductos()
+    }
+
+    void "test no entregar lanza excepción en estado 'recibido'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoRecibido()
+        estadoPedido.noEntregar()
+        then:
+        thrown(NoSePuedeMarcarComoNoEntregadoException)
     }
 
     void "test estado en preparacion es correcto"() {
@@ -93,6 +109,14 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         !estadoPedido.puedeActualizarProductos()
     }
 
+    void "test no entregar lanza excepción en estado 'en preparacion'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoEnPreparacion()
+        estadoPedido.noEntregar()
+        then:
+        thrown(NoSePuedeMarcarComoNoEntregadoException)
+    }
+
     void "test estado listo es correcto"() {
         when:
             EstadoPedido estadoPedido = new EstadoListo()
@@ -121,6 +145,14 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         EstadoPedido estadoPedido = new EstadoListo()
         then:
         !estadoPedido.puedeActualizarProductos()
+    }
+
+    void "test no entregar lanza excepción en estado 'listo'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoListo()
+        estadoPedido.noEntregar()
+        then:
+        thrown(NoSePuedeMarcarComoNoEntregadoException)
     }
 
     void "test estado siguiente a 'listo' es 'en entrega' si la modalidad es para llevar"() {
@@ -161,6 +193,14 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         !estadoPedido.puedeActualizarProductos()
     }
 
+    void "test no entregar lanza excepción en estado 'en espera'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoEnEspera()
+        estadoPedido.noEntregar()
+        then:
+        thrown(NoSePuedeMarcarComoNoEntregadoException)
+    }
+
     void "test estado 'en entrega' es correcto"() {
         when:
         EstadoPedido estadoPedido = new EstadoEnEntrega()
@@ -191,6 +231,15 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         !estadoPedido.puedeActualizarProductos()
     }
 
+    void "test no entregar lanza excepción en estado 'en entrega'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoEnEntrega()
+        estadoPedido.noEntregar()
+        then:
+        thrown(NoSePuedeMarcarComoNoEntregadoException)
+    }
+
+
     void "test estado entregado es correcto"() {
         when:
         EstadoPedido estadoPedido = new EstadoEntregado()
@@ -220,6 +269,14 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         EstadoPedido estadoPedido = new EstadoEntregado()
         then:
         !estadoPedido.puedeActualizarProductos()
+    }
+
+    void "test no entregar correcto en estado 'entregado'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoEntregado()
+        def estado = estadoPedido.noEntregar()
+        then:
+        estado.class == EstadoNoEntregado
     }
 
     void "test estado no entregado es correcto"() {
@@ -253,6 +310,15 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         !estadoPedido.puedeActualizarProductos()
     }
 
+    void "test no entregar lanza excepción en estado 'no entregado'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoNoEntregado()
+        estadoPedido.noEntregar()
+        then:
+        thrown(NoSePuedeMarcarComoNoEntregadoException)
+    }
+
+
     void "test estado cancelado es correcto"() {
         when:
         EstadoPedido estadoPedido = new EstadoCancelado()
@@ -282,4 +348,13 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         then:
         !estadoPedido.puedeActualizarProductos()
     }
+
+    void "test no entregar lanza excepción en estado 'cancelado'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoCancelado()
+        estadoPedido.noEntregar()
+        then:
+        thrown(NoSePuedeMarcarComoNoEntregadoException)
+    }
+
 }

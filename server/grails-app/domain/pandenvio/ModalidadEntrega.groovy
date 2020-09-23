@@ -24,4 +24,6 @@ abstract class ModalidadEntrega {
     abstract void asignarRepartidor(Repartidor repartidor)
 
     abstract void entregarPedido()
+
+    abstract EstadoPedido noEntregar(EstadoPedido estadoPedido)
 }

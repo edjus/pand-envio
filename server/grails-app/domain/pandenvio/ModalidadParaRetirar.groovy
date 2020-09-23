@@ -33,4 +33,9 @@ class ModalidadParaRetirar extends ModalidadEntrega {
     @Override
     void entregarPedido() {
     }
+
+    @Override
+    EstadoPedido noEntregar(EstadoPedido estadoPedido) {
+        throw new NoSePuedeMarcarComoNoEntregadoException("El pedido no puede marcarse como no entregado si es para retirar")
+    }
 }
