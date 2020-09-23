@@ -620,7 +620,6 @@ class PedidoSpec extends Specification {
         pedido.save(failOnError: true)
         !repartidor.disponible
         repartidor.listaDePedidos.size() == 1
-        repartidor.dirty
         pedido2.siguienteEstado() // En Espera
         Repartidor.count == 1
         pedido2.estado.class == EstadoEnEspera
