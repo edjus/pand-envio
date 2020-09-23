@@ -11,7 +11,7 @@
     <td>
       <button class='btn btn-primary' v-on:click="avanzar" v-if="mostrarAvanzarEstado"><i class='fas fa-arrow-circle-right'></i> Avanzar estado</button>
       <button class='btn btn-danger' v-on:click="cancelar"><i class='fas fa-window-close'></i> Cancelar</button>
-      <button class="btn btn-success" v-on:click="recibido"  v-if="mostrarRecibido"><i class="fas fa-user-check"></i> Recibido</button>
+      <button class="btn btn-success" v-on:click="entregado"  v-if="mostrarEntregado"><i class="fas fa-user-check"></i> Entregado</button>
       <button class="btn btn-warning" v-on:click="noEntregado" v-if="mostrarNoEntregado"><i class="fas fa-ghost"></i> No entregado</button>
     </td>
   </tr>
@@ -31,7 +31,7 @@ export default {
     return {
       rating: null,
       mostrarAvanzarEstado: esRol(['admin', 'duenio']),
-      mostrarRecibido: esRol(['cliente']) && this.item.estado === 'en_entrega',
+      mostrarEntregado: esRol(['repartidor']) && this.item.estado === 'en_entrega',
       mostrarNoEntregado: esRol(['admin', 'cliente']),
       puntuacionSoloLectura: !esRol(['admin', 'cliente'])
     }
@@ -53,7 +53,7 @@ export default {
     noEntregado: function () {
       this.$emit('noEntregado', this.item)
     },
-    recibido: function () {
+    entregado: function () {
       this.$emit('avanzarPedido', this.item)
     }
   }

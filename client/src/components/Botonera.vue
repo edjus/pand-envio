@@ -22,7 +22,7 @@
             <i class="fas fa-layer-group mr-2"></i> Menues
           </router-link>
         </li>
-        <li class="nav-item" v-if="esRol(['admin','duenio', 'cliente'])">
+        <li class="nav-item" v-if="esRol(['admin','duenio', 'cliente', 'repartidor'])">
           <router-link to="/pedidos" class="nav-link" v-bind:class="getClass('/pedidos')">
             <i class="fas fa-shopping-cart"></i> Pedidos
           </router-link>

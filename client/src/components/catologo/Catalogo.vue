@@ -7,12 +7,20 @@
         <card-producto :producto="producto" @agregarProducto="agregarProducto"></card-producto>
       </li>
     </ul>
+    <hr noshade class="mt-4">
+    <h4 class="mt-4 mb-3">Menues</h4>
+    <ul :style="gridStyle" class="card-list">
+      <li v-for="(menu, index) in menues" :key="index" class="card-item">
+        <card-producto :producto="menu" @agregarProducto="agregarProducto"></card-producto>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
 import * as AppService from '../../services/AppService'
 import CardProducto from './CardProducto'
+import {cargarMenu} from '../../services/MenuService'
 
 export default {
   name: 'Catologo',
@@ -20,6 +28,7 @@ export default {
   data () {
     return {
       productos: [],
+      menues: [],
       numeroDeColumnas: 3,
       serverURL: process.env.SERVER_URL
     }
@@ -38,6 +47,7 @@ export default {
     async obtenerProductos () {
       const platos = await AppService.obtenerPlatos()
       this.productos = platos
+      this.menues = await cargarMenu()
     },
 
     async agregarProducto (producto) {

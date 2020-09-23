@@ -25,6 +25,11 @@ const cargarPedidosCliente = async (clienteId) => {
   return response.data
 }
 
+const cargarPedidosRepartidor = async (repartidorId) => {
+  const response = await axios.get(`${SERVER_URL}/repartidor/pedidos/${repartidorId}`)
+  return response.data
+}
+
 const cargarPedidos = async () => {
   const response = await axios.get(`${SERVER_URL}/pedido`)
   return response.data
@@ -36,5 +41,5 @@ const denunciarPedidoNoEntregado = async (pedidoId) => {
 }
 
 export {
-  actualizarPuntuacionPedido, obtenerPuntuacionPedido, cargarPedidosRestaurant, cargarPedidosCliente, cargarPedidos, denunciarPedidoNoEntregado
+  actualizarPuntuacionPedido, obtenerPuntuacionPedido, cargarPedidosRestaurant, cargarPedidosCliente, cargarPedidos, denunciarPedidoNoEntregado, cargarPedidosRepartidor
 }

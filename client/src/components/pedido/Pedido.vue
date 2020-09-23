@@ -9,10 +9,10 @@
 
 <script>
 import TablaPedido from './TablaPedido'
-import {getRestauranteIdLogueado, idUsuarioActual} from '../../services/AutenticacionService'
+import {getRestauranteIdLogueado, idRepartidorActual, idUsuarioActual} from '../../services/AutenticacionService'
 import {
   actualizarPuntuacionPedido,
-  cargarPedidos,
+  cargarPedidos, cargarPedidosRepartidor,
   cargarPedidosRestaurant,
   denunciarPedidoNoEntregado
 } from '../../services/PedidoService'
@@ -140,11 +140,14 @@ export default {
       this.clearNotifications()
       const restauranteId = getRestauranteIdLogueado()
       const clienteId = idUsuarioActual()
+      const repartidorId = idRepartidorActual()
       try {
         if (restauranteId) {
           this.pedidos = await cargarPedidosRestaurant(restauranteId)
         } else if (clienteId) {
           this.pedidos = await cargarPedidosRestaurant(clienteId)
+        } else if (repartidorId) {
+          this.pedidos = await cargarPedidosRepartidor(repartidorId)
         } else {
           this.pedidos = await cargarPedidos()
         }
