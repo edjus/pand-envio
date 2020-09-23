@@ -12,7 +12,16 @@ const cargarMenu = async () => {
   return response.data
 }
 
+const guardarMenu = async (menu) => {
+  if (menu.id === 0) {
+    delete menu.id
+  }
+  const response = await axios.post(`${SERVER_URL}/menu`, menu)
+  return response.data
+}
+
 export {
   cargarMenuRestaurant,
-  cargarMenu
+  cargarMenu,
+  guardarMenu
 }

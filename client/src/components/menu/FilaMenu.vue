@@ -18,7 +18,7 @@ export default {
   computed: {
     getPlatos () {
       if (this.item.platos.length === 0) {
-        return 'no hay platos'
+        return '*** no hay platos ***'
       }
       return this.item.platos.map(plato => plato.nombre).join(' | ')
     }

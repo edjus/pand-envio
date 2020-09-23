@@ -36,6 +36,8 @@ class BootStrap {
         platoService.agregarPlato(acelga)
 
         Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: 'Av. siempre viva 123').save(failOnError: true)
+        Repartidor repartidor2 = new Repartidor(nombre: 'Pedrito', dni:455667,restaurant: restaurante)
+        repartidor2.save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
 
         Plato plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, descripcion: '15 te hago alto guiso', restaurant: restaurante)

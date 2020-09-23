@@ -17,7 +17,7 @@
 import TablaMenu from './TablaMenu'
 import FormularioMenu from './FormularioMenu'
 import {getRestauranteIdLogueado} from '../../services/AutenticacionService'
-import {cargarMenu, cargarMenuRestaurant} from '../../services/MenuService'
+import {cargarMenu, cargarMenuRestaurant, guardarMenu} from '../../services/MenuService'
 import {cargarRestaurantes} from '../../services/RestaurantService'
 
 export default {
@@ -67,39 +67,25 @@ export default {
         this.menues.push(menu)
       }
     },
-    guardarMenu: function (menu) {
+    guardarMenu: async function (menu) {
       this.clearNotifications()
-      if (menu.id === 0) {
-        delete menu.id
+      try {
+        const response = await guardarMenu(menu)
+        this.$notify({
+          group: 'notifications',
+          type: 'success',
+          title: 'Menu guardado exitosamente'
+        })
+        this.actualizarListadoMenus(response.menu)
+      } catch (error) {
+        this.$notify({
+          group: 'notifications',
+          type: 'error',
+          duration: 5000,
+          title: 'No se puede guardar el menu',
+          text: error.response.data
+        })
       }
-      fetch(`${this.serverURL}/menu`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(menu)
-      }).then(r => r.json())
-        .then(json => {
-          if (!(json._embedded && json._embedded.errors)) {
-            this.$notify({
-              group: 'notifications',
-              type: 'success',
-              title: 'Menu guardado exitosamente'
-            })
-            this.actualizarListadoMenus(json.menu)
-            this.menuActual = this.nuevoMenu()
-          } else {
-            console.error('Error cargando menues: ' + json._embedded.errors[0])
-            this.$notify({
-              group: 'notifications',
-              type: 'error',
-              duration: 5000,
-              title: 'No se puede guardar el menu',
-              text: json._embedded.errors[0]
-            })
-          }
-        })
-        .catch(error => {
-          console.error(error)
-        })
     },
     abrirFormulario: function () {
       this.menuActual = this.nuevoMenu()

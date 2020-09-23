@@ -9,11 +9,7 @@ const cargarRestaurantes = async (restauranteId) => {
       url += '/' + restauranteId
     }
     const response = await axios.get(url)
-
-    console.log(response)
     if (restauranteId) {
-      console.log(response)
-
       return [response.data]
     }
     return response.data

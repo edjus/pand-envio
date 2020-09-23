@@ -21,7 +21,7 @@ const idUsuarioActual = () => {
 
 const idRepartidorActual = () => {
   if (esRol('repartidor')) {
-    return 2
+    return 1
   }
 }
 
