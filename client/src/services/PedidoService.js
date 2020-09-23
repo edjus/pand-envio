@@ -45,6 +45,11 @@ const avanzarPedido = async (pedidoId) => {
   return response.data
 }
 
+const cancelarPedido = async (pedidoId) => {
+  const response = await axios.put(`${SERVER_URL}/pedido/${pedidoId}/cancelar`)
+  return response.data
+}
+
 export {
-  actualizarPuntuacionPedido, avanzarPedido, obtenerPuntuacionPedido, cargarPedidosRestaurant, cargarPedidosCliente, cargarPedidos, denunciarPedidoNoEntregado, cargarPedidosRepartidor
+  actualizarPuntuacionPedido, cancelarPedido, avanzarPedido, obtenerPuntuacionPedido, cargarPedidosRestaurant, cargarPedidosCliente, cargarPedidos, denunciarPedidoNoEntregado, cargarPedidosRepartidor
 }

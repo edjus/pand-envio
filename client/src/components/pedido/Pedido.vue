@@ -11,7 +11,7 @@
 import TablaPedido from './TablaPedido'
 import {getRestauranteIdLogueado, idRepartidorActual, idUsuarioActual} from '../../services/AutenticacionService'
 import {
-  actualizarPuntuacionPedido, avanzarPedido,
+  actualizarPuntuacionPedido, avanzarPedido, cancelarPedido,
   cargarPedidos, cargarPedidosRepartidor,
   cargarPedidosRestaurant,
   denunciarPedidoNoEntregado
@@ -71,33 +71,24 @@ export default {
         })
       }
     },
-    cancelarPedido: function (pedido) {
-      fetch(`${this.serverURL}/pedido/${pedido.id}/cancelar`, {
-        method: 'PUT',
-        headers: {'Content-Type': 'application/json'}
-      }).then(r => r.json())
-        .then(json => {
-          if (!(json._embedded && json._embedded.errors)) {
-            this.$notify({
-              group: 'notifications',
-              type: 'success',
-              title: 'El pedido se canceló exitosamente'
-            })
-            this.actualizarListadoPedidos(json.pedido)
-          } else {
-            console.error('Error cancelando pedido: ' + json._embedded.errors[0])
-            this.$notify({
-              group: 'notifications',
-              type: 'error',
-              duration: 5000,
-              title: 'No se puede cancelar el pedido',
-              text: json._embedded.errors[0]
-            })
-          }
+    cancelarPedido: async function (pedido) {
+      try {
+        const response = await cancelarPedido(pedido.id)
+        this.$notify({
+          group: 'notifications',
+          type: 'success',
+          title: 'El pedido se canceló exitosamente'
         })
-        .catch(error => {
-          console.error(error)
+        this.actualizarListadoPedidos(response.pedido)
+      } catch (error) {
+        this.$notify({
+          group: 'notifications',
+          type: 'error',
+          duration: 5000,
+          title: 'No se pudo cancelar el pedido',
+          text: error.response.data
         })
+      }
     },
     avanzarPedido: async function (pedido) {
       try {
@@ -119,12 +110,14 @@ export default {
       }
     },
     actualizarListadoPedidos: function (pedido) {
-      const index = this.pedidos.findIndex(x => x.id === pedido.id)
-      if (index >= 0) {
-        this.pedidos[index] = pedido
-        this.pedidos = this.pedidos.map(r => r)
-      } else {
-        this.pedidos.push(pedido)
+      if (pedido) {
+        const index = this.pedidos.findIndex(x => x.id === pedido.id)
+        if (index >= 0) {
+          this.pedidos[index] = pedido
+          this.pedidos = this.pedidos.map(r => r)
+        } else {
+          this.pedidos.push(pedido)
+        }
       }
     },
     cargarPedidos: async function () {
@@ -148,12 +141,11 @@ export default {
           title: 'Carga de pedidos exitosa'
         })
       } catch (error) {
-        console.error('Error cargando pedidos: ' + error)
         this.$notify({
           group: 'notifications',
           type: 'error',
           title: 'No se pueden cargar pedidos',
-          text: error
+          text: error.response.data
         })
       }
     }
