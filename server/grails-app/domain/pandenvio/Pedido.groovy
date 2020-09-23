@@ -149,9 +149,8 @@ class Pedido {
         if(this.modalidadEntrega.nombre == "para_retirar") {
             throw new NoSePuedeMarcarComoNoEntregadoException("El pedido no puede marcarse como no entregado si es para retirar")
         }
-        
-        if (this.estado.nombre != "en_entrega") {
-            throw new NoSePuedeMarcarComoNoEntregadoException("El pedido no tiene items no se puede cambiar estado")
+        if (this.estado.nombre != "entregado") {
+            throw new NoSePuedeMarcarComoNoEntregadoException("El pedido esta siendo procesado, todavia no fue marcado como entregado para marcar esta accion")
         }
         setEstado(new EstadoNoEntregado())
     }
