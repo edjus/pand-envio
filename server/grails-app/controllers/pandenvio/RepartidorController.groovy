@@ -55,6 +55,20 @@ class RepartidorController {
         }
     }
 
+    @Transactional
+    def obtenerPedidos(Long repartidorId) {
+        try {
+            List<Pedido> listaDePedidos = repartidorService.obtenerPedidos(repartidorId)
+            if(listaDePedidos.size() == 0){
+                respond([],status: OK)
+            }
+            else{
+                respond(listaDePedidos, status: OK)
+             }
+        } catch (RuntimeException e) {
+            respond ([e.message], status: BAD_REQUEST)
+        }
+    }
 
     @Transactional
     def obtenerRepartidoresAsociadosARestaurant(Long restaurantId) {
@@ -67,11 +81,8 @@ class RepartidorController {
                 respond(repartidores, status: OK)
             }
         } catch (RuntimeException e) {
-            respond e.message, status: BAD_REQUEST
+            respond ([e.message], status: BAD_REQUEST)
         }
     }
-
-
-
 
 }
