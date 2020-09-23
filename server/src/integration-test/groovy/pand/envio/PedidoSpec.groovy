@@ -19,7 +19,6 @@ import pandenvio.EstadoEnArmado
 import pandenvio.EstadoListo
 import pandenvio.EstadoPedido
 import pandenvio.FabricaClima
-import pandenvio.Item
 import pandenvio.Menu
 import pandenvio.ModalidadEntrega
 import pandenvio.ModalidadParaLlevar
@@ -507,7 +506,7 @@ class PedidoSpec extends Specification {
         pedido.save(failOnError: true)
         pedido.siguienteEstado()
         when:
-        pedido.setPuntuacionAModalidad(5)
+        pedido.puntuar(5)
         then:
         thrown CalificacionException
     }
@@ -531,7 +530,7 @@ class PedidoSpec extends Specification {
         pedido.siguienteEstado()
         pedido.save(failOnError: true)
         when:
-        pedido.setPuntuacionAModalidad(5)
+        pedido.puntuar(5)
         then:
         pedido.estado.class == EstadoEnEntrega
         pedido.nombreEstado == 'en_entrega'
@@ -558,7 +557,7 @@ class PedidoSpec extends Specification {
         pedido.siguienteEstado()
 
         when:
-        pedido.setPuntuacionAModalidad(5)
+        pedido.puntuar(5)
         then:
         pedido.obtenerEstrellas() == 5
     }
@@ -581,10 +580,10 @@ class PedidoSpec extends Specification {
         pedido.save(failOnError: true)
         pedido.siguienteEstado()
         pedido.siguienteEstado()
-        pedido.setPuntuacionAModalidad(5)
+        pedido.puntuar(5)
 
         when:
-        pedido.setPuntuacionAModalidad(5)
+        pedido.puntuar(5)
         then:
         thrown CalificacionException
     }

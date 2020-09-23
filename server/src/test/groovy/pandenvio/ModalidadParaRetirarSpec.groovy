@@ -47,4 +47,12 @@ class ModalidadParaRetirarSpec extends Specification implements DomainUnitTest<M
         then:
         thrown(NoSePuedeMarcarComoNoEntregadoException)
     }
+
+    void "test puntuar lanza excepción"() {
+        when:
+        def modalidad = new ModalidadParaRetirar()
+        modalidad.agregarPuntuacion()
+        then:
+        thrown(CalificacionException)
+    }
 }

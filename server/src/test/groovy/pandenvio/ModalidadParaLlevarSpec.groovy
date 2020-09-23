@@ -68,4 +68,31 @@ class ModalidadParaLlevarSpec extends Specification implements DomainUnitTest<Mo
         then:
         thrown(NoSePuedeMarcarComoNoEntregadoException)
     }
+
+    void "test puntuar correcto si no tiene puntuación"() {
+        when:
+        def modalidad = new ModalidadParaLlevar()
+        modalidad.agregarPuntuacion(4)
+        then:
+        modalidad.puntuacion.estrellas == 4
+    }
+
+
+    void "test puntuar lanza excepción si ya fue puntuado"() {
+        when:
+        def modalidad = new ModalidadParaLlevar()
+        modalidad.agregarPuntuacion(4)
+        assert modalidad.puntuacion.estrellas == 4
+        modalidad.agregarPuntuacion(1)
+        then:
+        thrown(CalificacionException)
+    }
+
+    void "test puntuar lanza excepción si la puntuacion es inválida"() {
+        when:
+        def modalidad = new ModalidadParaLlevar()
+        modalidad.agregarPuntuacion(8)
+        then:
+        thrown(CalificacionException)
+    }
 }

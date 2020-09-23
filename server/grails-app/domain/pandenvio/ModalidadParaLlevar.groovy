@@ -1,7 +1,7 @@
 package pandenvio
 
 class ModalidadParaLlevar  extends ModalidadEntrega {
-    Puntuacion puntuacion = new Puntuacion()
+    Puntuacion puntuacion
 
     Repartidor repartidor
 
@@ -27,7 +27,12 @@ class ModalidadParaLlevar  extends ModalidadEntrega {
         this.puntuacion != null && this.puntuacion.estrellas != null
     }
 
+    @Override
     void agregarPuntuacion(Integer calificacion){
+        if (this.puntuacion.estrellas != null) {
+            throw new CalificacionException('El pedido ya fue puntuado, no puede volver a puntuarse')
+        }
+
         this.puntuacion.estrellas = calificacion
     }
 

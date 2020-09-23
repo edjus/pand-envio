@@ -38,4 +38,9 @@ class ModalidadParaRetirar extends ModalidadEntrega {
     EstadoPedido noEntregar(EstadoPedido estadoPedido) {
         throw new NoSePuedeMarcarComoNoEntregadoException("El pedido no puede marcarse como no entregado si es para retirar")
     }
+
+    @Override
+    void agregarPuntuacion(Integer integer) {
+        throw new CalificacionException('El servicio del pedido no puede puntuarse por tener una modalidad de retiro')
+    }
 }

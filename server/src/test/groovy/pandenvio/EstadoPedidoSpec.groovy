@@ -357,4 +357,68 @@ class EstadoPedidoSpec extends Specification implements DomainUnitTest<EstadoPed
         thrown(NoSePuedeMarcarComoNoEntregadoException)
     }
 
+    void "test puntar lanza excepción en estado 'no entregado'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoNoEntregado()
+        estadoPedido.puntuar(new ModalidadParaLlevar(), 4)
+        then:
+        thrown(CalificacionException)
+    }
+
+    void "test puntar lanza excepción en estado 'cancelado'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoCancelado()
+        estadoPedido.puntuar(new ModalidadParaLlevar(), 4)
+        then:
+        thrown(CalificacionException)
+    }
+
+    void "test puntar lanza excepción en estado 'en_preparacion'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoEnPreparacion()
+        estadoPedido.puntuar(new ModalidadParaLlevar(), 4)
+        then:
+        thrown(CalificacionException)
+    }
+
+    void "test puntar lanza excepción en estado 'recibido'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoRecibido()
+        estadoPedido.puntuar(new ModalidadParaLlevar(), 4)
+        then:
+        thrown(CalificacionException)
+    }
+
+    void "test puntar lanza excepción en estado 'en_espera'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoRecibido()
+        estadoPedido.puntuar(new ModalidadParaLlevar(), 4)
+        then:
+        thrown(CalificacionException)
+    }
+
+    void "test puntar lanza excepción en estado 'en_entrega'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoEnEntrega()
+        estadoPedido.puntuar(new ModalidadParaLlevar(), 4)
+        then:
+        thrown(CalificacionException)
+    }
+
+    void "test puntar lanza excepción en estado 'en armado'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoEnArmado()
+        estadoPedido.puntuar(new ModalidadParaLlevar(), 4)
+        then:
+        thrown(CalificacionException)
+    }
+
+    void "test puntar correctamente si el estado es 'entregado'"() {
+        when:
+        EstadoPedido estadoPedido = new EstadoEntregado()
+        def modalidad = new ModalidadParaLlevar()
+        estadoPedido.puntuar(modalidad, 4)
+        then:
+        modalidad.puntuacion.estrellas == 4
+    }
 }

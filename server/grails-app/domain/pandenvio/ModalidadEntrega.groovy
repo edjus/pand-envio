@@ -26,4 +26,6 @@ abstract class ModalidadEntrega {
     abstract void entregarPedido()
 
     abstract EstadoPedido noEntregar(EstadoPedido estadoPedido)
+
+    abstract void agregarPuntuacion(Integer integer)
 }

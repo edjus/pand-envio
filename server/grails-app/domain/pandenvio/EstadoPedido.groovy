@@ -18,6 +18,10 @@ abstract class EstadoPedido {
     EstadoPedido noEntregar() {
         throw new NoSePuedeMarcarComoNoEntregadoException("El pedido esta siendo procesado, todavia no fue marcado como entregado para marcar esta accion")
     }
+
+    void puntuar(ModalidadEntrega modalidadEntrega, Integer estrellas) {
+        throw new CalificacionException('El servicio del pedido no puede puntuarse, todavia no fue entregado')
+    }
 }
 class EstadoEnArmado extends EstadoPedido {
     EstadoEnArmado() {
@@ -148,6 +152,11 @@ class EstadoEntregado extends EstadoPedido {
     @Override
     EstadoPedido noEntregar() {
         new EstadoNoEntregado()
+    }
+
+    @Override
+    void puntuar(ModalidadEntrega modalidadEntrega, Integer estrellas) {
+        modalidadEntrega.agregarPuntuacion(estrellas)
     }
 }
 

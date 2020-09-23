@@ -140,7 +140,7 @@ class PedidoService {
             throw new RuntimeException('El pedido no es válido no existe')
         }
         
-        pedido.setPuntuacionAModalidad(calificacionAIngresar);
+        pedido.puntuar(calificacionAIngresar);
         pedido.save(failOnError: true, flush: true)
         pedido.modalidadEntrega.puntuacion
     }

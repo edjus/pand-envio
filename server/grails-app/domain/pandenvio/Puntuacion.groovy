@@ -12,6 +12,9 @@ class Puntuacion {
     }
 
     void setEstrellas(Integer estrellas){
+        if (estrellas > 5 || estrellas < 0) {
+            throw new CalificacionException("La calificacion no puede ser inferior a 0 y superior a 5")
+        }
         this.estrellas = estrellas
     }
 }
