@@ -6,7 +6,7 @@ class Repartidor {
 
     String nombre
     String dni
-    boolean disponible
+    boolean disponible = true
     Restaurant restaurant
     Sueldo sueldo = new Sueldo()
     List<Pedido> listaDePedidos = new ArrayList<Pedido>()
@@ -27,11 +27,15 @@ class Repartidor {
     Repartidor(String nombre, String dni, Restaurant restaurant, sueldoBase = new Sueldo()) {
         this.nombre = nombre
         this.dni = dni
-        this.disponible = true
+        setDisponible(true)
         this.restaurant = restaurant
         setSueldo(sueldoBase)
         this.listaDePedidos = listaDePedidos;
     }   
+
+    void setDisponible(Boolean disponible){
+        this.disponible = disponible
+    }
 
     void setSueldo(Sueldo sueldo){
         this.sueldo = sueldo
