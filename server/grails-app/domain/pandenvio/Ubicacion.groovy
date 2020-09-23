@@ -16,7 +16,6 @@ class Ubicacion {
         if (pisoYDepartamento) {
             direccion += " - " + pisoYDepartamento
         }
-
         direccion
     }
 }

@@ -20,20 +20,14 @@ class ModalidadParaLlevar  extends ModalidadEntrega {
     }
 
     int cantidadEstrellas(){
-        return this.puntuacion.estrellas
+        this.puntuacion.estrellas
     }
 
     Boolean tienePuntuacion(){
-        return (this.puntuacion != null && this.puntuacion.estrellas != null)
-    }
-
-    Puntuacion getPuntuacion(){
-        return this.puntuacion
+        this.puntuacion != null && this.puntuacion.estrellas != null
     }
 
     void agregarPuntuacion(Integer calificacion){
-        //this.puntuacion = new Puntuacion(calificacion)
-
         this.puntuacion.estrellas = calificacion
     }
 

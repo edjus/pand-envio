@@ -1,6 +1,5 @@
 package pandenvio
 
-// Adicional para el precio del pedido
 class AdicionalDistancia {
 
     BigDecimal obtenerAdicional(BigDecimal precioBase, Pedido pedido){

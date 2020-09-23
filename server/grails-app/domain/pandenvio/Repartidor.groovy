@@ -2,8 +2,7 @@ package pandenvio
 
 class Repartidor {
 
-    static transients = [ "informacionDelMes"] // No persiste el atributo estado
-
+    static transients = [ "informacionDelMes"]
 
     String nombre
     String dni

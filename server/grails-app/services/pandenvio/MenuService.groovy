@@ -14,7 +14,7 @@ class MenuService {
     List<Menu> obtenerMenuAsociadosARestaurant(Long restaurantId) {
         Restaurant restaurant = restaurantService.obtenerRestaurante(restaurantId)
         List<Menu> menus = Menu.findAllWhere(restaurant : restaurant)
-        return menus
+        menus
     }
 
 }

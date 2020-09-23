@@ -19,19 +19,19 @@ class RepartidorService {
     Sueldo obtenerSueldoRepartidor(Long id) {
         Repartidor repartidor = Repartidor.findById(id)
         this.liquidarSueldoFinal(repartidor);
-        return repartidor.sueldo
+        repartidor.sueldo
     }
 
     List<Repartidor> obtenerRepartidoresAsociadosARestaurant(Long restaurantId) {
         Restaurant restaurant = restaurantService.obtenerRestaurante(restaurantId)
         List<Repartidor> repartidores = Repartidor.findAllWhere(restaurant : restaurant)
-        return repartidores
+        repartidores
     }
 
     
     List<Pedido> obtenerPedidos(Long restaurantId) {
         List<Pedido> listaPedidos = Repartidor.findById(restaurantId).listaDePedidos
-        return listaPedidos
+        listaPedidos
     }
 
 

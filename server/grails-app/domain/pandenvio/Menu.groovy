@@ -6,7 +6,6 @@ class Menu extends Producto {
 
     Set<Plato> platos = []
 
-
     boolean admiteA(CuponDescuento descuento) {
         descuento.permitirEn(this)
     }

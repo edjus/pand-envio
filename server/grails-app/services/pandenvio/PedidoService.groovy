@@ -91,11 +91,11 @@ class PedidoService {
 
     int buscarPedidosPorRepartidor(Repartidor repartidor) {
         List<ModalidadParaLlevar> modalidades = ModalidadParaLlevar.findAllWhere(repartidor : repartidor)
-        int cantidadPedidos = 0;
+        int cantidadPedidos = 0
         modalidades.each { modalidad ->
             cantidadPedidos = cantidadPedidos + Pedido.findAllWhere(modalidadEntrega: modalidad).size()
         }
-        return cantidadPedidos;
+        cantidadPedidos
     }
 
     List<Pedido> pedidoActual(Long clienteId) {
@@ -142,14 +142,13 @@ class PedidoService {
         
         pedido.setPuntuacionAModalidad(calificacionAIngresar);
         pedido.save(failOnError: true, flush: true)
-        return pedido.modalidadEntrega.puntuacion
+        pedido.modalidadEntrega.puntuacion
     }
 
     def obtenerPuntuacion(Long pedidoId) {
         Pedido pedido = Pedido.findById(pedidoId)
         Puntuacion puntuacion = Puntuacion.findById(pedidoId)
-        return puntuacion
-
+        puntuacion
     }
 
     def cambiarRango(Long pedidoId) {

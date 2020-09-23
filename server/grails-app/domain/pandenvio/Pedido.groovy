@@ -2,7 +2,7 @@ package pandenvio
 
 class Pedido {
 
-    static transients = [ "estado", "clima" ] // No persiste el atributo estado
+    static transients = [ "estado", "clima" ]
 
     Date fecha
     CuponDescuento cuponDeDescuento
@@ -54,13 +54,8 @@ class Pedido {
         }
     }
 
-
-    void setenRango(Boolean rango){
-        this.enRango = rango
-    }
-
     BigDecimal calcularPrecio() {
-        return this.modalidadEntrega.calcularPrecioCon(this, cuponDeDescuento)
+        this.modalidadEntrega.calcularPrecioCon(this, cuponDeDescuento)
     }
 
     void setEstado(EstadoPedido nuevoEstado){
@@ -86,38 +81,16 @@ class Pedido {
         this.modalidadEntrega.agregarPuntuacion(calificacionAIngresar)
     }
 
-    void setModalidadEntrega(ModalidadEntrega modalidadEntrega){
-        this.modalidadEntrega = modalidadEntrega
-    }
-
     void cambiarModalidad(){
         if (!this.estado.puedeActualizarProductos()) {
             throw  new NoSePuedeActualizarProductoException()
         } 
-        this.setModalidadEntrega(this.modalidadEntrega.cambiarModalidad())
-
-    }
-
-    Puntuacion obtenerPuntuacion(){
-        if(this.modalidadEntrega.nombre == "para_llevar"){
-            ModalidadParaLlevar modalidadLlevar = (ModalidadParaLlevar)this.modalidadEntrega;
-            return modalidadLlevar.puntuacion
-        }
-        
-    } 
-
-    Puntuacion setPuntuacion(Integer calificacion){
-        if(this.modalidadEntrega.nombre == "para_llevar"){
-            ModalidadParaLlevar modalidadLlevar = this.modalidadEntrega;
-            modalidadLlevar.puntuacion.estrellas = calificacion
-            return this.modalidadEntrega.puntuacion
-        }  
+        setModalidadEntrega(this.modalidadEntrega.cambiarModalidad())
     }
 
     Boolean tienePuntuacion(){
-        return this.modalidadEntrega.puntuacion != null
+        this.modalidadEntrega.puntuacion != null
     }
-
 
     int obtenerEstrellas(){
         if(this.modalidadEntrega.nombre == "para_llevar"){
@@ -159,11 +132,6 @@ class Pedido {
         modalidadEntrega.hayRepartidor()
     }
 
-    Boolean puedeCambiarModalidad(){
-        def estadosValidos = ["en_armado","recibido","en_preparacion"]
-        return (this.nombreEstado in estadosValidos)
-    }
-    
     void asignarA(Repartidor repartidor){
         this.modalidadEntrega.asignarRepartidor(repartidor)
     }
@@ -196,16 +164,8 @@ class Pedido {
         setCuponDeDescuento(cupon)
     }
 
-
-
-
-
-    Boolean estaEntregado(){
-        return this.nombreEstado == "entregado"
-    }
-
     Boolean esConLlluvia(){
-        return this.nombreClima == "lluvioso"
+        this.nombreClima == "lluvioso"
     }
 
     // TODO: ver como mejorar ésto y si es necesario, es una asignación manual del estado al cargar el pedido

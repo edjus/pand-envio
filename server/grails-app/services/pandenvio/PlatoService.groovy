@@ -17,7 +17,7 @@ class PlatoService {
     List<Plato> obtenerPlatoAsociadosARestaurant(Long restaurantId) {
         Restaurant restaurant = restaurantService.obtenerRestaurante(restaurantId)
         List<Plato> platos = Plato.findAllWhere(restaurant : restaurant)
-        return platos
+        platos
     }
 
 }
