@@ -28,11 +28,11 @@ class BootStrap {
 
         restaurantService.agregarRestaurant(restaurante1)
 
-        Plato tortilla = new Plato(nombre: "Tortilla de papas", precio: 350.0, categoria: CategoriaPlato.PLATO, descripcion: "Tortilla de papas clasica", restaurant:restaurante1)
+        Plato tortilla = new Plato(nombre: "Tortilla de papas", precio: 350.0, categoria: CategoriaPlato.PLATO, descripcion: "Tortilla de papas clasica", restaurant:restaurante1, imagen: "https://cocina-casera.com/wp-content/uploads/2015/01/receta-tortilla-patatas-facil.jpg")
         platoService.agregarPlato(tortilla)
-        Plato sanguche = new Plato(nombre: "Sanguche de Milanesa", precio: 450.0, categoria: CategoriaPlato.PLATO, descripcion: "Milanga completo", restaurant:restaurante1)
+        Plato sanguche = new Plato(nombre: "Sanguche de Milanesa", precio: 450.0, categoria: CategoriaPlato.PLATO, descripcion: "Milanga completo", restaurant:restaurante1, imagen: "https://d35hsl9am8s2ta.cloudfront.net/public/images/2020/04/sanguche-de-milanesa-1024x683.jpg")
         platoService.agregarPlato(sanguche)
-        Plato acelga = new Plato(nombre: "Buñuelos de acelga", precio: 225.75, categoria: CategoriaPlato.ENTRADA, descripcion: "6 buñuelos de acelga fritos", restaurant:restaurante1)
+        Plato acelga = new Plato(nombre: "Buñuelos de acelga", precio: 225.75, categoria: CategoriaPlato.ENTRADA, descripcion: "6 buñuelos de acelga fritos", restaurant:restaurante1, imagen: "https://www.milrecetasvegetarianas.com/wp-content/uploads/2017/01/11-Bu%C3%B1uelos-de-acelga-portada.jpg")
         platoService.agregarPlato(acelga)
 
         Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: 'Av. siempre viva 123').save(failOnError: true)
@@ -40,7 +40,7 @@ class BootStrap {
         repartidor2.save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
 
-        Plato plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, descripcion: '15 te hago alto guiso', restaurant: restaurante)
+        Plato plato = new Plato(nombre: 'Alto Guiso', precio: 200, categoria: CategoriaPlato.PLATO, descripcion: '15 te hago alto guiso', restaurant: restaurante, imagen: "https://hoycocino.com.ar/wp-content/uploads/2020/01/guiso-de-lentejas-vegetariano.jpg")
                 .save(failOnError: true)
         ModalidadEntrega modalidadEntrega = new ModalidadParaRetirar()
                 .save(failOnError: true)
@@ -51,10 +51,10 @@ class BootStrap {
                 .save(failOnError: true)
 
         Plato.withTransaction {
-            Producto menu = new Menu(nombre: 'Viernes', precio: 400, restaurant: restaurante).save()
+            Producto menu = new Menu(nombre: 'Viernes', precio: 400, restaurant: restaurante, imagen: "https://bongourmetbysilven.com/211-large_default/menu-diario-viernes.jpg").save()
             plato.menues << menu
             menu.platos << plato
-            Producto menu2 = new Menu(nombre:'Ejecutivo', precio: 500, restaurant: restaurante1).save()
+            Producto menu2 = new Menu(nombre:'Ejecutivo', precio: 500, restaurant: restaurante1, imagen: "https://i.ytimg.com/vi/grKMlRX1tQw/maxresdefault.jpg").save()
             tortilla.menues << menu2
             menu2.platos << tortilla
             sanguche.menues << menu2
