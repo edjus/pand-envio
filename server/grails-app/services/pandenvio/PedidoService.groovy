@@ -147,6 +147,9 @@ class PedidoService {
 
     def obtenerPuntuacion(Long pedidoId) {
         Pedido pedido = Pedido.findById(pedidoId)
+        if(pedido.modalidadEntrega.nombre == "para_retirar"){
+            throw new RuntimeException('El pedido es para retira, no tiene puntuacion')
+        }
         Puntuacion puntuacion = Puntuacion.findById(pedidoId)
         puntuacion
     }

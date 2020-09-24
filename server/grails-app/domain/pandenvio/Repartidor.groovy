@@ -2,11 +2,13 @@ package pandenvio
 
 class Repartidor {
 
+
+
     static transients = [ "informacionDelMes"]
 
     String nombre
     String dni
-    boolean disponible = true
+    boolean disponible 
     Restaurant restaurant
     Sueldo sueldo = new Sueldo()
     List<Pedido> listaDePedidos = new ArrayList<Pedido>()
@@ -16,6 +18,11 @@ class Repartidor {
                              "cantidadPedidosConPuntuacionMala": 0,
                              "cantidadPedidosConPuntuacionPerfecta": 0]
 
+
+
+    static mapping = {
+        disponible defaultValue: true
+    }
 
     static constraints = {
         nombre nullable: false, blank: false
@@ -27,15 +34,13 @@ class Repartidor {
     Repartidor(String nombre, String dni, Restaurant restaurant, sueldoBase = new Sueldo()) {
         this.nombre = nombre
         this.dni = dni
-        setDisponible(true)
         this.restaurant = restaurant
+        this.disponible = estaDisponible
         setSueldo(sueldoBase)
         this.listaDePedidos = listaDePedidos;
     }   
 
-    void setDisponible(Boolean disponible){
-        this.disponible = disponible
-    }
+
 
     void setSueldo(Sueldo sueldo){
         this.sueldo = sueldo

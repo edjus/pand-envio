@@ -22,8 +22,8 @@ class BootStrap {
         clienteService.agregarCliente(pepeArgento)
 
 
-        Restaurant restaurante1 = new Restaurant(nombre: "La esquina", productos: null, direccion: 'Av. San Martin 456')
-        Repartidor repartidor = new Repartidor(nombre: 'Carlitos', dni:123456,restaurant: restaurante1)
+        Restaurant restaurante1 = new Restaurant(nombre: "La esquina", productos: null,  direccion: 'Av. San Martin 456')
+        Repartidor repartidor = new Repartidor(nombre: 'Carlitos', dni:123456,disponible: true ,restaurant: restaurante1)
         repartidor.save()
 
         restaurantService.agregarRestaurant(restaurante1)
@@ -36,7 +36,7 @@ class BootStrap {
         platoService.agregarPlato(acelga)
 
         Restaurant restaurante = new Restaurant(nombre: 'La otra esquina', direccion: 'Av. siempre viva 123').save(failOnError: true)
-        Repartidor repartidor2 = new Repartidor(nombre: 'Pedrito', dni:455667,restaurant: restaurante)
+        Repartidor repartidor2 = new Repartidor(nombre: 'Pedrito', dni:455667, disponible: true, restaurant: restaurante)
         repartidor2.save(failOnError: true)
         Ubicacion unaCasa = new Ubicacion(calle:'Av. Siempre viva', altura: 1234).save(failOnError: true)
 
