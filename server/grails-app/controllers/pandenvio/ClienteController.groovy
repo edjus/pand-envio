@@ -24,6 +24,21 @@ class ClienteController {
     }
 
     @Transactional
+    def obtenerCupones(Long clienteId) {
+        try {
+            Set<CuponDescuentoPorcentual> cupones = clienteService.obtenerCupones(clienteId)
+            if(cupones.size() == 0){
+                respond([],status: OK)
+            }
+            else{
+                respond(cupones, status: OK)
+            }
+        } catch (RuntimeException e) {
+            render(text: e.message, status: BAD_REQUEST)
+        }
+    }
+
+    @Transactional
     def save(Cliente cliente) {
         //Common controller validations: empty values, non-zero values, etc..
         if (cliente.hasErrors()) {

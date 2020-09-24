@@ -16,4 +16,12 @@ class ClienteService {
     def obtenerCliente(Long clienteId){
         Cliente.findById(clienteId)
     }
+
+    def obtenerCupones(Long clienteId){
+        Cliente cliente = this.obtenerCliente(clienteId);
+        if(!cliente){
+            throw new DatosNoPuedenSerNulosException("El cliente es invalido")
+        }
+        cliente.cupones
+    }
 }
