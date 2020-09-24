@@ -153,6 +153,7 @@ class CreadorCuponesSpec extends Specification {
 
         then:
         CuponDescuentoPorcentual.count == ++cantidadCupones
+        CuponDescuentoPorcentual.list().last().estaDisponible()
     }
 
     void "test no crea cupones si no tiene cupones disponibles y tiene dos pedidos en el restaurante y uno en otro"() {
@@ -254,5 +255,7 @@ class CreadorCuponesSpec extends Specification {
 
         then:
         CuponDescuentoPorcentual.count == ++cantidadCupones
+        CuponDescuentoPorcentual.list().last().estaDisponible()
+
     }
 }
