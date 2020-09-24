@@ -11,6 +11,7 @@
 
 <script>
 import TablaCupon from './TablaCupon'
+import {idUsuarioActual} from "../../services/AutenticacionService";
 
 export default {
   name: 'Cupon',
@@ -33,7 +34,12 @@ export default {
     },
     cargarCupones: async function () {
       this.clearNotifications()
-      fetch(`${this.serverURL}/cupones`)
+        let url = `${this.serverURL}/cupones`
+        const clienteId = idUsuarioActual()
+        if (clienteId){
+          url = `${this.serverURL}/cliente/${clienteId}/cupones`
+        }
+      fetch(url)
         .then(r => r.json())
         .then(json => {
           this.cupones = json
