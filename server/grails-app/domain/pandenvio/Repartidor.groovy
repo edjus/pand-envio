@@ -51,7 +51,6 @@ class Repartidor {
     }
 
     void calcularInformeDeSueldo(){
-        //int cantidadPedidosCompletados = 0
         for ( pedido in this.listaDePedidos ) {
             if(pedido.nombreEstado == "no_entregado"){
                 this.informacionDelMes["cantidadPedidosIncompletos"]+= 1;

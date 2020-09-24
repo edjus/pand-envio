@@ -28,4 +28,6 @@ abstract class ModalidadEntrega {
     abstract EstadoPedido noEntregar(EstadoPedido estadoPedido)
 
     abstract void agregarPuntuacion(Integer integer)
+
+    abstract Integer obtenerEstrellas()
 }

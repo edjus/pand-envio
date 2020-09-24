@@ -19,14 +19,6 @@ class ModalidadParaLlevar  extends ModalidadEntrega {
         this.adicionales << new AdicionalClimatico()
     }
 
-    int cantidadEstrellas(){
-        this.puntuacion.estrellas
-    }
-
-    Boolean tienePuntuacion(){
-        this.puntuacion != null && this.puntuacion.estrellas != null
-    }
-
     @Override
     void agregarPuntuacion(Integer calificacion){
         if (this.puntuacion.estrellas != null) {
@@ -34,6 +26,11 @@ class ModalidadParaLlevar  extends ModalidadEntrega {
         }
 
         this.puntuacion.estrellas = calificacion
+    }
+
+    @Override
+    Integer obtenerEstrellas() {
+        (this.puntuacion != null && this.puntuacion.estrellas != null) ? puntuacion.estrellas : 0
     }
 
     @Override

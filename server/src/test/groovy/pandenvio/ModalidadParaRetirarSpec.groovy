@@ -55,4 +55,12 @@ class ModalidadParaRetirarSpec extends Specification implements DomainUnitTest<M
         then:
         thrown(CalificacionException)
     }
+
+    void "test obtenerEstrellas lanza excepción"() {
+        when:
+        def modalidad = new ModalidadParaRetirar()
+        modalidad.obtenerEstrellas()
+        then:
+        thrown(CalificacionException)
+    }
 }

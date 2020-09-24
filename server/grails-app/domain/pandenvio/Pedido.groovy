@@ -78,13 +78,8 @@ class Pedido {
         this.modalidadEntrega.puntuacion != null
     }
 
-    int obtenerEstrellas(){
-        if(this.modalidadEntrega.nombre == "para_llevar"){
-            if(modalidadEntrega.tienePuntuacion()){
-                return (int) this.modalidadEntrega.cantidadEstrellas()
-            }
-            return 0
-        }   
+    Integer obtenerEstrellas(){
+        this.modalidadEntrega.obtenerEstrellas()
     }
 
     void setClima(Clima nuevoClima){

@@ -43,4 +43,9 @@ class ModalidadParaRetirar extends ModalidadEntrega {
     void agregarPuntuacion(Integer integer) {
         throw new CalificacionException('El servicio del pedido no puede puntuarse por tener una modalidad de retiro')
     }
+
+    @Override
+    Integer obtenerEstrellas() {
+        throw  new CalificacionException('El tipo de pedido no se puede calificar por ende no tiene estrellas')
+    }
 }

@@ -95,4 +95,21 @@ class ModalidadParaLlevarSpec extends Specification implements DomainUnitTest<Mo
         then:
         thrown(CalificacionException)
     }
+
+    void "test obtener estrellas devuelve 0 si no fue calificado"() {
+        when:
+        def modalidad = new ModalidadParaLlevar()
+        def estrellas = modalidad.obtenerEstrellas()
+        then:
+        estrellas == 0
+    }
+
+    void "test obtener estrellas devuelve cantidad de estrellas correcta"() {
+        when:
+        def modalidad = new ModalidadParaLlevar()
+        modalidad.agregarPuntuacion(3)
+        def estrellas = modalidad.obtenerEstrellas()
+        then:
+        estrellas == 3
+    }
 }
