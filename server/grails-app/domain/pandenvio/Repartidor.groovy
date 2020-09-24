@@ -19,6 +19,7 @@ class Repartidor {
                              "cantidadPedidosConPuntuacionPerfecta": 0]
 
 
+    def reglasDeFacturacion = []
 
     static mapping = {
         disponible defaultValue: true
@@ -38,8 +39,16 @@ class Repartidor {
         this.disponible = true
         setSueldo(sueldoBase)
         this.listaDePedidos = listaDePedidos;
-    }   
+        cargarReglasDeFacturacion()
+    }
 
+    private void cargarReglasDeFacturacion() {
+        this.reglasDeFacturacion << new PedidosIncompletos()
+        this.reglasDeFacturacion << new PedidosCompletados()
+        this.reglasDeFacturacion << new PedidosConLluvia()
+        this.reglasDeFacturacion << new PedidosConPuntuacionMenoresA3()
+        this.reglasDeFacturacion << new PedidosConPuntuacionIgual5()
+    }
 
 
     void setSueldo(Sueldo sueldo){
@@ -51,25 +60,9 @@ class Repartidor {
     }
 
     void calcularInformeDeSueldo(){
-        for ( pedido in this.listaDePedidos ) {
-            if(pedido.nombreEstado == "no_entregado"){
-                this.informacionDelMes["cantidadPedidosIncompletos"]+= 1;
-            }
-            if(pedido.nombreEstado == "entregado"){
-                informacionDelMes["cantidadPedidosCompletados"]+= 1;
-                if(pedido.esConLlluvia()){
-                    this.informacionDelMes["cantidadPedidosConLluvia"]+=1;
-                }
-                if(pedido.tienePuntuacion()){
-                    if(pedido.obtenerEstrellas() < 3){
-                        this.informacionDelMes["cantidadPedidosConPuntuacionMala"]+=1;
-                    }
-                    if(pedido.obtenerEstrellas() == 5){
-                        this.informacionDelMes["cantidadPedidosConPuntuacionPerfecta"]+=1;
-                    }
-                }
-            }
-        }        
+        this.listaDePedidos.forEach {
+            p -> this.reglasDeFacturacion.forEach { r -> r.calcularVariacion(p, this.informacionDelMes)}
+        }
     }
 
     void liquidarSueldoFinal(){
