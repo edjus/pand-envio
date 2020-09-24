@@ -13,7 +13,7 @@ class CuponDescuentoPorcentual extends CuponDescuento {
     }
 
     boolean esValido() {
-      return (this.porcentaje > 0)
+      this.porcentaje > 0
    }
 
     @Override

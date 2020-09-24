@@ -33,7 +33,7 @@ class Sueldo {
     }
 
     int calcularAdicional(int cantidadPedidos, int montoAdicional){
-        cantidadPedidos * montoAdicionalPorPedido
+        cantidadPedidos * montoAdicional
     }
 
     void calcularPenalidades(int cantidadPedidosIncompletos, int cantidadPedidosConPuntuacionMala){
