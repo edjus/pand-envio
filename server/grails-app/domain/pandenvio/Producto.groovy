@@ -10,7 +10,6 @@ abstract class Producto {
         imagen nullable: true
     }
 
-    // TODO: fix typo
     static belongsTo = [restaurant: Restaurant]
 
     abstract boolean admiteA(CuponDescuento descuento)

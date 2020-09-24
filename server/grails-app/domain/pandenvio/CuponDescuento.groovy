@@ -1,9 +1,9 @@
 package pandenvio
 
 abstract class CuponDescuento {
-    Date fecha;
-    String codigo;
-    Pedido pedidoBeneficiado;
+    Date fecha
+    String codigo
+    Pedido pedidoBeneficiado
 
     static constraints = {
         pedidoBeneficiado nullable: true

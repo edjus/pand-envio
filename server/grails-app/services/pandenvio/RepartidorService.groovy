@@ -28,12 +28,10 @@ class RepartidorService {
         repartidores
     }
 
-    
     List<Pedido> obtenerPedidos(Long restaurantId) {
         List<Pedido> listaPedidos = Repartidor.findById(restaurantId).listaDePedidos
         listaPedidos
     }
-
 
     def liquidarSueldoFinal(Repartidor repartidor) {
         if (!repartidor) {

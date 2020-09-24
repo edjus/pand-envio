@@ -8,11 +8,9 @@ class PlatoService {
 
     RestaurantService restaurantService;
 
-
     def agregarPlato(Plato plato) {
         plato.save flush:true
     }
-
 
     List<Plato> obtenerPlatoAsociadosARestaurant(Long restaurantId) {
         Restaurant restaurant = restaurantService.obtenerRestaurante(restaurantId)
