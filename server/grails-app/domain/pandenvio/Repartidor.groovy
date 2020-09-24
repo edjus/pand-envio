@@ -35,7 +35,7 @@ class Repartidor {
         this.nombre = nombre
         this.dni = dni
         this.restaurant = restaurant
-        this.disponible = estaDisponible
+        this.disponible = true
         setSueldo(sueldoBase)
         this.listaDePedidos = listaDePedidos;
     }   
