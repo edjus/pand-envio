@@ -42,7 +42,12 @@
             <i class="fas fa-money-check-alt"></i> Ver sueldo
           </router-link>
         </li>
-        <li class="nav-item" v-if="esRol('admin')">
+        <li class="nav-item" v-if="esRol('cliente')">
+          <router-link to="/catalogo" class="nav-link" v-bind:class="getClass('/catalogo')">
+            <i class="fas fa-book-open"></i> Catálogo
+          </router-link>
+        </li>
+        <li class="nav-item" v-if="esRol(['admin','cliente'])">
           <router-link to="/cupones" class="nav-link" v-bind:class="getClass('/cupones')">
             <i class="fas fa-tags"></i> Cupones
           </router-link>
@@ -52,11 +57,6 @@
         </li>
         <li class="nav-item" v-if="esRol('admin')">
           <a href="#" v-on:click="invocarSol" class="nav-link"><i class="fas fa-sun"></i> Llamar al Sol</a>
-        </li>
-        <li class="nav-item" v-if="esRol('cliente')">
-          <router-link to="/catalogo" class="nav-link" v-bind:class="getClass('/catalogo')">
-            <i class="fas fa-book-open"></i> Catálogo
-          </router-link>
         </li>
       </ul>
     </div>

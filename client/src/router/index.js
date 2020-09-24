@@ -76,7 +76,7 @@ const router = new Router({
       component: Cupon,
       meta: {
         publico: false,
-        rol: ['admin']
+        rol: ['admin', 'cliente']
       }
     },
     {

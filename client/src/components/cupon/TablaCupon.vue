@@ -6,7 +6,7 @@
         <th>Id</th>
         <th>Fecha</th>
         <th>Codigo</th>
-        <th>Activo</th>
+        <th>Disponible</th>
         <th>Cliente</th>
       </tr>
       </thead>
@@ -15,7 +15,7 @@
         <td>{{ cupon.id }}</td>
         <td>{{ cupon.fecha }}</td>
         <td>{{ cupon.codigo }}</td>
-        <td>{{ cupon.activo }}</td>
+        <td>{{ cupon.disponible ? 'Disponible para usar' : 'Ya Usado'}}</td>
         <td>{{ cupon.cliente.nombre + ' ' + cupon.cliente.apellido}}</td>
       </tr>
       </tbody>
@@ -29,7 +29,7 @@ export default {
   name: 'TablaCupon',
   methods: {
     getClass (cupon) {
-      return cupon.activo ? 'activo' : 'usado'
+      return cupon.disponible ? 'activo' : 'usado'
     }
   }
 }
