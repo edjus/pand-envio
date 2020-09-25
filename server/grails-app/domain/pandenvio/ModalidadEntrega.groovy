@@ -8,7 +8,7 @@ abstract class ModalidadEntrega {
         BigDecimal precioTotalBase = pedido.items.sum(0) { it.calcularPrecio() }
         BigDecimal precioTotalParcial = this.aplicarAdicionales(precioTotalBase, pedido)
 
-        Boolean aplicaDescuento = pedido.items.inject(true) { resultado , item -> resultado && item.admiteA(cuponDeDescuento) }
+        Boolean aplicaDescuento = pedido.items.every() { item -> item.admiteA(cuponDeDescuento) }
 
         aplicaDescuento ? cuponDeDescuento.aplicarDescuento(precioTotalParcial, pedido) : precioTotalParcial
     }
